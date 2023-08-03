@@ -1,0 +1,49 @@
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.box-container {
+  padding: 0 2rem;
+  width: 85%;
+  float: right;
+  margin-top: 5rem;
+}
+
+.primary-btn {
+  min-width: 6rem !important;
+  border-radius: 20px !important;
+  border: none !important;
+  box-shadow: none !important;
+  background-color: #233eae !important;
+  text-transform: none !important;
+}
+
+.side-menu-bar {
+  height: 100%;
+  background: #383f51;
+  color: white;
+}
+.side-menu-bar img {
+  height: 30%;
+  width: 70%;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: rgb(236, 236, 236) !important;
+}
+
+* {
+  font-family: "Poppins", sans-serif !important;
+}/*# sourceMappingURL=index.css.map */

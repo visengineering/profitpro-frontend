@@ -1,0 +1,12 @@
+@import "./main.scss";
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: rgb(236, 236, 236) !important;
+}
+
+* {
+  font-family: "Poppins", sans-serif !important;
+}
