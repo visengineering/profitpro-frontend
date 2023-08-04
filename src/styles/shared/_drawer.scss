@@ -1,10 +1,19 @@
 .side-menu-bar {
   height: 100%;
-  background: #383f51;
-  color: white;
+  background: $secondary;
+  color: $white;
 
   img {
     height: 30%;
     width: 70%;
+  }
+  .side-menu-accordion {
+    background: $secondary;
+    color: $white;
+    border: none;
+    outline: none;
+    .MuiAccordionSummary-root {
+      color: $white !important;
+    }
   }
 }

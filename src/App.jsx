@@ -1,6 +1,6 @@
 import "./styles/main.css";
 import SaleRepresentativeTable from "./components/pages/sales-representative/SaleRepresentativeTable";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import TranscriptsTable from "./components/pages/transcripts/TranscriptsTable";
 import Drawer from "./components/generic-components/drawer";
 import Transcript from "./components/pages/transcripts/Transcript";
@@ -9,25 +9,35 @@ import SalesRepresentative from "./components/pages/sales-representative/SalesRe
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/salesRepresentative",
-      element: <SaleRepresentativeTable />,
-    },
-    {
-      path: "/salesRepresentative/:salesRepresentativeId",
-      element: <SalesRepresentative />,
-    },
-    {
-      path: "/salesRepresentative/:salesRepresentativeId/transcripts",
-      element: <TranscriptsTable />,
-    },
-    {
-      path: "/salesRepresentative/:salesRepresentativeId/transcripts/:transcriptId",
-      element: <Transcript />,
+      path: "",
+      element: (
+        <>
+          <Drawer />
+          <Outlet />
+        </>
+      ),
+      children: [
+        {
+          path: "salesRepresentative",
+          element: <SaleRepresentativeTable />,
+        },
+        {
+          path: "salesRepresentative/:salesRepresentativeId",
+          element: <SalesRepresentative />,
+        },
+        {
+          path: "salesRepresentative/:salesRepresentativeId/transcripts",
+          element: <TranscriptsTable />,
+        },
+        {
+          path: "salesRepresentative/:salesRepresentativeId/transcripts/:transcriptId",
+          element: <Transcript />,
+        },
+      ],
     },
   ]);
   return (
     <div>
-      <Drawer />
       <RouterProvider router={router} />
     </div>
   );

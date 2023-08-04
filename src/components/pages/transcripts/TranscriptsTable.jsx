@@ -1,6 +1,8 @@
 import React from "react";
 import TranscriptsDataTable from "./TranscriptsDataTable";
-import { Box, Breadcrumbs, Link, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Chip } from "@mui/material";
+import { emphasize, styled } from "@mui/material/styles";
+import HomeIcon from "@mui/icons-material/Home";
 
 const TranscriptsTable = () => {
   let transcripts = [
@@ -41,22 +43,41 @@ const TranscriptsTable = () => {
       duration: "2:34",
     },
   ];
+
+  const StyledBreadcrumb = styled(Chip)(({ theme }) => {
+    const backgroundColor =
+      theme.palette.mode === "light"
+        ? theme.palette.grey[100]
+        : theme.palette.grey[800];
+    return {
+      backgroundColor,
+      height: theme.spacing(3),
+      color: "#233eae",
+      fontWeight: theme.typography.fontWeightRegular,
+      "&:hover, &:focus": {
+        backgroundColor: emphasize(backgroundColor, 0.12),
+      },
+      "&:active": {
+        boxShadow: theme.shadows[1],
+        backgroundColor: emphasize(backgroundColor, 0.24),
+      },
+    };
+  });
   return (
     <Box className="box-container">
-      <Box role="presentation">
-        <Breadcrumbs
-          aria-label="breadcrumb"
-          sx={{ fontSize: "24px", margin: "2rem 0" }}
-        >
-          <Link underline="hover" color="inherit" href="/salesRepresentative">
-            Sales Representatives
-          </Link>
-          <Typography
-            sx={{ fontSize: "24px", color: "#233eae" }}
-            color="text.primary"
-          >
-            Transcripts
-          </Typography>
+      <Box role="presentation" sx={{ margin: "1rem" }}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <StyledBreadcrumb
+            component="a"
+            label="Sales Representatives"
+            icon={<HomeIcon fontSize="small" />}
+            disabled
+          />
+          <StyledBreadcrumb
+            sx={{ background: "silver" }}
+            component="a"
+            label="Transcripts"
+          />
         </Breadcrumbs>
       </Box>
       <TranscriptsDataTable transcripts={transcripts} />

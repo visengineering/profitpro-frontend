@@ -12,6 +12,7 @@ const LoadingButton = ({
   disabled,
   variant,
   size,
+  endIcon,
   type = "button",
   submitValid = false,
 }) => {
@@ -27,6 +28,7 @@ const LoadingButton = ({
         size={size}
         sx={sx}
         onClick={handleClick}
+        endIcon={endIcon}
       >
         {buttonTitle}
       </MUILoadingButton>

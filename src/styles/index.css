@@ -23,17 +23,25 @@
   border: none !important;
   box-shadow: none !important;
   background-color: #233eae !important;
-  text-transform: none !important;
 }
 
 .side-menu-bar {
   height: 100%;
   background: #383f51;
-  color: white;
+  color: #fff;
 }
 .side-menu-bar img {
   height: 30%;
   width: 70%;
+}
+.side-menu-bar .side-menu-accordion {
+  background: #383f51;
+  color: #fff;
+  border: none;
+  outline: none;
+}
+.side-menu-bar .side-menu-accordion .MuiAccordionSummary-root {
+  color: #fff !important;
 }
 
 html,

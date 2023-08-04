@@ -1,42 +1,26 @@
 import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { Drawer as MUIDrawer } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-const drawerWidth = "15%";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import HomeIcon from "@mui/icons-material/Home";
+import GridViewIcon from "@mui/icons-material/GridView";
+import { Collapse, Drawer as MUIDrawer } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  })
-);
+const drawerWidth = "15%";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -46,7 +30,6 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
-    // width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -106,6 +89,11 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function Drawer() {
   const [open, setOpen] = React.useState(true);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -143,45 +131,69 @@ export default function Drawer() {
           flexShrink: 0,
           "& .MuiDrawer-paper": {
             width: drawerWidth,
+            minWidth: "240px",
           },
         }}
         variant="persistent"
         anchor="left"
-        open={open}
+        open
       >
         <Box className="side-menu-bar">
           <DrawerHeader sx={{ display: "flex", justifyContent: "center" }}>
-            <Box component="img" src="logo.png"></Box>
+            <Box component="img" src="/logo.png"></Box>
           </DrawerHeader>
           <Divider />
-          <List>
-            {["Dashboard", "Dashboard", "Dashboard", "Dashboard"].map(
-              (text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton>
-                    <ListItemIcon sx={{ color: "white" }}>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              )
-            )}
-          </List>
-          <Divider />
-          <List>
-            {["Dashboard", "Dashboard", "Dashboard", "Dashboard"].map(
-              (text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton>
-                    <ListItemIcon sx={{ color: "white" }}>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              )
-            )}
+
+          <List
+            sx={{ width: "100%", maxWidth: 360, bgcolor: "inherit" }}
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+          >
+            <ListItemButton onClick={() => navigate("/salesRepresentative")}>
+              <ListItemIcon>
+                <HomeIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Sales Representatives" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <GridViewIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
+            <ListItemButton onClick={handleClick}>
+              <ListItemIcon>
+                <InboxIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+              {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            </ListItemButton>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon sx={{ color: "white" }}>•</ListItemIcon>
+                  <ListItemText primary="Dashboard" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <ListItemIcon sx={{ color: "white" }}>•</ListItemIcon>
+                  </ListItemIcon>
+                  <ListItemText primary="Dashboard" />
+                </ListItemButton>{" "}
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <ListItemIcon sx={{ color: "white" }}>•</ListItemIcon>
+                  </ListItemIcon>
+                  <ListItemText primary="Dashboard" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+            <ListItemButton>
+              <ListItemIcon>
+                <GridViewIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
           </List>
         </Box>
       </MUIDrawer>
