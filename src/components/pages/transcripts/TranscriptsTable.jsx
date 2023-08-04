@@ -2,9 +2,11 @@ import React from "react";
 import TranscriptsDataTable from "./TranscriptsDataTable";
 import { Box, Breadcrumbs, Chip } from "@mui/material";
 import { emphasize, styled } from "@mui/material/styles";
-import HomeIcon from "@mui/icons-material/Home";
-
+import PersonIcon from "@mui/icons-material/Person";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { useNavigate } from "react-router-dom";
 const TranscriptsTable = () => {
+  const navigate = useNavigate();
   let transcripts = [
     {
       createdAt: "2020-01-05",
@@ -51,9 +53,9 @@ const TranscriptsTable = () => {
         : theme.palette.grey[800];
     return {
       backgroundColor,
-      height: theme.spacing(3),
-      color: "#233eae",
+      height: theme.spacing(5),
       fontWeight: theme.typography.fontWeightRegular,
+      fontSize: "18px",
       "&:hover, &:focus": {
         backgroundColor: emphasize(backgroundColor, 0.12),
       },
@@ -66,17 +68,23 @@ const TranscriptsTable = () => {
   return (
     <Box className="box-container">
       <Box role="presentation" sx={{ margin: "1rem" }}>
-        <Breadcrumbs aria-label="breadcrumb">
+        <Breadcrumbs
+          separator={<NavigateNextIcon fontSize="small" />}
+          aria-label="breadcrumb"
+        >
           <StyledBreadcrumb
             component="a"
+            onClick={() => {
+              navigate("/salesRepresentative");
+            }}
             label="Sales Representatives"
-            icon={<HomeIcon fontSize="small" />}
-            disabled
+            icon={<PersonIcon />}
+            size="medium"
           />
           <StyledBreadcrumb
-            sx={{ background: "silver" }}
             component="a"
             label="Transcripts"
+            sx={{ background: "silver" }}
           />
         </Breadcrumbs>
       </Box>

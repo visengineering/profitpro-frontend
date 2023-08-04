@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
@@ -16,10 +16,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import HomeIcon from "@mui/icons-material/Home";
-import GridViewIcon from "@mui/icons-material/GridView";
 import { Collapse, Drawer as MUIDrawer } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
+import PersonIcon from "@mui/icons-material/Person";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 const drawerWidth = "15%";
 
 const AppBar = styled(MuiAppBar, {
@@ -88,8 +88,18 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function Drawer() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [appBarTitle, setAppBarTitle] = useState("");
+
+  useEffect(() => {
+    if (location.pathname === "/salesRepresentative")
+      setAppBarTitle("User List");
+    else {
+      setAppBarTitle("");
+    }
+  }, [location]);
 
   const handleClick = () => {
     setOpen(!open);
@@ -112,7 +122,7 @@ export default function Drawer() {
           }}
         >
           <Typography variant="h6" noWrap component="div">
-            User List
+            {appBarTitle}{" "}
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -149,15 +159,9 @@ export default function Drawer() {
             component="nav"
             aria-labelledby="nested-list-subheader"
           >
-            <ListItemButton onClick={() => navigate("/salesRepresentative")}>
+            <ListItemButton onClick={() => navigate("/")}>
               <ListItemIcon>
                 <HomeIcon sx={{ color: "white" }} />
-              </ListItemIcon>
-              <ListItemText primary="Sales Representatives" />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <GridViewIcon sx={{ color: "white" }} />
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
             </ListItemButton>
@@ -165,35 +169,28 @@ export default function Drawer() {
               <ListItemIcon>
                 <InboxIcon sx={{ color: "white" }} />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" />
+              <ListItemText primary="DealerShip 1" />
               {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon sx={{ color: "white" }}>•</ListItemIcon>
-                  <ListItemText primary="Dashboard" />
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  onClick={() => navigate("/salesRepresentative")}
+                >
+                  <ListItemIcon>
+                    <PersonIcon sx={{ color: "white" }} />
+                  </ListItemIcon>
+                  <ListItemText primary="Sales Representatives" />
                 </ListItemButton>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon>
-                    <ListItemIcon sx={{ color: "white" }}>•</ListItemIcon>
+                    <AssignmentIcon sx={{ color: "white" }} />
                   </ListItemIcon>
-                  <ListItemText primary="Dashboard" />
-                </ListItemButton>{" "}
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <ListItemIcon sx={{ color: "white" }}>•</ListItemIcon>
-                  </ListItemIcon>
-                  <ListItemText primary="Dashboard" />
+                  <ListItemText primary="All Transcripts" />
                 </ListItemButton>
               </List>
             </Collapse>
-            <ListItemButton>
-              <ListItemIcon>
-                <GridViewIcon sx={{ color: "white" }} />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItemButton>
           </List>
         </Box>
       </MUIDrawer>
