@@ -38,12 +38,6 @@ import {
 
 const headCells = [
   {
-    id: "",
-    numeric: false,
-    disablePadding: true,
-    label: "",
-  },
-  {
     id: "Photo",
     numeric: false,
     disablePadding: true,
@@ -114,18 +108,24 @@ function EnhancedTableHead(props) {
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
+            {headCell.disableSorting ? (
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : "asc"}
+                onClick={createSortHandler(headCell.id)}
+              >
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <Box component="span" sx={visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </Box>
+                ) : null}
+              </TableSortLabel>
+            ) : (
+              headCell.label
+            )}
           </TableCell>
         ))}
       </TableRow>
@@ -257,19 +257,19 @@ function Row(props) {
             }
           />
         </TableCell>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={(e) => {
-              e.stopPropagation();
-              setOpen(!open);
-            }}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell align="center">
+          {!!row?.transcripts?.length && (
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpen(!open);
+              }}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          )}
           <Box
             component="img"
             src={row.user_image}
@@ -281,6 +281,7 @@ function Row(props) {
             alt="Image"
           />
         </TableCell>
+
         <TableCell align="center">
           {row.first_name} {row.last_name}
         </TableCell>
@@ -343,33 +344,51 @@ function Row(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Transcripts
+                Sale Representative Transcripts
               </Typography>
-              <Table size="small" aria-label="purchases">
+              <Table aria-label="purchases">
                 <TableHead>
                   <TableRow>
+                    <TableCell>Transcript ID</TableCell>
                     <TableCell>Created At</TableCell>
                     <TableCell>Updated At</TableCell>
-                    <TableCell>Customer ID</TableCell>
+                    <TableCell>Audio Link</TableCell>
                     <TableCell align="center">Time Duration</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.transcripts.slice(0, 5).map((transcriptionRow) => (
+                  {/* {
+                conversation_id: 1,
+                conversation_link: "dummy-link.com",
+                short_transcript:
+                  "I'm tired of cafeteria food. Let's do something different tonight. Have anything particular in mind?...",
+                created_date: "2023-08-04T11:46:11.010457Z",
+                modified_date: "2023-08-04T11:46:11.010548Z",
+              }, */}
+                  {row.transcripts.map((transcriptionRow) => (
                     <TableRow key={transcriptionRow.created_date}>
+                      <TableCell align="center">
+                        {transcriptionRow.conversation_id}
+                      </TableCell>
                       <TableCell component="th" scope="row">
                         {transcriptionRow.created_date}
                       </TableCell>
                       <TableCell component="th" scope="row">
                         {transcriptionRow.modified_date}
                       </TableCell>
-                      <TableCell>{transcriptionRow.conversation_id}</TableCell>
+                      <TableCell>
+                        {transcriptionRow.conversation_link}
+                      </TableCell>
                       <TableCell align="center">
-                        {`${Math.floor(transcriptionRow.duration / 60000)}:${(
-                          (transcriptionRow.duration % 60000) /
-                          1000
-                        ).toFixed(0)}`}
+                        {transcriptionRow.duration
+                          ? `${Math.floor(
+                              transcriptionRow.duration / 60000
+                            )}:${(
+                              (transcriptionRow.duration % 60000) /
+                              1000
+                            ).toFixed(0)}`
+                          : "-"}
                       </TableCell>
                       <TableCell align="center">
                         <Link
@@ -382,18 +401,18 @@ function Row(props) {
                       </TableCell>
                     </TableRow>
                   ))}
-                  <TableRow>
-                    <LoadingButton
-                      buttonTitle={"Show more"}
-                      variant="contained"
-                      size="small"
-                      sx={{ margin: "1rem" }}
-                      handleClick={handleShowMore}
-                      styleClass="primary-btn"
-                    />
-                  </TableRow>
                 </TableBody>
               </Table>
+              {!!row.transcripts.length && (
+                <LoadingButton
+                  buttonTitle={"Show more"}
+                  variant="contained"
+                  size="small"
+                  sx={{ margin: "1rem" }}
+                  handleClick={handleShowMore}
+                  styleClass="primary-btn float-right"
+                />
+              )}
             </Box>
           </Collapse>
         </TableCell>
@@ -423,7 +442,7 @@ Row.propTypes = {
 function SalesRepresentativeDataTable(props) {
   const { rows } = props;
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
+  const [orderBy, setOrderBy] = React.useState("");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);

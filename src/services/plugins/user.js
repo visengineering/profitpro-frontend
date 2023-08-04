@@ -6,7 +6,7 @@ class UserService {
   static getSaleRepresentativeByDealerShip(params, userId) {
     return userService({
       method: "GET",
-      url: "/",
+      url: "",
       params
     })
   }

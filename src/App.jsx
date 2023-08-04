@@ -1,4 +1,4 @@
-import "./styles/main.css";
+import "./styles/main.scss";
 import SaleRepresentativeList from "./components/pages/sales-representative/SaleRepresentativeList";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import TranscriptsTable from "./components/pages/transcripts/TranscriptsTable";
