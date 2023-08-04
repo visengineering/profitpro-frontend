@@ -4,7 +4,7 @@ export const BASE_API_URL = process.env.REACT_APP_BACKEND_API_URL;
 
 export const authInterceptor = [
   (config) => {
-    config.headers['ngrok-skip-browser-warning'] = "any"
+    config.headers['ngrok-skip-browser-warning'] = true
 
     return config;
   },

@@ -11,18 +11,28 @@ import Breadcrumbs from "../../generic-components/breadcrumbs";
 
 const SaleRepresentativeList = () => {
   const [users, setUsers] = useState([]);
+  const [totalCount, setCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchSalesDetails();
   }, []);
 
-  const fetchSalesDetails = async () => {
+  const fetchSalesDetails = async (limit = 5, selectedPage = 1) => {
     try {
-      const response = await UserService.getSaleRepresentativeByDealerShip();
+      const params = {
+        limit,
+        page: selectedPage,
+      };
 
-      const { users: userResult } = response.data;
+      const response = await UserService.getSaleRepresentativeByDealerShip(params);
 
+      const { results: userResult, count, currentPage: page } = response.data;
+
+      setCount(count)
+      setCurrentPage(page || 1)
       setUsers(userResult);
     } catch (error) {
       console.log("Error while fetching sale representatives", error);
@@ -81,7 +91,12 @@ const SaleRepresentativeList = () => {
           alignItems: "center",
         }}
       ></Box>
-      <SalesRepresentativeDataTable rows={users} />
+      <SalesRepresentativeDataTable
+        rows={users}
+        totalCount={totalCount}
+        currentPage={currentPage}
+        filterData={fetchSalesDetails}
+      />
     </Box>
   );
 };

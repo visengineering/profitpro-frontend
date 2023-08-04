@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -74,6 +74,7 @@ const headCells = [
     label: "Action",
   },
 ];
+
 function EnhancedTableHead(props) {
   const {
     onSelectAllClick,
@@ -97,7 +98,7 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              "aria-label": "select all desserts",
+              "aria-label": "select all users",
             }}
           />
         </TableCell>
@@ -166,7 +167,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          All ({props.total})
+          All ({props.totalCount})
           <LoadingButton
             buttonTitle={"Add new"}
             variant="contained"
@@ -196,7 +197,7 @@ function EnhancedTableToolbar(props) {
 }
 function Row(props) {
   const { row, isItemSelected } = props;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleShowMore = (user_id) => {
@@ -220,7 +221,7 @@ function Row(props) {
     alert("handle delete");
   };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
   const handleClick = (event) => {
     event.stopPropagation();
@@ -232,7 +233,7 @@ function Row(props) {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <TableRow
         hover
         onClick={() => handleShowUser}
@@ -409,41 +410,37 @@ function Row(props) {
           </Collapse>
         </TableCell>
       </TableRow>
-    </React.Fragment>
+    </Fragment>
   );
 }
 
 Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
+  row: PropTypes.object,
 };
 
 function SalesRepresentativeDataTable(props) {
-  const { rows } = props;
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { rows, totalCount, currentPage, filterData } = props;
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("");
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
+
+  useEffect(() => {
+    setPage(currentPage);
+  }, [currentPage])  
+
+
+  useEffect(() => {
+    console.log(page, rowsPerPage)
+    filterData(rowsPerPage, page || 1);
+  }, [page, rowsPerPage]);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -468,20 +465,22 @@ function SalesRepresentativeDataTable(props) {
       >
         <EnhancedTableToolbar
           numSelected={selected.length}
-          total={rows.length}
+          totalCount={totalCount}
         />
         <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
+
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={totalCount}
             />
+
             <TableBody>
-              {rows && rows.length > 0 ? (
+              {totalCount ? (
                 rows.map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   return (
@@ -508,14 +507,15 @@ function SalesRepresentativeDataTable(props) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={totalCount}
           rowsPerPage={rowsPerPage}
           page={page}
-          onPageChange={() => {
-            console.log("Page changed");
+          onPageChange={(e) => {
+            console.log(e.target, e)
+            setPage(e?.target?.value || 1)
           }}
-          onRowsPerPageChange={() => {
-            console.log("Rows per page changed");
+          onRowsPerPageChange={(e) => {
+            setRowsPerPage(e?.target?.value || 5)
           }}
         />
       </Paper>

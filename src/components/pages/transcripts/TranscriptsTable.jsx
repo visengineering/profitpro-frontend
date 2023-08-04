@@ -25,8 +25,8 @@ const TranscriptsTable = () => {
       const response = await UserService.getSaleRepresentativeByDealerShipById(
         userId
       );
-      const { users: userResult } = response.data;
-      setTranscripts(userResult.transcripts);
+      const transcripts = response.data;
+      setTranscripts(transcripts);
     } catch (error) {
       console.log("Error while fetching transcripts", error);
       toast.error("Something went wrong while fetching details", {
