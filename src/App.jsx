@@ -1,10 +1,12 @@
 import "./styles/main.css";
-import SaleRepresentativeTable from "./components/pages/sales-representative/SaleRepresentativeTable";
+import SaleRepresentativeList from "./components/pages/sales-representative/SaleRepresentativeList";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import TranscriptsTable from "./components/pages/transcripts/TranscriptsTable";
 import Drawer from "./components/generic-components/drawer";
 import Transcript from "./components/pages/transcripts/Transcript";
 import SalesRepresentative from "./components/pages/sales-representative/SalesRepresentative";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const router = createBrowserRouter([
@@ -19,7 +21,7 @@ function App() {
       children: [
         {
           path: "salesRepresentative",
-          element: <SaleRepresentativeTable />,
+          element: <SaleRepresentativeList />,
         },
         {
           path: "salesRepresentative/:salesRepresentativeId",
@@ -38,6 +40,7 @@ function App() {
   ]);
   return (
     <div>
+      <ToastContainer />
       <RouterProvider router={router} />
     </div>
   );
