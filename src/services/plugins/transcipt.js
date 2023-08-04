@@ -1,15 +1,13 @@
 import { PluginService } from ".";
 
-const transcriptService = PluginService('/transcripts');
+const transcriptService = PluginService("/transcripts");
 
 class TranscriptService {
-  static getTranscriptByUser(userId, params) {
+  static getTranscriptByUser(transcriptId) {
     return transcriptService({
       method: "GET",
-      url: `/${userId}`,
-      params
-    })
+      url: `/${transcriptId}`,
+    });
   }
 }
-
 export default TranscriptService;

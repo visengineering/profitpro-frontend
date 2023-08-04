@@ -166,7 +166,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          All (56)
+          All ({props.total})
           <LoadingButton
             buttonTitle={"Add new"}
             variant="contained"
@@ -199,8 +199,8 @@ function Row(props) {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
-  const handleShowMore = () => {
-    navigate("/salesRepresentative/123/transcripts");
+  const handleShowMore = (user_id) => {
+    navigate(`/salesRepresentative/${user_id}/transcripts`);
   };
   const handleShowDetails = () => {
     navigate("/salesRepresentative/123/transcripts/123");
@@ -235,7 +235,7 @@ function Row(props) {
     <React.Fragment>
       <TableRow
         hover
-        onClick={handleShowUser}
+        onClick={() => handleShowUser}
         role="checkbox"
         aria-checked={isItemSelected}
         tabIndex={-1}
@@ -358,14 +358,6 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {/* {
-                conversation_id: 1,
-                conversation_link: "dummy-link.com",
-                short_transcript:
-                  "I'm tired of cafeteria food. Let's do something different tonight. Have anything particular in mind?...",
-                created_date: "2023-08-04T11:46:11.010457Z",
-                modified_date: "2023-08-04T11:46:11.010548Z",
-              }, */}
                   {row.transcripts.map((transcriptionRow) => (
                     <TableRow key={transcriptionRow.created_date}>
                       <TableCell align="center">
@@ -409,7 +401,7 @@ function Row(props) {
                   variant="contained"
                   size="small"
                   sx={{ margin: "1rem" }}
-                  handleClick={handleShowMore}
+                  handleClick={() => handleShowMore(row.user_id)}
                   styleClass="primary-btn float-right"
                 />
               )}
@@ -474,7 +466,10 @@ function SalesRepresentativeDataTable(props) {
           borderRadius: "10px",
         }}
       >
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          total={rows.length}
+        />
         <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
             <EnhancedTableHead
@@ -486,17 +481,27 @@ function SalesRepresentativeDataTable(props) {
               rowCount={rows.length}
             />
             <TableBody>
-              {rows.map((row, index) => {
-                const isItemSelected = isSelected(row.name);
-                const labelId = `enhanced-table-checkbox-${index}`;
-                return (
-                  <Row
-                    key={row.user_id}
-                    row={row}
-                    isItemSelected={isItemSelected}
-                  />
-                );
-              })}
+              {rows && rows.length > 0 ? (
+                rows.map((row, index) => {
+                  const isItemSelected = isSelected(row.name);
+                  return (
+                    <Row
+                      key={row.user_id}
+                      row={row}
+                      isItemSelected={isItemSelected}
+                    />
+                  );
+                })
+              ) : (
+                <TableRow>
+                  {" "}
+                  <TableCell colSpan={12} align="center">
+                    <Typography variant="h6">
+                      no sales representatives found
+                    </Typography>
+                  </TableCell>{" "}
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>

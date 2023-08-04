@@ -1,50 +1,46 @@
-import { Box, CardContent, CardMedia, Typography } from "@mui/material";
 import React from "react";
-import Card from "../../generic-components/card";
+import { Typography, Grid, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 
-function SalesRepresentative() {
+const user = {
+  image: "/avatar1.jpg",
+  email: "user@example.com",
+  mobile: "123-456-7890",
+  user_display_name: "John Doe",
+  address: "1234 Main St, City, Country",
+};
+
+const SalesRepresentative = () => {
   return (
-    <Box className="box-container">
-      <Typography sx={{ margin: "1rem" }} variant="h4">
-        Sale Reperesentative Details
-      </Typography>
-      <Card>
-        <Box sx={{ display: "flex" }}>
-          <Box sx={{ display: "flex", flexDirection: "column", width: "50%" }}>
-            <CardContent>
-              <Typography component="div" variant="h5">
-                Max Thompson
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                color="text.secondary"
-                component="div"
-              >
-                Sales Representative
-              </Typography>
-            </CardContent>
-
-            <CardMedia
+    <Box className="box-container" sx={{ marginTop: "2rem" }}>
+      <Paper>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={3} align="center">
+            <Box
+              src={user.image}
+              alt="User Avatar"
               component="img"
-              sx={{ width: 151 }}
-              image="/avatar2.jpg"
-              alt="Live from space album cover"
+              sx={{ height: "100%", width: "20rem" }}
             />
-          </Box>
-          <Box sx={{ width: "50%" }}>
-            <CardContent>
-              <Typography variant="subtitle1" component="div">
-                Email: test1@gmail.com
-              </Typography>
-              <Typography variant="subtitle1" component="div">
-                Mobile: +1 (133) 346-4560
-              </Typography>
-            </CardContent>
-          </Box>
-        </Box>
-      </Card>
+          </Grid>
+          <Grid item xs={12} md={9}>
+            <Typography variant="h6" gutterBottom>
+              {user.user_display_name}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              Email: {user.email}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              Mobile: {user.mobile}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              Address: {user.address}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Paper>
     </Box>
   );
-}
+};
 
 export default SalesRepresentative;

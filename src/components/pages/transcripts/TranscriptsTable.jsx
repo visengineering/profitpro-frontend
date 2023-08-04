@@ -1,50 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TranscriptsDataTable from "./TranscriptsDataTable";
 import { Box, Breadcrumbs, Chip } from "@mui/material";
 import { emphasize, styled } from "@mui/material/styles";
 import PersonIcon from "@mui/icons-material/Person";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { useNavigate } from "react-router-dom";
+import UserService from "../../../services/plugins/user";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+
 const TranscriptsTable = () => {
   const navigate = useNavigate();
-  let transcripts = [
-    {
-      createdAt: "2020-01-05",
-      updatedAt: "2020-01-08",
-      customerId: "11091700",
-      duration: "3:10",
-    },
-    {
-      createdAt: "2020-01-02",
-      updatedAt: "2020-01-02",
-      customerId: "11090034",
-      duration: "2:35",
-    },
-    {
-      createdAt: "2019-02-08",
-      updatedAt: "2020-07-09",
-      customerId: "11091700",
-      duration: "2:40",
-    },
-    {
-      createdAt: "2020-06-04",
-      updatedAt: "2020-09-02",
-      customerId: "11090034",
-      duration: "2:47",
-    },
-    {
-      createdAt: "2021-10-12",
-      updatedAt: "2022-01-08",
-      customerId: "11091700",
-      duration: "2:15",
-    },
-    {
-      createdAt: "2022-07-02",
-      updatedAt: "2023-01-02",
-      customerId: "11090034",
-      duration: "2:34",
-    },
-  ];
+
+  const { salesRepresentativeId } = useParams();
+
+  const [transcripts, setTranscripts] = useState([]);
+
+  useEffect(() => {
+    fetchTranscriptDetails(salesRepresentativeId);
+  }, []);
+
+  const fetchTranscriptDetails = async (userId) => {
+    try {
+      const response = await UserService.getSaleRepresentativeByDealerShipById(
+        userId
+      );
+      const { users: userResult } = response.data;
+      setTranscripts(userResult.transcripts);
+    } catch (error) {
+      console.log("Error while fetching transcripts", error);
+      toast.error("Something went wrong while fetching details", {
+        position: "top-right",
+        autoClose: 2000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        theme: "colored",
+      });
+    }
+  };
 
   const StyledBreadcrumb = styled(Chip)(({ theme }) => {
     const backgroundColor =

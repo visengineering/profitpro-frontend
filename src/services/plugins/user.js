@@ -1,14 +1,21 @@
 import { PluginService } from ".";
 
-const userService = PluginService('/users');
+const userService = PluginService("/users");
 
 class UserService {
-  static getSaleRepresentativeByDealerShip(params, userId) {
+  static getSaleRepresentativeByDealerShip(params) {
     return userService({
       method: "GET",
       url: "",
-      params
-    })
+      params,
+    });
+  }
+
+  static getSaleRepresentativeByDealerShipById(userId) {
+    return userService({
+      method: "GET",
+      url: `/${userId}`,
+    });
   }
 }
 

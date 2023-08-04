@@ -10,7 +10,6 @@ import Divider from "@mui/material/Divider";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -20,6 +19,7 @@ import { Collapse, Drawer as MUIDrawer } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 const drawerWidth = "15%";
 
 const AppBar = styled(MuiAppBar, {
@@ -66,7 +66,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -167,7 +166,7 @@ export default function Drawer() {
             </ListItemButton>
             <ListItemButton onClick={handleClick}>
               <ListItemIcon>
-                <InboxIcon sx={{ color: "white" }} />
+                <StorefrontIcon sx={{ color: "white" }} />
               </ListItemIcon>
               <ListItemText primary="DealerShip 1" />
               {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -191,6 +190,18 @@ export default function Drawer() {
                 </ListItemButton>
               </List>
             </Collapse>
+            <ListItemButton>
+              <ListItemIcon>
+                <StorefrontIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="DealerShip 2" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <StorefrontIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="DealerShip 3" />
+            </ListItemButton>
           </List>
         </Box>
       </MUIDrawer>

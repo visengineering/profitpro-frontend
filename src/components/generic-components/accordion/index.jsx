@@ -1,5 +1,4 @@
-import { Accordion as MUIAccordion, AccordionDetails } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Accordion as MUIAccordion } from "@mui/material";
 import React from "react";
 
 const Accordion = ({ summary, className, children }) => {

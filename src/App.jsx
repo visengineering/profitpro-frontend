@@ -5,8 +5,9 @@ import TranscriptsTable from "./components/pages/transcripts/TranscriptsTable";
 import Drawer from "./components/generic-components/drawer";
 import Transcript from "./components/pages/transcripts/Transcript";
 import SalesRepresentative from "./components/pages/sales-representative/SalesRepresentative";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Dashboard from "./components/pages/dashboard/Dashboard";
 
 function App() {
   const router = createBrowserRouter([
@@ -19,6 +20,10 @@ function App() {
         </>
       ),
       children: [
+        {
+          path: "",
+          element: <Dashboard />,
+        },
         {
           path: "salesRepresentative",
           element: <SaleRepresentativeList />,

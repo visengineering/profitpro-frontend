@@ -18,20 +18,14 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import LoadingButton from "../../generic-components/button";
-import Collapse from "@mui/material/Collapse";
 import { alpha } from "@mui/material/styles";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Chip from "@mui/material/Chip";
-import PropTypes from "prop-types";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useParams } from "react-router-dom";
+
 function EnhancedTableToolbar(props) {
   const { numSelected } = props;
 
@@ -65,7 +59,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          All (6)
+          All ({props.total})
         </Typography>
       )}
 
@@ -88,6 +82,12 @@ function EnhancedTableToolbar(props) {
 
 const headCells = [
   {
+    id: "Transcript ID",
+    numeric: true,
+    disablePadding: false,
+    label: "Customer ID",
+  },
+  {
     id: "Created At",
     numeric: false,
     disablePadding: true,
@@ -100,10 +100,10 @@ const headCells = [
     label: "Updated At",
   },
   {
-    id: "Customer ID",
+    id: "Audio Link",
     numeric: true,
     disablePadding: false,
-    label: "Customer ID",
+    label: "Audio Link",
   },
   {
     id: "Time Duration",
@@ -173,6 +173,7 @@ function EnhancedTableHead(props) {
 }
 
 function TranscriptsDataTable(props) {
+  const { salesRepresentativeId } = useParams();
   const { transcripts } = props;
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
@@ -188,7 +189,7 @@ function TranscriptsDataTable(props) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = transcripts.map((n) => n.name);
+      const newSelected = transcripts.map((n) => n.conversation_id);
       setSelected(newSelected);
       return;
     }
@@ -199,8 +200,10 @@ function TranscriptsDataTable(props) {
 
   const navigate = useNavigate();
 
-  const handleShowDetails = () => {
-    navigate("/salesRepresentative/123/transcripts/123");
+  const handleShowDetails = (transcriptId) => {
+    navigate(
+      `/salesRepresentative/${salesRepresentativeId}/transcripts/${transcriptId}`
+    );
   };
   return (
     <Box sx={{ width: "100%" }}>
@@ -212,7 +215,10 @@ function TranscriptsDataTable(props) {
           borderRadius: "10px",
         }}
       >
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          total={transcripts.length}
+        />
         <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
             <EnhancedTableHead
@@ -224,44 +230,63 @@ function TranscriptsDataTable(props) {
               rowCount={transcripts.length}
             />
             <TableBody>
-              {transcripts?.map((row) => {
-                const isItemSelected = isSelected(row.name);
-                // const labelId = `enhanced-table-checkbox-${index}`;
-                return (
-                  <TableRow
-                    key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={
-                          {
-                            // "aria-labelledby": labelId,
+              {transcripts && transcripts.length ? (
+                transcripts?.map((row) => {
+                  const isItemSelected = isSelected(row.conversation_id);
+                  // const labelId = `enhanced-table-checkbox-${index}`;
+                  return (
+                    <TableRow
+                      key={row.conversation_id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                          color="primary"
+                          checked={isItemSelected}
+                          inputProps={
+                            {
+                              // "aria-labelledby": labelId,
+                            }
                           }
-                        }
-                      />
-                    </TableCell>
-                    <TableCell align="center">{row.createdAt}</TableCell>
-                    <TableCell align="center">{row.updatedAt}</TableCell>
-                    <TableCell align="center">{row.customerId}</TableCell>
-                    <TableCell align="center">{row.duration}</TableCell>
-                    <TableCell align="center">
-                      <Link
-                        component="button"
-                        variant="body2"
-                        onClick={handleShowDetails}
-                      >
-                        Details
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                        />
+                      </TableCell>
+                      <TableCell align="center">{row.created_date}</TableCell>
+                      <TableCell align="center">{row.modified_date}</TableCell>
+                      <TableCell align="center">
+                        {row.conversation_id}
+                      </TableCell>
+                      <TableCell>{row.conversation_link}</TableCell>
+                      <TableCell align="center">
+                        {row.duration
+                          ? `${Math.floor(row.duration / 60000)}:${(
+                              (row.duration % 60000) /
+                              1000
+                            ).toFixed(0)}`
+                          : "-"}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Link
+                          component="button"
+                          variant="body2"
+                          onClick={() => handleShowDetails(row.conversation_id)}
+                        >
+                          Details
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <TableRow>
+                  {" "}
+                  <TableCell colSpan={12} align="center">
+                    <Typography variant="h6">no transcripts found</Typography>
+                  </TableCell>{" "}
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
