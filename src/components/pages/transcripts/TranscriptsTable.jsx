@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TranscriptsDataTable from "./TranscriptsDataTable";
 import { Box, Breadcrumbs, Chip } from "@mui/material";
 import { emphasize, styled } from "@mui/material/styles";
@@ -15,18 +15,27 @@ const TranscriptsTable = () => {
   const { salesRepresentativeId } = useParams();
 
   const [transcripts, setTranscripts] = useState([]);
+  const [totalCount, setTotalCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchTranscriptDetails(salesRepresentativeId);
-  }, []);
-
-  const fetchTranscriptDetails = async (userId) => {
+  const fetchTranscriptDetails = async (page_size = 5, selectedPage = 1) => {
+    setLoading(true);
     try {
+      const params = {
+        page_size,
+        page: selectedPage || 1,
+      };
+
       const response = await UserService.getSaleRepresentativeByDealerShipById(
-        userId
+        salesRepresentativeId,
+        params
       );
-      const transcripts = response.data;
-      setTranscripts(transcripts);
+
+      const { results, current, count } = response.data
+      setCurrentPage(current)
+      setTotalCount(count)
+      setTranscripts(results);
     } catch (error) {
       console.log("Error while fetching transcripts", error);
       toast.error("Something went wrong while fetching details", {
@@ -37,6 +46,7 @@ const TranscriptsTable = () => {
         theme: "colored",
       });
     }
+    setLoading(false);
   };
 
   const StyledBreadcrumb = styled(Chip)(({ theme }) => {
@@ -81,7 +91,13 @@ const TranscriptsTable = () => {
           />
         </Breadcrumbs>
       </Box>
-      <TranscriptsDataTable transcripts={transcripts} />
+      <TranscriptsDataTable
+        loading={loading}
+        totalCount={totalCount}
+        transcripts={transcripts}
+        currentPage={currentPage}
+        fetchData={fetchTranscriptDetails}
+      />
     </Box>
   );
 };

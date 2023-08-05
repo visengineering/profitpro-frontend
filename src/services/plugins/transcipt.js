@@ -1,6 +1,6 @@
 import { PluginService } from ".";
 
-const transcriptService = PluginService("/transcripts");
+const transcriptService = PluginService("/transcript");
 
 class TranscriptService {
   static getTranscriptByUser(transcriptId) {

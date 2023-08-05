@@ -13,26 +13,28 @@ const SaleRepresentativeList = () => {
   const [users, setUsers] = useState([]);
   const [totalCount, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchSalesDetails();
-  }, []);
+    fetchSalesDetails()
+  }, [])
 
-  const fetchSalesDetails = async (limit = 5, selectedPage = 1) => {
+  const fetchSalesDetails = async (page_size = 5, selectedPage = 1) => {
+    setLoading(true);
     try {
       const params = {
-        limit,
-        page: selectedPage,
+        page_size,
+        page: selectedPage || 1,
       };
 
       const response = await UserService.getSaleRepresentativeByDealerShip(params);
 
-      const { results: userResult, count, currentPage: page } = response.data;
+      const { results: userResult, count, current } = response.data;
 
       setCount(count)
-      setCurrentPage(page || 1)
+      setCurrentPage(current || 1)
       setUsers(userResult);
     } catch (error) {
       console.log("Error while fetching sale representatives", error);
@@ -44,6 +46,8 @@ const SaleRepresentativeList = () => {
         theme: "colored",
       });
     }
+
+    setLoading(false);
   };
 
   const StyledBreadcrumb = styled(Chip)(({ theme }) => {
@@ -93,6 +97,7 @@ const SaleRepresentativeList = () => {
       ></Box>
       <SalesRepresentativeDataTable
         rows={users}
+        isLoading={isLoading}
         totalCount={totalCount}
         currentPage={currentPage}
         filterData={fetchSalesDetails}

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -25,6 +25,7 @@ import { visuallyHidden } from "@mui/utils";
 import SearchIcon from "@mui/icons-material/Search";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useParams } from "react-router-dom";
+import TableLoader from '../../shared-components/Loader/TableLoader'
 
 function EnhancedTableToolbar(props) {
   const { numSelected } = props;
@@ -172,20 +173,34 @@ function EnhancedTableHead(props) {
   );
 }
 
-function TranscriptsDataTable(props) {
+function TranscriptsDataTable({
+  loading,
+  transcripts,
+  currentPage,
+  totalCount,
+  fetchData,
+}) {
   const { salesRepresentativeId } = useParams();
-  const { transcripts } = props;
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("");
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
+
+  useEffect(() => {
+    setPage(currentPage);
+  }, [currentPage]);
+
+  useEffect(() => {
+    fetchData(rowsPerPage, page);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rowsPerPage, page]);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -215,94 +230,110 @@ function TranscriptsDataTable(props) {
           borderRadius: "10px",
         }}
       >
-        <EnhancedTableToolbar
-          numSelected={selected.length}
-          total={transcripts.length}
-        />
-        <TableContainer component={Paper}>
-          <Table aria-label="collapsible table">
-            <EnhancedTableHead
+        {loading ? (
+          <TableLoader />
+        ) : (
+          <>
+            <EnhancedTableToolbar
               numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={transcripts.length}
+              total={totalCount}
             />
-            <TableBody>
-              {transcripts && transcripts.length ? (
-                transcripts?.map((row) => {
-                  const isItemSelected = isSelected(row.conversation_id);
-                  // const labelId = `enhanced-table-checkbox-${index}`;
-                  return (
-                    <TableRow
-                      key={row.conversation_id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          onClick={(e) => {
-                            e.stopPropagation();
+            <TableContainer component={Paper}>
+              <Table aria-label="collapsible table">
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onSelectAllClick={handleSelectAllClick}
+                  onRequestSort={handleRequestSort}
+                  rowCount={transcripts.length}
+                />
+                <TableBody>
+                  {transcripts && transcripts.length ? (
+                    transcripts?.map((row) => {
+                      const isItemSelected = isSelected(row.conversation_id);
+                      // const labelId = `enhanced-table-checkbox-${index}`;
+                      return (
+                        <TableRow
+                          key={row.conversation_id}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
                           }}
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={
-                            {
-                              // "aria-labelledby": labelId,
-                            }
-                          }
-                        />
-                      </TableCell>
-                      <TableCell align="center">{row.created_date}</TableCell>
-                      <TableCell align="center">{row.modified_date}</TableCell>
-                      <TableCell align="center">
-                        {row.conversation_id}
-                      </TableCell>
-                      <TableCell>{row.conversation_link}</TableCell>
-                      <TableCell align="center">
-                        {row.duration
-                          ? `${Math.floor(row.duration / 60000)}:${(
-                              (row.duration % 60000) /
-                              1000
-                            ).toFixed(0)}`
-                          : "-"}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Link
-                          component="button"
-                          variant="body2"
-                          onClick={() => handleShowDetails(row.conversation_id)}
                         >
-                          Details
-                        </Link>
-                      </TableCell>
+                          <TableCell padding="checkbox">
+                            <Checkbox
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                              color="primary"
+                              checked={isItemSelected}
+                            />
+                          </TableCell>
+
+                          <TableCell align="center">
+                            {row.conversation_id}
+                          </TableCell>
+
+                          <TableCell align="center">
+                            {row.created_date}
+                          </TableCell>
+
+                          <TableCell align="center">
+                            {row.modified_date}
+                          </TableCell>
+
+                          <TableCell>{row.conversation_link}</TableCell>
+                          <TableCell align="center">
+                            {row.duration
+                              ? `${Math.floor(row.duration / 60000)}:${(
+                                  (row.duration % 60000) /
+                                  1000
+                                ).toFixed(0)}`
+                              : "-"}
+                          </TableCell>
+                          <TableCell align="center">
+                            <Link
+                              component="button"
+                              variant="body2"
+                              onClick={() =>
+                                handleShowDetails(row.conversation_id)
+                              }
+                            >
+                              Details
+                            </Link>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                  ) : (
+                    <TableRow>
+                      {" "}
+                      <TableCell colSpan={12} align="center">
+                        <Typography variant="h6">
+                          no transcripts found
+                        </Typography>
+                      </TableCell>{" "}
                     </TableRow>
-                  );
-                })
-              ) : (
-                <TableRow>
-                  {" "}
-                  <TableCell colSpan={12} align="center">
-                    <Typography variant="h6">no transcripts found</Typography>
-                  </TableCell>{" "}
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={transcripts.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={() => {
-            console.log("Page changed");
-          }}
-          onRowsPerPageChange={() => {
-            console.log("Rows per page changed");
-          }}
-        />
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={totalCount || -1}
+              rowsPerPage={rowsPerPage}
+              page={page - 1}
+              onPageChange={(e, val) => {
+                setPage(val + 1);
+              }}
+              onRowsPerPageChange={(e) => {
+                if (e.target.value !== rowsPerPage)
+                  setRowsPerPage(e.target.value);
+              }}
+            />
+          </>
+        )}
       </Paper>
     </Box>
   );

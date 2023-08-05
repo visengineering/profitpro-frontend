@@ -11,10 +11,11 @@ class UserService {
     });
   }
 
-  static getSaleRepresentativeByDealerShipById(userId) {
+  static getSaleRepresentativeByDealerShipById(userId, params) {
     return userService({
       method: "GET",
-      url: `/${userId}`,
+      url: `/${userId}/transcripts`,
+      params
     });
   }
 }

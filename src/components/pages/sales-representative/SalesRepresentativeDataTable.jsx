@@ -35,6 +35,7 @@ import {
   Toolbar,
   Tooltip,
 } from "@mui/material";
+import TableLoader from "../../shared-components/Loader/TableLoader";
 
 const headCells = [
   {
@@ -418,13 +419,18 @@ Row.propTypes = {
   row: PropTypes.object,
 };
 
-function SalesRepresentativeDataTable(props) {
-  const { rows, totalCount, currentPage, filterData } = props;
+function SalesRepresentativeDataTable({
+  rows,
+  totalCount,
+  currentPage,
+  filterData,
+  isLoading,
+}) {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(1);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -434,12 +440,13 @@ function SalesRepresentativeDataTable(props) {
 
   useEffect(() => {
     setPage(currentPage);
-  }, [currentPage])  
-
+  }, [currentPage]);
 
   useEffect(() => {
-    console.log(page, rowsPerPage)
+    if (currentPage === page && rowsPerPage === 1) return
+
     filterData(rowsPerPage, page || 1);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, rowsPerPage]);
 
   const handleSelectAllClick = (event) => {
@@ -463,61 +470,65 @@ function SalesRepresentativeDataTable(props) {
           borderRadius: "10px",
         }}
       >
-        <EnhancedTableToolbar
-          numSelected={selected.length}
-          totalCount={totalCount}
-        />
-        <TableContainer component={Paper}>
-          <Table aria-label="collapsible table">
-
-            <EnhancedTableHead
+        {isLoading ? (
+          <TableLoader />
+        ) : (
+          <>
+            <EnhancedTableToolbar
               numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={totalCount}
+              totalCount={totalCount}
             />
+            <TableContainer component={Paper}>
+              <Table aria-label="collapsible table">
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onSelectAllClick={handleSelectAllClick}
+                  onRequestSort={handleRequestSort}
+                  rowCount={totalCount}
+                />
 
-            <TableBody>
-              {totalCount ? (
-                rows.map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  return (
-                    <Row
-                      key={row.user_id}
-                      row={row}
-                      isItemSelected={isItemSelected}
-                    />
-                  );
-                })
-              ) : (
-                <TableRow>
-                  {" "}
-                  <TableCell colSpan={12} align="center">
-                    <Typography variant="h6">
-                      no sales representatives found
-                    </Typography>
-                  </TableCell>{" "}
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={totalCount}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={(e) => {
-            console.log(e.target, e)
-            setPage(e?.target?.value || 1)
-          }}
-          onRowsPerPageChange={(e) => {
-            setRowsPerPage(e?.target?.value || 5)
-          }}
-        />
+                <TableBody>
+                  {totalCount ? (
+                    rows.map((row, index) => {
+                      const isItemSelected = isSelected(row.name);
+                      return (
+                        <Row
+                          key={row.user_id}
+                          row={row}
+                          isItemSelected={isItemSelected}
+                        />
+                      );
+                    })
+                  ) : (
+                    <TableRow>
+                      {" "}
+                      <TableCell colSpan={12} align="center">
+                        <Typography variant="h6">
+                          no sales representatives found
+                        </Typography>
+                      </TableCell>{" "}
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[1, 5, 10, 25]}
+              component="div"
+              count={totalCount}
+              rowsPerPage={rowsPerPage}
+              page={page - 1}
+              onPageChange={(e, value) => {
+                setPage(value + 1);
+              }}
+              onRowsPerPageChange={(e) => {
+                setRowsPerPage(e?.target?.value || 5);
+              }}
+            />
+          </>
+        )}
       </Paper>
     </Box>
   );
