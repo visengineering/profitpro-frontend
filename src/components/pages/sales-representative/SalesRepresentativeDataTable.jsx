@@ -201,15 +201,16 @@ function Row(props) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleShowMore = (user_id) => {
+  const navigateToTranscripts = (user_id) => {
     navigate(`/salesRepresentative/${user_id}/transcripts`);
   };
-  const handleShowDetails = () => {
-    navigate("/salesRepresentative/123/transcripts/123");
+  const handleShowDetails = (userId, transcriptId) => {
+    navigate(`/salesRepresentative/${userId}/transcripts/${transcriptId}`);
   };
 
-  const handleShowUser = () => {
-    navigate("/salesRepresentative/123");
+  const handleShowUser = (e) => {
+    e.stopPropagation();
+    navigate(`/salesRepresentative/${row.user_id}`);
   };
 
   const handleEdit = (e) => {
@@ -237,7 +238,7 @@ function Row(props) {
     <Fragment>
       <TableRow
         hover
-        onClick={() => handleShowUser}
+        onClick={() => navigateToTranscripts(row.user_id)}
         role="checkbox"
         aria-checked={isItemSelected}
         tabIndex={-1}
@@ -259,7 +260,8 @@ function Row(props) {
             }
           />
         </TableCell>
-        <TableCell align="center">
+
+        <TableCell align="center" className="d-flex justify-center align-center">
           {!!row?.transcripts?.length && (
             <IconButton
               aria-label="expand row"
@@ -274,7 +276,8 @@ function Row(props) {
           )}
           <Box
             component="img"
-            src={row.user_image}
+            onClick={(e) => handleShowUser(e)}
+            src={row.user_avatar}
             sx={{
               width: "3rem",
               height: "3rem",
@@ -301,6 +304,7 @@ function Row(props) {
             color={row.is_active ? "success" : "error"}
           />
         </TableCell>
+
         <TableCell align="center">
           <div>
             <IconButton
@@ -341,6 +345,7 @@ function Row(props) {
           </div>
         </TableCell>
       </TableRow>
+
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
           <Collapse in={open} timeout="auto" unmountOnExit>
@@ -388,7 +393,7 @@ function Row(props) {
                         <Link
                           component="button"
                           variant="body2"
-                          onClick={handleShowDetails}
+                          onClick={() => handleShowDetails(row.user_id, transcriptionRow.conversation_id)}
                         >
                           Details
                         </Link>
@@ -397,13 +402,13 @@ function Row(props) {
                   ))}
                 </TableBody>
               </Table>
-              {!!row.transcripts.length && (
+              {(!!row.transcripts.length && row.total_transcript_count > 5) && (
                 <LoadingButton
                   buttonTitle={"Show more"}
                   variant="contained"
                   size="small"
                   sx={{ margin: "1rem" }}
-                  handleClick={() => handleShowMore(row.user_id)}
+                  handleClick={() => navigateToTranscripts(row.user_id)}
                   styleClass="primary-btn float-right"
                 />
               )}
@@ -430,7 +435,7 @@ function SalesRepresentativeDataTable({
   const [orderBy, setOrderBy] = useState("");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -515,7 +520,7 @@ function SalesRepresentativeDataTable({
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[1, 5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 25]}
               component="div"
               count={totalCount}
               rowsPerPage={rowsPerPage}

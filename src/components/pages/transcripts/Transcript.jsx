@@ -87,7 +87,7 @@ function Transcript() {
               Description
             </Typography>
 
-            <Typography variant="body2" sx={{ margin: "1rem 0" }}>
+            <Typography variant="body2" sx={{ margin: "1rem 0", overflowWrap: "break-word" }}>
               {transcript.transcript}
             </Typography>
           </CardContent>

@@ -3,7 +3,7 @@
 }
 
 .d-flex {
-  display: flex;
+  display: flex !important;
 }
 
 .justify-center {
@@ -12,4 +12,8 @@
 
 .p-10 {
   padding: 20px;
+}
+
+.align-center {
+  align-items: center;
 }
