@@ -23,12 +23,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import SearchIcon from "@mui/icons-material/Search";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useParams } from "react-router-dom";
 import TableLoader from '../../shared-components/Loader/TableLoader'
 
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+  const { numSelected, refetchData } = props;
 
   return (
     <Toolbar
@@ -72,6 +73,7 @@ function EnhancedTableToolbar(props) {
         </Tooltip>
       ) : (
         <Box sx={{ display: "flex", gap: "1rem" }}>
+          <RefreshIcon className="cursor-pointer" onClick={refetchData} />
           <SearchIcon />
           <SettingsIcon />
           <FilterListIcon />
@@ -198,7 +200,7 @@ function TranscriptsDataTable({
   }, [currentPage]);
 
   useEffect(() => {
-    fetchData(rowsPerPage, page);
+    fetchData(rowsPerPage, page || 1);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowsPerPage, page]);
 
@@ -235,8 +237,9 @@ function TranscriptsDataTable({
         ) : (
           <>
             <EnhancedTableToolbar
-              numSelected={selected.length}
               total={totalCount}
+              numSelected={selected.length}
+              refetchData={() => fetchData(rowsPerPage, page || 1)}
             />
             <TableContainer component={Paper}>
               <Table aria-label="collapsible table">

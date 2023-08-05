@@ -23,6 +23,7 @@ import LoadingButton from "../../generic-components/button";
 import { visuallyHidden } from "@mui/utils";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "react-router-dom";
 import {
@@ -136,7 +137,7 @@ function EnhancedTableHead(props) {
 }
 
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+  const { numSelected, refetchData } = props;
 
   return (
     <Toolbar
@@ -188,6 +189,7 @@ function EnhancedTableToolbar(props) {
         </Tooltip>
       ) : (
         <Box sx={{ display: "flex", gap: "1rem" }}>
+          <RefreshIcon onClick={refetchData} className="cursor-pointer" />
           <SearchIcon />
           <SettingsIcon />
           <FilterListIcon />
@@ -480,8 +482,9 @@ function SalesRepresentativeDataTable({
         ) : (
           <>
             <EnhancedTableToolbar
-              numSelected={selected.length}
               totalCount={totalCount}
+              numSelected={selected.length}
+              refetchData={() => filterData(rowsPerPage, page || 1)}
             />
             <TableContainer component={Paper}>
               <Table aria-label="collapsible table">
