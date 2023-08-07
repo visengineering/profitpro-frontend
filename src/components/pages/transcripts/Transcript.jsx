@@ -1,15 +1,20 @@
-import { Box, CardContent, Typography } from "@mui/material";
+import { Box, CardContent, Chip, Typography, emphasize, styled } from "@mui/material";
 import Card from "../../generic-components/card";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TranscriptService from "../../../services/plugins/transcipt";
 import { toast } from "react-toastify";
 import DetailLoader from "./DetailLoader";
+import Breadcrumbs from "../../generic-components/breadcrumbs";
+import PersonIcon from "@mui/icons-material/Person";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 function Transcript() {
-  const { transcriptId } = useParams();
+  const { transcriptId, salesRepresentativeId } = useParams();
   const [transcript, setTranscript] = useState({});
   const [isLoading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchTranscriptDetailsById(transcriptId);
@@ -50,8 +55,56 @@ function Transcript() {
     }
     setLoading(false);
   };
+
+  const StyledBreadcrumb = styled(Chip)(({ theme }) => {
+    const backgroundColor =
+      theme.palette.mode === "light"
+        ? theme.palette.grey[100]
+        : theme.palette.grey[800];
+    return {
+      backgroundColor,
+      height: theme.spacing(5),
+      fontWeight: theme.typography.fontWeightRegular,
+      fontSize: "18px",
+      "&:hover, &:focus": {
+        backgroundColor: emphasize(backgroundColor, 0.12),
+      },
+      "&:active": {
+        boxShadow: theme.shadows[1],
+        backgroundColor: emphasize(backgroundColor, 0.24),
+      },
+    };
+  });
+
   return (
     <Box className="box-container">
+      <Breadcrumbs
+        separator={<NavigateNextIcon fontSize="small" />}
+        aria-label="breadcrumb"
+      >
+        <StyledBreadcrumb
+          component="a"
+          onClick={() => {
+            navigate("/salesRepresentative");
+          }}
+          label="Sales Representatives"
+          icon={<PersonIcon />}
+          size="medium"
+        />
+        <StyledBreadcrumb
+          component="a"
+          onClick={() => {
+            navigate(`/salesRepresentative/${salesRepresentativeId}/transcripts`);
+          }}
+          label="Transcripts"
+        />
+        <StyledBreadcrumb
+          component="a"
+          label="Transcript Details"
+          sx={{ background: "silver" }}
+        />
+ 
+      </Breadcrumbs>
       <Typography sx={{ margin: "1rem" }} variant="h4">
         Transcript Details
       </Typography>
@@ -60,7 +113,6 @@ function Transcript() {
       ) : (
         <Card>
           <CardContent>
-
             <Typography color="text.secondary">
               Transcript ID: {transcript.conversation_id}
             </Typography>
@@ -72,13 +124,7 @@ function Transcript() {
               Updated At: {transcript.modified_date}
             </Typography>
             <Typography color="text.secondary">
-              Time duration:{" "}
-              {transcript.duration
-                ? `${Math.floor(transcript.duration / 60000)}:${(
-                    (transcript.duration % 60000) /
-                    1000
-                  ).toFixed(0)}`
-                : "-"}
+              Time duration: {transcript.duration ?? "-"}
             </Typography>
             <Typography
               variant="h5"
@@ -87,7 +133,10 @@ function Transcript() {
               Description
             </Typography>
 
-            <Typography variant="body2" sx={{ margin: "1rem 0", overflowWrap: "break-word" }}>
+            <Typography
+              variant="body2"
+              sx={{ margin: "1rem 0", overflowWrap: "break-word" }}
+            >
               {transcript.transcript}
             </Typography>
           </CardContent>

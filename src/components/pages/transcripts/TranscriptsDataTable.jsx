@@ -112,7 +112,7 @@ const headCells = [
     id: "Time Duration",
     numeric: true,
     disablePadding: false,
-    label: "Time Duration",
+    label: "Time Duration (seconds)",
   },
   {
     id: "Action",
@@ -287,12 +287,7 @@ function TranscriptsDataTable({
 
                           <TableCell>{row.conversation_link}</TableCell>
                           <TableCell align="center">
-                            {row.duration
-                              ? `${Math.floor(row.duration / 60000)}:${(
-                                  (row.duration % 60000) /
-                                  1000
-                                ).toFixed(0)}`
-                              : "-"}
+                            {row.duration ?? "-"}
                           </TableCell>
                           <TableCell align="center">
                             <Link

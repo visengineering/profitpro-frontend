@@ -362,7 +362,7 @@ function Row(props) {
                     <TableCell>Created At</TableCell>
                     <TableCell>Updated At</TableCell>
                     <TableCell>Audio Link</TableCell>
-                    <TableCell align="center">Time Duration</TableCell>
+                    <TableCell align="center">Time Duration(seconds)</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
                 </TableHead>
@@ -382,14 +382,7 @@ function Row(props) {
                         {transcriptionRow.conversation_link}
                       </TableCell>
                       <TableCell align="center">
-                        {transcriptionRow.duration
-                          ? `${Math.floor(
-                              transcriptionRow.duration / 60000
-                            )}:${(
-                              (transcriptionRow.duration % 60000) /
-                              1000
-                            ).toFixed(0)}`
-                          : "-"}
+                        {transcriptionRow.duration ?? "-"}
                       </TableCell>
                       <TableCell align="center">
                         <Link

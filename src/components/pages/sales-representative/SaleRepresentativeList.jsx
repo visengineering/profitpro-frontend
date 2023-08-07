@@ -84,7 +84,6 @@ const SaleRepresentativeList = () => {
             icon={<PersonIcon />}
             size="medium"
           />
-          <StyledBreadcrumb component="a" label="Transcripts" />
         </Breadcrumbs>
       </Box>
       <Box
