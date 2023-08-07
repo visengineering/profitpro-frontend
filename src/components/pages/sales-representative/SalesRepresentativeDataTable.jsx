@@ -9,7 +9,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import { alpha } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -18,25 +17,24 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Chip from "@mui/material/Chip";
 import PropTypes from "prop-types";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import LoadingButton from "../../generic-components/button";
-import { visuallyHidden } from "@mui/utils";
-import AddIcon from "@mui/icons-material/Add";
-import SearchIcon from "@mui/icons-material/Search";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import SettingsIcon from "@mui/icons-material/Settings";
 import { useNavigate } from "react-router-dom";
+
 import {
   Checkbox,
+  FormControl,
+  InputLabel,
   Link,
   Menu,
   MenuItem,
-  TablePagination,
-  TableSortLabel,
-  Toolbar,
-  Tooltip,
+  Pagination,
+  PaginationItem,
+  Select,
 } from "@mui/material";
 import TableLoader from "../../shared-components/Loader/TableLoader";
+import EnhancedTableHead from "../../shared-components/enhanced-table-head";
+import EnhancedTableToolbar from "../../shared-components/enhanced-table-toolbar";
+import InputField from "../../generic-components/input-field";
 
 const headCells = [
   {
@@ -77,127 +75,6 @@ const headCells = [
   },
 ];
 
-function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all users",
-            }}
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align="center"
-            padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            {headCell.disableSorting ? (
-              <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : "asc"}
-                onClick={createSortHandler(headCell.id)}
-              >
-                {headCell.label}
-                {orderBy === headCell.id ? (
-                  <Box component="span" sx={visuallyHidden}>
-                    {order === "desc"
-                      ? "sorted descending"
-                      : "sorted ascending"}
-                  </Box>
-                ) : null}
-              </TableSortLabel>
-            ) : (
-              headCell.label
-            )}
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-function EnhancedTableToolbar(props) {
-  const { numSelected, refetchData } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          All ({props.totalCount})
-          <LoadingButton
-            buttonTitle={"Add new"}
-            variant="contained"
-            size="small"
-            sx={{ margin: "1rem" }}
-            styleClass="primary-btn"
-            endIcon={<AddIcon />}
-          />
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Box sx={{ display: "flex", gap: "1rem" }}>
-          <RefreshIcon onClick={refetchData} className="cursor-pointer" />
-          <SearchIcon />
-          <SettingsIcon />
-          <FilterListIcon />
-        </Box>
-      )}
-    </Toolbar>
-  );
-}
 function Row(props) {
   const { row, isItemSelected } = props;
   const [open, setOpen] = useState(false);
@@ -263,7 +140,10 @@ function Row(props) {
           />
         </TableCell>
 
-        <TableCell align="center" className="d-flex justify-center align-center">
+        <TableCell
+          align="center"
+          className="d-flex justify-center align-center"
+        >
           {!!row?.transcripts?.length && (
             <IconButton
               aria-label="expand row"
@@ -336,11 +216,17 @@ function Row(props) {
             >
               <MenuItem onClick={handleClose} sx={{ gap: "1rem" }}>
                 {" "}
-                <DeleteIcon onClick={(e) => handledelete(e)} />
+                <DeleteIcon
+                  sx={{ color: "red" }}
+                  onClick={(e) => handledelete(e)}
+                />
                 <Typography>Delete</Typography>
               </MenuItem>
               <MenuItem onClick={handleClose} sx={{ gap: "1rem" }}>
-                <EditIcon onClick={(e) => handleEdit(e)} />{" "}
+                <EditIcon
+                  sx={{ color: "blue" }}
+                  onClick={(e) => handleEdit(e)}
+                />{" "}
                 <Typography>Edit</Typography>
               </MenuItem>
             </Menu>
@@ -362,7 +248,7 @@ function Row(props) {
                     <TableCell>Created At</TableCell>
                     <TableCell>Updated At</TableCell>
                     <TableCell>Audio Link</TableCell>
-                    <TableCell align="center">Time Duration(seconds)</TableCell>
+                    <TableCell align="center">Time Duration</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
                 </TableHead>
@@ -382,13 +268,25 @@ function Row(props) {
                         {transcriptionRow.conversation_link}
                       </TableCell>
                       <TableCell align="center">
-                        {transcriptionRow.duration ?? "-"}
+                        {transcriptionRow.duration
+                          ? `${Math.floor(
+                              transcriptionRow.duration / 60000
+                            )}:${(
+                              (transcriptionRow.duration % 60000) /
+                              1000
+                            ).toFixed(0)}`
+                          : "-"}
                       </TableCell>
                       <TableCell align="center">
                         <Link
                           component="button"
                           variant="body2"
-                          onClick={() => handleShowDetails(row.user_id, transcriptionRow.conversation_id)}
+                          onClick={() =>
+                            handleShowDetails(
+                              row.user_id,
+                              transcriptionRow.conversation_id
+                            )
+                          }
                         >
                           Details
                         </Link>
@@ -397,7 +295,7 @@ function Row(props) {
                   ))}
                 </TableBody>
               </Table>
-              {(!!row.transcripts.length && row.total_transcript_count > 5) && (
+              {!!row.transcripts.length && row.total_transcript_count > 5 && (
                 <LoadingButton
                   buttonTitle={"Show more"}
                   variant="contained"
@@ -430,7 +328,7 @@ function SalesRepresentativeDataTable({
   const [orderBy, setOrderBy] = useState("");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -443,10 +341,10 @@ function SalesRepresentativeDataTable({
   }, [currentPage]);
 
   useEffect(() => {
-    if (currentPage === page && rowsPerPage === 1) return
+    if (currentPage === page && rowsPerPage === 1) return;
 
     filterData(rowsPerPage, page || 1);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, rowsPerPage]);
 
   const handleSelectAllClick = (event) => {
@@ -488,6 +386,7 @@ function SalesRepresentativeDataTable({
                   onSelectAllClick={handleSelectAllClick}
                   onRequestSort={handleRequestSort}
                   rowCount={totalCount}
+                  headCells={headCells}
                 />
 
                 <TableBody>
@@ -515,7 +414,7 @@ function SalesRepresentativeDataTable({
                 </TableBody>
               </Table>
             </TableContainer>
-            <TablePagination
+            {/* <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
               count={totalCount}
@@ -527,7 +426,55 @@ function SalesRepresentativeDataTable({
               onRowsPerPageChange={(e) => {
                 setRowsPerPage(e?.target?.value || 5);
               }}
-            />
+            /> */}
+            <Box className="table-pagination">
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "end",
+                  padding: 1,
+                  alignItems: "center",
+                }}
+              >
+                <FormControl sx={{ m: 1, minWidth: "5rem" }} size="small">
+                  <InputLabel>Rows</InputLabel>
+                  <Select
+                    value={rowsPerPage}
+                    label="Rows"
+                    onChange={(e) => {
+                      setRowsPerPage(e.target.value);
+                    }}
+                  >
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={15}>15</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={25}>25</MenuItem>
+                  </Select>
+                </FormControl>
+                <Typography sx={{ fontSize: "12px" }}>Go to</Typography>
+                <InputField
+                  variant="outlined"
+                  type="number"
+                  value={page}
+                  min={1}
+                  max={totalCount}
+                  onChange={(e) => {
+                    setPage(e.target.value);
+                  }}
+                />
+                <Pagination
+                  shape="rounded"
+                  component="div"
+                  count={totalCount}
+                  rowsPerPage={rowsPerPage}
+                  page={page - 1}
+                  onPageChange={(e, value) => {
+                    setPage(value + 1);
+                  }}
+                  renderItem={(item) => <PaginationItem {...item} />}
+                />
+              </Box>
+            </Box>
           </>
         )}
       </Paper>

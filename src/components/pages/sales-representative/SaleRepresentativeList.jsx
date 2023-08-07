@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import SalesRepresentativeDataTable from "./SalesRepresentativeDataTable";
 import { Box } from "@mui/material";
-import { emphasize, styled } from "@mui/material/styles";
-import Chip from "@mui/material/Chip";
 import UserService from "../../../services/plugins/user";
 import { toast } from "react-toastify";
 import PersonIcon from "@mui/icons-material/Person";
-import { useNavigate } from "react-router-dom";
 import Breadcrumbs from "../../generic-components/breadcrumbs";
 
 const SaleRepresentativeList = () => {
@@ -15,11 +12,9 @@ const SaleRepresentativeList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
-    fetchSalesDetails()
-  }, [])
+    fetchSalesDetails();
+  }, []);
 
   const fetchSalesDetails = async (page_size = 5, selectedPage = 1) => {
     setLoading(true);
@@ -29,12 +24,14 @@ const SaleRepresentativeList = () => {
         page: selectedPage || 1,
       };
 
-      const response = await UserService.getSaleRepresentativeByDealerShip(params);
+      const response = await UserService.getSaleRepresentativeByDealerShip(
+        params
+      );
 
       const { results: userResult, count, current } = response.data;
 
-      setCount(count)
-      setCurrentPage(current || 1)
+      setCount(count);
+      setCurrentPage(current || 1);
       setUsers(userResult);
     } catch (error) {
       console.log("Error while fetching sale representatives", error);
@@ -50,41 +47,24 @@ const SaleRepresentativeList = () => {
     setLoading(false);
   };
 
-  const StyledBreadcrumb = styled(Chip)(({ theme }) => {
-    const backgroundColor =
-      theme.palette.mode === "light"
-        ? theme.palette.grey[100]
-        : theme.palette.grey[800];
-    return {
-      backgroundColor,
-      height: theme.spacing(5),
-      fontWeight: theme.typography.fontWeightRegular,
-      fontSize: "18px",
-      "&:hover, &:focus": {
-        backgroundColor: emphasize(backgroundColor, 0.12),
-      },
-      "&:active": {
-        boxShadow: theme.shadows[1],
-        backgroundColor: emphasize(backgroundColor, 0.24),
-      },
-    };
-  });
+  const crumbs = [
+    {
+      label: "Sales Representatives",
+      icon: <PersonIcon />,
+      size: "medium",
+      active: true,
+    },
+    {
+      label: "Transcripts",
+      size: "medium",
+      active: false,
+    },
+  ];
 
   return (
     <Box className="box-container">
       <Box role="presentation" sx={{ margin: "1rem" }}>
-        <Breadcrumbs>
-          <StyledBreadcrumb
-            component="a"
-            sx={{ background: "silver" }}
-            onClick={() => {
-              navigate("/salesRepresentative");
-            }}
-            label="Sales Representatives"
-            icon={<PersonIcon />}
-            size="medium"
-          />
-        </Breadcrumbs>
+        <Breadcrumbs crumbs={crumbs} />
       </Box>
       <Box
         sx={{

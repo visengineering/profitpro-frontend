@@ -12,31 +12,41 @@ const user = {
 
 const SalesRepresentative = () => {
   return (
-    <Box className="box-container" sx={{ marginTop: "2rem" }}>
-      <Paper>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={3} align="center">
-            <Box
-              src={user.image}
-              alt="User Avatar"
-              component="img"
-              sx={{ height: "100%", width: "20rem" }}
-            />
-          </Grid>
-          <Grid item xs={12} md={9}>
-            <Typography variant="h6" gutterBottom>
-              {user.user_display_name}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              Email: {user.email}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              Mobile: {user.mobile}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              Address: {user.address}
-            </Typography>
-          </Grid>
+    <Box className="box-container">
+      <Paper
+        sx={{
+          display: "flex",
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          boxShadow: "rgba(0, 0, 0, 0.15) 5.4px 5.4px 6.2px",
+          borderRadius: "10px",
+        }}
+      >
+        <Box
+          src={user.image}
+          alt="User Avatar"
+          component="img"
+          sx={{ height: "inherit", width: "30%" }}
+        />
+        <Grid
+          item
+          xs={12}
+          md={9}
+          sx={{ height: "100%", width: "50%", padding: "5rem" }}
+        >
+          <Typography variant="h6" gutterBottom>
+            {user.user_display_name}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            Email: {user.email}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            Mobile: {user.mobile}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            Address: {user.address}
+          </Typography>
         </Grid>
       </Paper>
     </Box>

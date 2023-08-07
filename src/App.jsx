@@ -2,7 +2,9 @@ import "./styles/main.scss";
 import SaleRepresentativeList from "./components/pages/sales-representative/SaleRepresentativeList";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import TranscriptsTable from "./components/pages/transcripts/TranscriptsTable";
-import Drawer from "./components/generic-components/drawer";
+import SideMenu from "./components/shared-components/side-menu";
+import TopBar from "./components/shared-components/top-bar";
+
 import Transcript from "./components/pages/transcripts/Transcript";
 import SalesRepresentative from "./components/pages/sales-representative/SalesRepresentative";
 import { ToastContainer } from "react-toastify";
@@ -15,7 +17,8 @@ function App() {
       path: "",
       element: (
         <>
-          <Drawer />
+          <TopBar />
+          <SideMenu />
           <Outlet />
         </>
       ),

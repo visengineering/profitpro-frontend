@@ -3,85 +3,20 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import {
   Box,
   Checkbox,
-  IconButton,
   Link,
   TablePagination,
-  TableSortLabel,
-  Toolbar,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { alpha } from "@mui/material/styles";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import { visuallyHidden } from "@mui/utils";
-import SearchIcon from "@mui/icons-material/Search";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import SettingsIcon from "@mui/icons-material/Settings";
 import { useParams } from "react-router-dom";
-import TableLoader from '../../shared-components/Loader/TableLoader'
-
-function EnhancedTableToolbar(props) {
-  const { numSelected, refetchData } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          All ({props.total})
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Box sx={{ display: "flex", gap: "1rem" }}>
-          <RefreshIcon className="cursor-pointer" onClick={refetchData} />
-          <SearchIcon />
-          <SettingsIcon />
-          <FilterListIcon />
-        </Box>
-      )}
-    </Toolbar>
-  );
-}
+import TableLoader from "../../shared-components/Loader/TableLoader";
+import EnhancedTableHead from "../../shared-components/enhanced-table-head";
+import EnhancedTableToolbar from "../../shared-components/enhanced-table-toolbar";
 
 const headCells = [
   {
@@ -122,59 +57,6 @@ const headCells = [
   },
 ];
 
-function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all desserts",
-            }}
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align="center"
-            padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
 function TranscriptsDataTable({
   loading,
   transcripts,
@@ -201,7 +83,7 @@ function TranscriptsDataTable({
 
   useEffect(() => {
     fetchData(rowsPerPage, page || 1);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowsPerPage, page]);
 
   const handleSelectAllClick = (event) => {
@@ -237,7 +119,7 @@ function TranscriptsDataTable({
         ) : (
           <>
             <EnhancedTableToolbar
-              total={totalCount}
+              totalCount={totalCount}
               numSelected={selected.length}
               refetchData={() => fetchData(rowsPerPage, page || 1)}
             />
@@ -250,6 +132,7 @@ function TranscriptsDataTable({
                   onSelectAllClick={handleSelectAllClick}
                   onRequestSort={handleRequestSort}
                   rowCount={transcripts.length}
+                  headCells={headCells}
                 />
                 <TableBody>
                   {transcripts && transcripts.length ? (

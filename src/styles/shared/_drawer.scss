@@ -7,13 +7,18 @@
     height: 30%;
     width: 70%;
   }
-  .side-menu-accordion {
-    background: $secondary;
-    color: $white;
-    border: none;
-    outline: none;
-    .MuiAccordionSummary-root {
-      color: $white !important;
+  .active-page-text {
+    font-size: 12px;
+    padding: 16px 0 0 16px;
+  }
+  .MuiListItemButton-root {
+    width: 90%;
+    border-radius: 0 50px 50px 0;
+    &:hover {
+      background: $navbar-btn-hover;
     }
+  }
+  .MuiListItemIcon-root {
+    color: white;
   }
 }
