@@ -259,7 +259,7 @@ function TranscriptsDataTable({
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onChange={(e, value) => {
-                    setPage(value);
+                    if (page !== value) setPage(value);
                   }}
                   renderItem={(item) => <PaginationItem {...item} />}
                 />

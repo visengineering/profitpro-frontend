@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SalesRepresentativeDataTable from "./SalesRepresentativeDataTable";
 import { Box } from "@mui/material";
 import UserService from "../../../services/plugins/user";
@@ -11,11 +11,7 @@ const SaleRepresentativeList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchSalesDetails();
-  }, []);
-
-  const fetchSalesDetails = async (page_size = 10, selectedPage = 1) => {
+  const fetchSalesDetails = async (page_size = 5, selectedPage = 1) => {
     setLoading(true);
     try {
       const params = {

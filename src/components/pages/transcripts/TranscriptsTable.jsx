@@ -68,7 +68,7 @@ const TranscriptsTable = () => {
         loading={loading}
         totalCount={totalCount}
         transcripts={transcripts}
-        currentPage={currentPage}
+        currentPage={currentPage || 1}
         fetchData={fetchTranscriptDetails}
       />
     </Box>
