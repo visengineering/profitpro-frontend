@@ -184,17 +184,15 @@ function Row(props) {
                       <TableCell align="center">
                         {transcriptRow.conversation_id}
                       </TableCell>
-                      <TableCell align="center" component="th" scope="row">
+                      <TableCell align="center">
                         {transcriptRow.created_date}
                       </TableCell>
-                      <TableCell align="center" component="th" scope="row">
+                      <TableCell align="center">
                         {transcriptRow.modified_date}
                       </TableCell>
                       <TableCell
                         align="center"
                         sx={{
-                          display: "flex",
-                          justifyContent: "center",
                           gap: "1rem",
                           alignItems: "center",
                         }}
