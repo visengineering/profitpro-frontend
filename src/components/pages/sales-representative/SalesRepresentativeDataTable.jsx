@@ -8,16 +8,13 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
+
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import PropTypes from "prop-types";
 import LoadingButton from "../../generic-components/button";
 import { useNavigate } from "react-router-dom";
-import DownloadIcon from "@mui/icons-material/Download";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import {
@@ -39,42 +36,45 @@ const headCells = [
     numeric: false,
     disablePadding: true,
     label: "",
+    width: "3rem",
+    align: "center",
   },
   {
     id: "Image",
     numeric: false,
     disablePadding: true,
     label: "Image",
+    width: "3rem",
+    align: "center",
   },
   {
     id: "Member Name",
     numeric: true,
     disablePadding: false,
     label: "Member Name",
+    width: "20rem",
+    align: "left",
   },
   {
     id: "Mobile",
     numeric: true,
     disablePadding: false,
     label: "Mobile",
+    align: "center",
   },
   {
     id: "Email",
     numeric: true,
     disablePadding: false,
     label: "Email",
+    align: "center",
   },
-  // {
-  //   id: "Status",
-  //   numeric: true,
-  //   disablePadding: false,
-  //   label: "Status",
-  // },
   {
     id: "Action",
     numeric: true,
     disablePadding: false,
     label: "Action",
+    align: "center",
   },
 ];
 
@@ -117,21 +117,7 @@ function Row(props) {
         selected={isItemSelected}
         sx={{ cursor: "pointer" }}
       >
-        {/* <TableCell padding="checkbox">
-          <Checkbox
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            color="primary"
-            checked={isItemSelected}
-            inputProps={
-              {
-                // "aria-labelledby": labelId,
-              }
-            }
-          />
-        </TableCell> */}
-        <TableCell align="center">
+        <TableCell align="center" size="small">
           {!!row?.transcripts?.length && (
             <IconButton
               aria-label="expand row"
@@ -163,76 +149,24 @@ function Row(props) {
           />
         </TableCell>
 
-        <TableCell align="center">
+        <TableCell align="left">
           {row.first_name} {row.last_name}
         </TableCell>
         <TableCell align="center">{row.phone}</TableCell>
         <TableCell align="center">{row.user_email}</TableCell>
-        {/* <TableCell align="center">
-          {" "}
-          <Chip
-            sx={{
-              minWidth: "5rem",
-            }}
-            variant="filled"
-            size="small"
-            label={row.is_active ? "Active" : "Inactive"}
-            color={row.is_active ? "success" : "error"}
-          />
-        </TableCell> */}
-
-        {/* <TableCell align="center">
-          <div>
-            <IconButton
-              aria-label="more"
-              id="long-button"
-              aria-controls={open ? "long-menu" : undefined}
-              aria-expanded={open ? "true" : undefined}
-              aria-haspopup="true"
-              onClick={(e) => handleClick(e)}
-            >
-              <MoreHorizIcon />
-            </IconButton>
-            <Menu
-              id="long-menu"
-              MenuListProps={{
-                "aria-labelledby": "long-button",
-              }}
-              anchorEl={anchorEl}
-              open={openMenu}
-              onClose={(e) => handleClose(e)}
-              PaperProps={{
-                style: {
-                  maxHeight: 48 * 4.5,
-                  width: "8rem",
-                },
-              }}
-            >
-              <MenuItem onClick={handleClose} sx={{ gap: "1rem" }}>
-                {" "}
-                <DeleteIcon
-                  sx={{ color: "red" }}
-                  onClick={(e) => handledelete(e)}
-                />
-                <Typography>Delete</Typography>
-              </MenuItem>
-              <MenuItem onClick={handleClose} sx={{ gap: "1rem" }}>
-                <EditIcon
-                  sx={{ color: "blue" }}
-                  onClick={(e) => handleEdit(e)}
-                />{" "}
-                <Typography>Edit</Typography>
-              </MenuItem>
-            </Menu>
-          </div>
-        </TableCell> */}
         <TableCell align="center">
-          <IconButton onClick={(e) => handleEdit(e)}>
-            <EditIcon sx={{ color: "blue" }} />
-          </IconButton>
-          <IconButton onClick={(e) => handleDelete(e)}>
-            <DeleteIcon sx={{ color: "red" }} />
-          </IconButton>
+          <Box sx={{ display: "flex", justifyContent: "center", gap: "5px" }}>
+            <LoadingButton
+              buttonTitle="Edit"
+              variant="outlined"
+              styleClass="secondary-btn"
+            />
+            <LoadingButton
+              buttonTitle="Delete"
+              variant="contained"
+              styleClass="error-btn"
+            />
+          </Box>
         </TableCell>
       </TableRow>
 
@@ -255,16 +189,16 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.transcripts.map((transcriptionRow) => (
-                    <TableRow key={transcriptionRow.created_date}>
+                  {row.transcripts.map((transcriptRow) => (
+                    <TableRow key={transcriptRow.created_date}>
                       <TableCell align="center">
-                        {transcriptionRow.conversation_id}
+                        {transcriptRow.conversation_id}
                       </TableCell>
                       <TableCell align="center" component="th" scope="row">
-                        {transcriptionRow.created_date}
+                        {transcriptRow.created_date}
                       </TableCell>
                       <TableCell align="center" component="th" scope="row">
-                        {transcriptionRow.modified_date}
+                        {transcriptRow.modified_date}
                       </TableCell>
                       <TableCell
                         align="center"
@@ -275,19 +209,19 @@ function Row(props) {
                           alignItems: "center",
                         }}
                       >
-                        Download Audio
-                        <Link href={row.conversation_link} target="_blank">
+                        <Link
+                          href={transcriptRow.conversation_link}
+                          target="_blank"
+                        >
                           <IconButton size="small">
-                            <DownloadIcon />
+                            <SimCardDownloadIcon />
                           </IconButton>
                         </Link>
                       </TableCell>
                       <TableCell align="center">
-                        {transcriptionRow.duration
-                          ? `${Math.floor(
-                              transcriptionRow.duration / 60000
-                            )}:${(
-                              (transcriptionRow.duration % 60000) /
+                        {transcriptRow.duration
+                          ? `${Math.floor(transcriptRow.duration / 60000)}:${(
+                              (transcriptRow.duration % 60000) /
                               1000
                             ).toFixed(0)}`
                           : "-"}
@@ -299,7 +233,7 @@ function Row(props) {
                           onClick={() =>
                             handleShowDetails(
                               row.user_id,
-                              transcriptionRow.conversation_id
+                              transcriptRow.conversation_id
                             )
                           }
                         >
@@ -378,9 +312,6 @@ function SalesRepresentativeDataTable({
       <Paper
         sx={{
           width: "100%",
-          mb: 2,
-          boxShadow: "rgba(0, 0, 0, 0.15) 5.4px 5.4px 6.2px",
-          borderRadius: "10px",
         }}
       >
         {isLoading ? (
@@ -468,17 +399,6 @@ function SalesRepresentativeDataTable({
                     <MenuItem value={25}>25</MenuItem>
                   </Select>
                 </FormControl>
-                {/* <Typography sx={{ fontSize: "12px" }}>Go to</Typography>
-                <InputField
-                  variant="outlined"
-                  type="number"
-                  value={page}
-                  min={1}
-                  max={totalCount}
-                  onChange={(e) => {
-                    setPage(e.target.value);
-                  }}
-                /> */}
                 <Pagination
                   shape="rounded"
                   component="div"

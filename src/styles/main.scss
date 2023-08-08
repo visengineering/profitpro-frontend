@@ -5,3 +5,12 @@
 @import "./shared/button.scss";
 @import "./shared/drawer.scss";
 @import "./shared/topbar.scss";
+
+.box-container {
+  padding: 0 2rem;
+  width: 85%;
+  float: right;
+  margin-top: 7rem;
+  height: 100%;
+  max-width: calc(100% - 300px);
+}

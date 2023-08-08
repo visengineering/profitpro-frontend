@@ -62,7 +62,7 @@ const SaleRepresentativeList = () => {
   ];
 
   return (
-    <Box className="box-container">
+    <Box className="table-container">
       <Box role="presentation" sx={{ margin: "1rem" }}>
         <Breadcrumbs crumbs={crumbs} />
       </Box>

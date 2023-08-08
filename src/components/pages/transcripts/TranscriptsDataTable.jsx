@@ -5,19 +5,23 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
 import {
   Box,
-  Checkbox,
+  FormControl,
   IconButton,
+  InputLabel,
   Link,
-  TablePagination,
+  MenuItem,
+  Pagination,
+  PaginationItem,
+  Select,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import TableLoader from "../../shared-components/Loader/TableLoader";
 import EnhancedTableHead from "../../shared-components/enhanced-table-head";
-import DownloadIcon from "@mui/icons-material/Download";
 import EnhancedTableToolbar from "../../shared-components/enhanced-table-toolbar";
 
 const headCells = [
@@ -26,36 +30,42 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: "Customer ID",
+    align: "center",
   },
   {
     id: "Created At",
     numeric: false,
     disablePadding: true,
     label: "Created At",
+    align: "center",
   },
   {
     id: "Updated At",
     numeric: true,
     disablePadding: false,
     label: "Updated At",
+    align: "center",
   },
   {
     id: "Audio Link",
     numeric: true,
     disablePadding: false,
     label: "Audio Link",
+    align: "center",
   },
   {
     id: "Time Duration",
     numeric: true,
     disablePadding: false,
     label: "Time Duration (seconds)",
+    align: "center",
   },
   {
     id: "Action",
     numeric: true,
     disablePadding: false,
     label: "Action",
+    align: "center",
   },
 ];
 
@@ -139,7 +149,7 @@ function TranscriptsDataTable({
                 <TableBody>
                   {transcripts && transcripts.length ? (
                     transcripts?.map((row) => {
-                      const isItemSelected = isSelected(row.conversation_id);
+                      // const isItemSelected = isSelected(row.conversation_id);
                       // const labelId = `enhanced-table-checkbox-${index}`;
                       return (
                         <TableRow
@@ -148,16 +158,6 @@ function TranscriptsDataTable({
                             "&:last-child td, &:last-child th": { border: 0 },
                           }}
                         >
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              onClick={(e) => {
-                                e.stopPropagation();
-                              }}
-                              color="primary"
-                              checked={isItemSelected}
-                            />
-                          </TableCell>
-
                           <TableCell align="center">
                             {row.conversation_id}
                           </TableCell>
@@ -178,10 +178,9 @@ function TranscriptsDataTable({
                               alignItems: "center",
                             }}
                           >
-                            Download Audio
                             <Link href={row.conversation_link} target="_blank">
                               <IconButton size="small">
-                                <DownloadIcon />
+                                <SimCardDownloadIcon />
                               </IconButton>
                             </Link>
                           </TableCell>
@@ -204,7 +203,6 @@ function TranscriptsDataTable({
                     })
                   ) : (
                     <TableRow>
-                      {" "}
                       <TableCell colSpan={12} align="center">
                         <Typography variant="h6">
                           no transcripts found
@@ -215,20 +213,45 @@ function TranscriptsDataTable({
                 </TableBody>
               </Table>
             </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={totalCount || -1}
-              rowsPerPage={rowsPerPage}
-              page={page - 1}
-              onPageChange={(e, val) => {
-                setPage(val + 1);
-              }}
-              onRowsPerPageChange={(e) => {
-                if (e.target.value !== rowsPerPage)
-                  setRowsPerPage(e.target.value);
-              }}
-            />
+            <Box className="table-pagination">
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "end",
+                  padding: 1,
+                  alignItems: "center",
+                }}
+              >
+                <Typography sx={{ fontSize: "12px" }}>Display</Typography>
+
+                <FormControl sx={{ m: 1, minWidth: "5rem" }} size="small">
+                  <InputLabel>Rows</InputLabel>
+                  <Select
+                    value={rowsPerPage}
+                    label="Rows"
+                    onChange={(e) => {
+                      setRowsPerPage(e.target.value);
+                    }}
+                  >
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={15}>15</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={25}>25</MenuItem>
+                  </Select>
+                </FormControl>
+                <Pagination
+                  shape="rounded"
+                  component="div"
+                  count={totalCount}
+                  rowsPerPage={rowsPerPage}
+                  page={page - 1}
+                  onPageChange={(e, value) => {
+                    setPage(value + 1);
+                  }}
+                  renderItem={(item) => <PaginationItem {...item} />}
+                />
+              </Box>
+            </Box>
           </>
         )}
       </Paper>

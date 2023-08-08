@@ -8,7 +8,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
-
+import LoadingButton from "../../generic-components/button";
+import AddIcon from "@mui/icons-material/Add";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: "5px",
@@ -43,9 +44,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       width: "350px",
-      // "&:focus": {
-      //   width: "25ch",
-      // },
     },
   },
 }));
@@ -55,7 +53,7 @@ function EnhancedTableToolbar({ numSelected, refetchData, totalCount }) {
     <Toolbar
       sx={{
         pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
+        pr: { sm: 2 },
         ...(numSelected > 0 && {
           bgcolor: (theme) =>
             alpha(
@@ -86,6 +84,12 @@ function EnhancedTableToolbar({ numSelected, refetchData, totalCount }) {
           <Typography variant="h6" id="tableTitle" component="div">
             All ({totalCount})
           </Typography>
+          <LoadingButton
+            buttonTitle="Add new"
+            variant="contained"
+            styleClass="primary-btn"
+            endIcon={<AddIcon />}
+          />
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -107,7 +111,6 @@ function EnhancedTableToolbar({ numSelected, refetchData, totalCount }) {
       ) : (
         <Box sx={{ display: "flex", gap: "1rem" }}>
           <RefreshIcon onClick={refetchData} className="cursor-pointer" />
-          <SearchIcon />
           <SettingsIcon />
           <FilterListIcon />
         </Box>

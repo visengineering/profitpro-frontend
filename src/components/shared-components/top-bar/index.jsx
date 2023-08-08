@@ -2,6 +2,7 @@ import { Avatar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 
 const drawerWidth = "15%";
 
@@ -34,11 +35,10 @@ function TopBar() {
         <Typography variant="h6" noWrap component="div">
           User List
         </Typography>
-        <Box sx={{ display: "flex", gap: "2rem" }}>
-          <IconButton sx={{ p: 0 }}>
-            <Avatar alt="Remy Sharp" src="/avatar4.jpg" />
-          </IconButton>
-        </Box>
+        <IconButton>
+          <NotificationsNoneIcon sx={{ color: "black", fontSize: "30px" }} />
+        </IconButton>
+        {/* </Box> */}
       </Toolbar>
     </AppBar>
   );

@@ -1,8 +1,17 @@
 .primary-btn {
   min-width: 6rem !important;
-  border-radius: 20px !important;
+  border-radius: 5px !important;
   border: none !important;
   box-shadow: none !important;
   background-color: $primary !important;
   // text-transform: none !important;
+}
+.secondary-btn {
+  text-transform: none !important;
+  min-width: 5rem !important;
+}
+.error-btn {
+  min-width: 5rem !important;
+  text-transform: none !important;
+  background-color: $error !important;
 }

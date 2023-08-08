@@ -5,9 +5,20 @@ $backgroundImage: url("../../../public/SideBar.png"); // Adjust the path
   color: $white;
   background-image: $backgroundImage;
 
+  .drawer-head {
+    display: flex;
+    justify-content: center;
+    background: $primary-2;
+  }
+  .list-container {
+    height: calc(100% - 7rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   img {
-    height: 30%;
-    width: 70%;
+    width: 60%;
   }
   .active-page-text {
     font-size: 12px;
@@ -17,19 +28,42 @@ $backgroundImage: url("../../../public/SideBar.png"); // Adjust the path
     background: transparent;
   }
   .MuiListItemButton-root {
-    width: 90%;
-    border-radius: 0 50px 50px 0;
+    width: 80%;
+    margin: auto;
+    border-radius: 4px;
     &:hover {
       background: $navbar-btn-hover;
     }
   }
   .navbar-btn-active {
-    width: 90%;
-    border-radius: 0 50px 50px 0;
+    margin: auto;
+    width: 80%;
+    border-radius: 4px;
     background: $navbar-btn-hover;
   }
 
   .MuiListItemIcon-root {
     color: white;
+  }
+  .personal-info-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 0 auto;
+
+    .personal-info {
+      display: flex;
+      flex-direction: column;
+
+      .name {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1;
+      }
+      .email {
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
   }
 }

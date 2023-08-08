@@ -10,7 +10,12 @@ import ListItemText from "@mui/material/ListItemText";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import HomeIcon from "@mui/icons-material/Home";
-import { Collapse, Drawer as MUIDrawer, Typography } from "@mui/material";
+import {
+  Avatar,
+  Collapse,
+  Drawer as MUIDrawer,
+  Typography,
+} from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -63,79 +68,91 @@ export default function Drawer() {
         anchor="left"
         open
       >
-        <Box className="side-menu-bar">
-          <DrawerHeader sx={{ display: "flex", justifyContent: "center" }}>
+        <Box className="side-menu-bar" sx={{ height: "100%" }}>
+          <DrawerHeader className="drawer-head">
             <Box component="img" src="/logo.png" />
           </DrawerHeader>
           <Divider />
-          <Typography className="active-page-text">Dashboard</Typography>
-          <List component="nav">
-            <ListItemButton
-              onClick={() => {
-                navigate("/");
-              }}
-              className={
-                activeButton === "dashboard" ? "navbar-btn-active" : ""
-              }
-            >
-              <ListItemIcon>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItemButton>
-            <ListItemButton onClick={handleClick}>
-              <ListItemIcon>
-                <StorefrontIcon />
-              </ListItemIcon>
-              <ListItemText primary="Car Dealership" />
-              {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            </ListItemButton>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton
-                  className={
-                    activeButton === "sales-representative"
-                      ? "navbar-btn-active"
-                      : ""
-                  }
-                  sx={{ pl: 4 }}
-                  onClick={() => {
-                    navigate("/salesRepresentative");
-                  }}
-                >
-                  <ListItemIcon>
+          <Box className="list-container">
+            <List component="nav" sx={{ marginTop: "2rem" }}>
+              <ListItemButton
+                onClick={() => {
+                  navigate("/");
+                }}
+                className={
+                  activeButton === "dashboard" ? "navbar-btn-active" : ""
+                }
+              >
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItemButton>
+              <ListItemButton onClick={handleClick}>
+                <ListItemIcon>
+                  <StorefrontIcon />
+                </ListItemIcon>
+                <ListItemText primary="Car Dealership" />
+                {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </ListItemButton>
+              <Collapse in={open} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton
+                    className={
+                      activeButton === "sales-representative"
+                        ? "navbar-btn-active"
+                        : ""
+                    }
+                    sx={{ pl: 6 }}
+                    onClick={() => {
+                      navigate("/salesRepresentative");
+                    }}
+                  >
+                    {/* <ListItemIcon>
                     <PersonIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Sales Representatives" />
-                </ListItemButton>
-                <ListItemButton
-                  sx={{ pl: 4 }}
-                  className={
-                    activeButton === "all-transcripts"
-                      ? "navbar-btn-active"
-                      : ""
-                  }
-                >
-                  <ListItemIcon>
+                  </ListItemIcon> */}
+                    <ListItemText primary="Sales Representatives" />
+                  </ListItemButton>
+                  <ListItemButton
+                    sx={{ pl: 6 }}
+                    className={
+                      activeButton === "all-transcripts"
+                        ? "navbar-btn-active"
+                        : ""
+                    }
+                  >
+                    {/* <ListItemIcon>
                     <AssignmentIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="All Transcripts" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-            <ListItemButton>
-              <ListItemIcon>
-                <StorefrontIcon />
-              </ListItemIcon>
-              <ListItemText primary="Mobile Dealership" />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <StorefrontIcon />
-              </ListItemIcon>
-              <ListItemText primary="Bike Dealership" />
-            </ListItemButton>
-          </List>
+                  </ListItemIcon> */}
+                    <ListItemText primary="All Transcripts" />
+                  </ListItemButton>
+                </List>
+              </Collapse>
+              <ListItemButton>
+                <ListItemIcon>
+                  <StorefrontIcon />
+                </ListItemIcon>
+                <ListItemText primary="Mobile Dealership" />
+              </ListItemButton>
+              <ListItemButton>
+                <ListItemIcon>
+                  <StorefrontIcon />
+                </ListItemIcon>
+                <ListItemText primary="Bike Dealership" />
+              </ListItemButton>
+            </List>
+            <Box className="personal-info-container">
+              <Avatar alt="Farhan Tariq" src="/avatar5.jpg" />
+              <Box className="personal-info">
+                <Typography variant="h6" className="name">
+                  Farhan Tariq
+                </Typography>
+                <Typography className="email">
+                  dev.farhantariq12b@gmail.com
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
         </Box>
       </MUIDrawer>
     </Box>

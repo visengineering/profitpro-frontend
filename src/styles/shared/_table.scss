@@ -1,9 +1,11 @@
-.box-container {
-  padding: 0 2rem;
+.table-container {
+  // padding: 0 2rem;
   width: 85%;
   float: right;
-  margin-top: 7rem;
+  margin-top: 5rem;
+  // height: 100%;
   max-width: calc(100% - 300px);
+  height: calc(100vh - 5rem);
 }
 .table-pagination {
   .MuiTextField-root {
