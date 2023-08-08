@@ -145,11 +145,13 @@ function Row(props) {
               buttonTitle="Edit"
               variant="outlined"
               styleClass="secondary-btn"
+              handleClick={(e) => e.stopPropagation()}
             />
             <LoadingButton
               buttonTitle="Delete"
               variant="contained"
               styleClass="error-btn"
+              handleClick={(e) => e.stopPropagation()}
             />
           </Box>
         </TableCell>
