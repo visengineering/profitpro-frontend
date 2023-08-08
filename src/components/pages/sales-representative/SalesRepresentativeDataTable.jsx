@@ -272,8 +272,6 @@ function SalesRepresentativeDataTable({
   }, [page, currentPage]);
 
   useEffect(() => {
-    if (currentPage === page && rowsPerPage === 5) return;
-
     filterData(rowsPerPage, page || 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, rowsPerPage]);
@@ -390,11 +388,11 @@ function SalesRepresentativeDataTable({
                 <Pagination
                   shape="rounded"
                   component="div"
-                  count={totalCount}
+                  count={Math.ceil(totalCount / rowsPerPage)}
                   rowsPerPage={rowsPerPage}
-                  page={page - 1}
+                  page={page}
                   onPageChange={(e, value) => {
-                    setPage(value + 1);
+                    setPage(value);
                   }}
                   renderItem={(item) => <PaginationItem {...item} />}
                 />

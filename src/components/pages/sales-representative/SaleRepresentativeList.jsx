@@ -15,7 +15,7 @@ const SaleRepresentativeList = () => {
     fetchSalesDetails();
   }, []);
 
-  const fetchSalesDetails = async (page_size = 5, selectedPage = 1) => {
+  const fetchSalesDetails = async (page_size = 10, selectedPage = 1) => {
     setLoading(true);
     try {
       const params = {

@@ -15,7 +15,7 @@ const TranscriptsTable = () => {
   const [transcripts, setTranscripts] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchTranscriptDetails = async (page_size = 5, selectedPage = 1) => {
     setLoading(true);

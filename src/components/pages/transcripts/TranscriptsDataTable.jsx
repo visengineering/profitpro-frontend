@@ -90,13 +90,10 @@ function TranscriptsDataTable({
 
   useEffect(() => {
     if (currentPage !== page) setPage(currentPage);
-  }, [page, currentPage]);
+  }, [currentPage]);
 
   useEffect(() => {
-    if (currentPage === page && rowsPerPage === 5) return;
-
     fetchData(rowsPerPage, page || 1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowsPerPage, page]);
 
   const handleSelectAllClick = (event) => {
@@ -261,8 +258,8 @@ function TranscriptsDataTable({
                   count={Math.ceil(totalCount / rowsPerPage)}
                   rowsPerPage={rowsPerPage}
                   page={page}
-                  onChange={(e, page) => {
-                    setPage(page);
+                  onChange={(e, value) => {
+                    setPage(value);
                   }}
                   renderItem={(item) => <PaginationItem {...item} />}
                 />
