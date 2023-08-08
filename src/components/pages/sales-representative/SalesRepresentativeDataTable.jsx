@@ -14,18 +14,16 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Chip from "@mui/material/Chip";
 import PropTypes from "prop-types";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import LoadingButton from "../../generic-components/button";
 import { useNavigate } from "react-router-dom";
-
+import DownloadIcon from "@mui/icons-material/Download";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import {
-  Checkbox,
   FormControl,
   InputLabel,
   Link,
-  Menu,
   MenuItem,
   Pagination,
   PaginationItem,
@@ -34,14 +32,19 @@ import {
 import TableLoader from "../../shared-components/Loader/TableLoader";
 import EnhancedTableHead from "../../shared-components/enhanced-table-head";
 import EnhancedTableToolbar from "../../shared-components/enhanced-table-toolbar";
-import InputField from "../../generic-components/input-field";
 
 const headCells = [
   {
-    id: "Photo",
+    id: "",
     numeric: false,
     disablePadding: true,
-    label: "Photo",
+    label: "",
+  },
+  {
+    id: "Image",
+    numeric: false,
+    disablePadding: true,
+    label: "Image",
   },
   {
     id: "Member Name",
@@ -61,12 +64,12 @@ const headCells = [
     disablePadding: false,
     label: "Email",
   },
-  {
-    id: "Status",
-    numeric: true,
-    disablePadding: false,
-    label: "Status",
-  },
+  // {
+  //   id: "Status",
+  //   numeric: true,
+  //   disablePadding: false,
+  //   label: "Status",
+  // },
   {
     id: "Action",
     numeric: true,
@@ -97,20 +100,9 @@ function Row(props) {
     alert("handle edit");
   };
 
-  const handledelete = (e) => {
+  const handleDelete = (e) => {
     e.stopPropagation();
     alert("handle delete");
-  };
-
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openMenu = Boolean(anchorEl);
-  const handleClick = (event) => {
-    event.stopPropagation();
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = (event) => {
-    event.stopPropagation();
-    setAnchorEl(null);
   };
 
   return (
@@ -125,7 +117,7 @@ function Row(props) {
         selected={isItemSelected}
         sx={{ cursor: "pointer" }}
       >
-        <TableCell padding="checkbox">
+        {/* <TableCell padding="checkbox">
           <Checkbox
             onClick={(e) => {
               e.stopPropagation();
@@ -138,12 +130,8 @@ function Row(props) {
               }
             }
           />
-        </TableCell>
-
-        <TableCell
-          align="center"
-          className="d-flex justify-center align-center"
-        >
+        </TableCell> */}
+        <TableCell align="center">
           {!!row?.transcripts?.length && (
             <IconButton
               aria-label="expand row"
@@ -153,9 +141,14 @@ function Row(props) {
                 setOpen(!open);
               }}
             >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              {open ? <ArrowDropUpIcon /> : <ArrowRightIcon />}
             </IconButton>
-          )}
+          )}{" "}
+        </TableCell>
+        <TableCell
+          align="center"
+          className="d-flex justify-center align-center"
+        >
           <Box
             component="img"
             onClick={(e) => handleShowUser(e)}
@@ -164,6 +157,7 @@ function Row(props) {
               width: "3rem",
               height: "3rem",
               borderRadius: "50%",
+              border: "none",
             }}
             alt="Image"
           />
@@ -174,7 +168,7 @@ function Row(props) {
         </TableCell>
         <TableCell align="center">{row.phone}</TableCell>
         <TableCell align="center">{row.user_email}</TableCell>
-        <TableCell align="center">
+        {/* <TableCell align="center">
           {" "}
           <Chip
             sx={{
@@ -185,9 +179,9 @@ function Row(props) {
             label={row.is_active ? "Active" : "Inactive"}
             color={row.is_active ? "success" : "error"}
           />
-        </TableCell>
+        </TableCell> */}
 
-        <TableCell align="center">
+        {/* <TableCell align="center">
           <div>
             <IconButton
               aria-label="more"
@@ -231,6 +225,14 @@ function Row(props) {
               </MenuItem>
             </Menu>
           </div>
+        </TableCell> */}
+        <TableCell align="center">
+          <IconButton onClick={(e) => handleEdit(e)}>
+            <EditIcon sx={{ color: "blue" }} />
+          </IconButton>
+          <IconButton onClick={(e) => handleDelete(e)}>
+            <DeleteIcon sx={{ color: "red" }} />
+          </IconButton>
         </TableCell>
       </TableRow>
 
@@ -244,10 +246,10 @@ function Row(props) {
               <Table aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Transcript ID</TableCell>
-                    <TableCell>Created At</TableCell>
-                    <TableCell>Updated At</TableCell>
-                    <TableCell>Audio Link</TableCell>
+                    <TableCell align="center">Transcript ID</TableCell>
+                    <TableCell align="center">Created At</TableCell>
+                    <TableCell align="center">Updated At</TableCell>
+                    <TableCell align="center">Audio Link</TableCell>
                     <TableCell align="center">Time Duration</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
@@ -258,14 +260,27 @@ function Row(props) {
                       <TableCell align="center">
                         {transcriptionRow.conversation_id}
                       </TableCell>
-                      <TableCell component="th" scope="row">
+                      <TableCell align="center" component="th" scope="row">
                         {transcriptionRow.created_date}
                       </TableCell>
-                      <TableCell component="th" scope="row">
+                      <TableCell align="center" component="th" scope="row">
                         {transcriptionRow.modified_date}
                       </TableCell>
-                      <TableCell>
-                        {transcriptionRow.conversation_link}
+                      <TableCell
+                        align="center"
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          gap: "1rem",
+                          alignItems: "center",
+                        }}
+                      >
+                        Download Audio
+                        <Link href={row.conversation_link} target="_blank">
+                          <IconButton size="small">
+                            <DownloadIcon />
+                          </IconButton>
+                        </Link>
                       </TableCell>
                       <TableCell align="center">
                         {transcriptionRow.duration
@@ -436,6 +451,8 @@ function SalesRepresentativeDataTable({
                   alignItems: "center",
                 }}
               >
+                <Typography sx={{ fontSize: "12px" }}>Display</Typography>
+
                 <FormControl sx={{ m: 1, minWidth: "5rem" }} size="small">
                   <InputLabel>Rows</InputLabel>
                   <Select
@@ -451,7 +468,7 @@ function SalesRepresentativeDataTable({
                     <MenuItem value={25}>25</MenuItem>
                   </Select>
                 </FormControl>
-                <Typography sx={{ fontSize: "12px" }}>Go to</Typography>
+                {/* <Typography sx={{ fontSize: "12px" }}>Go to</Typography>
                 <InputField
                   variant="outlined"
                   type="number"
@@ -461,7 +478,7 @@ function SalesRepresentativeDataTable({
                   onChange={(e) => {
                     setPage(e.target.value);
                   }}
-                />
+                /> */}
                 <Pagination
                   shape="rounded"
                   component="div"

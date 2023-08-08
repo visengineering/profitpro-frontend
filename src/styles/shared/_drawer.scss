@@ -1,7 +1,9 @@
+$backgroundImage: url("../../../public/SideBar.png"); // Adjust the path
 .side-menu-bar {
   height: 100%;
   background: $secondary;
   color: $white;
+  background-image: $backgroundImage;
 
   img {
     height: 30%;
@@ -11,6 +13,9 @@
     font-size: 12px;
     padding: 16px 0 0 16px;
   }
+  .MuiList-root {
+    background: transparent;
+  }
   .MuiListItemButton-root {
     width: 90%;
     border-radius: 0 50px 50px 0;
@@ -18,6 +23,12 @@
       background: $navbar-btn-hover;
     }
   }
+  .navbar-btn-active {
+    width: 90%;
+    border-radius: 0 50px 50px 0;
+    background: $navbar-btn-hover;
+  }
+
   .MuiListItemIcon-root {
     color: white;
   }

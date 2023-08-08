@@ -8,6 +8,7 @@ import Paper from "@mui/material/Paper";
 import {
   Box,
   Checkbox,
+  IconButton,
   Link,
   TablePagination,
   Typography,
@@ -16,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import TableLoader from "../../shared-components/Loader/TableLoader";
 import EnhancedTableHead from "../../shared-components/enhanced-table-head";
+import DownloadIcon from "@mui/icons-material/Download";
 import EnhancedTableToolbar from "../../shared-components/enhanced-table-toolbar";
 
 const headCells = [
@@ -168,7 +170,21 @@ function TranscriptsDataTable({
                             {row.modified_date}
                           </TableCell>
 
-                          <TableCell>{row.conversation_link}</TableCell>
+                          <TableCell
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              gap: "1rem",
+                              alignItems: "center",
+                            }}
+                          >
+                            Download Audio
+                            <Link href={row.conversation_link} target="_blank">
+                              <IconButton size="small">
+                                <DownloadIcon />
+                              </IconButton>
+                            </Link>
+                          </TableCell>
                           <TableCell align="center">
                             {row.duration ?? "-"}
                           </TableCell>

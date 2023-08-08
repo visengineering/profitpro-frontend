@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,7 +11,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import HomeIcon from "@mui/icons-material/Home";
 import { Collapse, Drawer as MUIDrawer, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import StorefrontIcon from "@mui/icons-material/Storefront";
@@ -28,10 +28,25 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function Drawer() {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleClick = () => {
     setOpen(!open);
   };
+
+  const [activeButton, setActiveButton] = useState(""); // 'home' is the default active button
+
+  useEffect(() => {
+    if (location.pathname === "/salesRepresentative") {
+      setActiveButton("sales-representative");
+    } else if (location.pathname === "/") {
+      setActiveButton("dashboard");
+    } else if (
+      location.pathname.match(/^\/salesRepresentative\/(\d+)\/transcripts$/)
+    ) {
+      setActiveButton("all-transcripts");
+    }
+  }, [location]);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -49,18 +64,20 @@ export default function Drawer() {
         open
       >
         <Box className="side-menu-bar">
-          .
           <DrawerHeader sx={{ display: "flex", justifyContent: "center" }}>
-            <Box component="img" src="/logo.png"></Box>
+            <Box component="img" src="/logo.png" />
           </DrawerHeader>
           <Divider />
           <Typography className="active-page-text">Dashboard</Typography>
-          <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "inherit" }}
-            component="nav"
-            aria-labelledby="nested-list-subheader"
-          >
-            <ListItemButton onClick={() => navigate("/")}>
+          <List component="nav">
+            <ListItemButton
+              onClick={() => {
+                navigate("/");
+              }}
+              className={
+                activeButton === "dashboard" ? "navbar-btn-active" : ""
+              }
+            >
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
@@ -70,21 +87,35 @@ export default function Drawer() {
               <ListItemIcon>
                 <StorefrontIcon />
               </ListItemIcon>
-              <ListItemText primary="DealerShip 1" />
+              <ListItemText primary="Car Dealership" />
               {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItemButton
+                  className={
+                    activeButton === "sales-representative"
+                      ? "navbar-btn-active"
+                      : ""
+                  }
                   sx={{ pl: 4 }}
-                  onClick={() => navigate("/salesRepresentative")}
+                  onClick={() => {
+                    navigate("/salesRepresentative");
+                  }}
                 >
                   <ListItemIcon>
                     <PersonIcon />
                   </ListItemIcon>
                   <ListItemText primary="Sales Representatives" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  className={
+                    activeButton === "all-transcripts"
+                      ? "navbar-btn-active"
+                      : ""
+                  }
+                >
                   <ListItemIcon>
                     <AssignmentIcon />
                   </ListItemIcon>
@@ -96,13 +127,13 @@ export default function Drawer() {
               <ListItemIcon>
                 <StorefrontIcon />
               </ListItemIcon>
-              <ListItemText primary="DealerShip 2" />
+              <ListItemText primary="Mobile Dealership" />
             </ListItemButton>
             <ListItemButton>
               <ListItemIcon>
                 <StorefrontIcon />
               </ListItemIcon>
-              <ListItemText primary="DealerShip 3" />
+              <ListItemText primary="Bike Dealership" />
             </ListItemButton>
           </List>
         </Box>
