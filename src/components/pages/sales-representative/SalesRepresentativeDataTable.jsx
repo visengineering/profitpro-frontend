@@ -169,7 +169,9 @@ function Row(props) {
                     <TableCell align="center">Created At</TableCell>
                     <TableCell align="center">Updated At</TableCell>
                     <TableCell align="center">Audio Link</TableCell>
-                    <TableCell align="center">Time Duration</TableCell>
+                    <TableCell align="center">
+                      Time Duration (seconds)
+                    </TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
                 </TableHead>

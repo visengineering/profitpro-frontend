@@ -3,7 +3,6 @@ import SalesRepresentativeDataTable from "./SalesRepresentativeDataTable";
 import { Box } from "@mui/material";
 import UserService from "../../../services/plugins/user";
 import { toast } from "react-toastify";
-import PersonIcon from "@mui/icons-material/Person";
 import Breadcrumbs from "../../generic-components/breadcrumbs";
 
 const SaleRepresentativeList = () => {

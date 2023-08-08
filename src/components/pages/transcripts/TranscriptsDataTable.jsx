@@ -258,11 +258,11 @@ function TranscriptsDataTable({
                 <Pagination
                   shape="rounded"
                   component="div"
-                  count={totalCount}
+                  count={Math.ceil(totalCount / rowsPerPage)}
                   rowsPerPage={rowsPerPage}
-                  page={page - 1}
-                  onPageChange={(e, value) => {
-                    setPage(value + 1);
+                  page={page}
+                  onChange={(e, page) => {
+                    setPage(page);
                   }}
                   renderItem={(item) => <PaginationItem {...item} />}
                 />

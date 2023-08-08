@@ -30,7 +30,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function Drawer() {
-  const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -43,11 +42,12 @@ export default function Drawer() {
       setActiveButton("sales-representative");
     } else if (location.pathname === "/") {
       setActiveButton("dashboard");
-    } else if (
-      location.pathname.match(/^\/salesRepresentative\/(\d+)\/transcripts$/)
-    ) {
-      setActiveButton("all-transcripts");
     }
+    // } else if (
+    //   location.pathname.match(/^\/salesRepresentative\/(\d+)\/transcripts$/)
+    // ) {
+    //   setActiveButton("all-transcripts");
+    // }
   }, [location]);
 
   return (

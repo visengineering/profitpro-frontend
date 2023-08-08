@@ -3,13 +3,13 @@ import React from "react";
 import { alpha } from "@mui/material/styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
-import RefreshIcon from "@mui/icons-material/Refresh";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
 import LoadingButton from "../../generic-components/button";
 import AddIcon from "@mui/icons-material/Add";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: "5px",
@@ -112,7 +112,7 @@ function EnhancedTableToolbar({ numSelected, refetchData, totalCount }) {
         </Tooltip>
       ) : (
         <Box sx={{ display: "flex", gap: "1rem" }}>
-          <RefreshIcon onClick={refetchData} className="cursor-pointer" />
+          <AutorenewIcon onClick={refetchData} className="cursor-pointer" />
           <SettingsIcon />
           <FilterListIcon />
         </Box>
