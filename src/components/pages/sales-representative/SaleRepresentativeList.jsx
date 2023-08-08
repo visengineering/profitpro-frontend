@@ -50,14 +50,7 @@ const SaleRepresentativeList = () => {
   const crumbs = [
     {
       label: "Sales Representatives",
-      icon: <PersonIcon />,
-      size: "medium",
       active: true,
-    },
-    {
-      label: "Transcripts",
-      size: "medium",
-      active: false,
     },
   ];
 

@@ -251,7 +251,7 @@ function Row(props) {
                   size="small"
                   sx={{ margin: "1rem" }}
                   handleClick={() => navigateToTranscripts(row.user_id)}
-                  styleClass="primary-btn float-right"
+                  styleClass="primary-btn float-right "
                 />
               )}
             </Box>

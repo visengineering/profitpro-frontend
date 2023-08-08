@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import TranscriptsDataTable from "./TranscriptsDataTable";
 import { Box } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
 import { useNavigate } from "react-router-dom";
 import UserService from "../../../services/plugins/user";
 import { toast } from "react-toastify";
@@ -51,14 +50,11 @@ const TranscriptsTable = () => {
   const crumbs = [
     {
       label: "Sales Representatives",
-      icon: <PersonIcon />,
       onClick: () => navigate("/salesRepresentative"),
-      size: "medium",
-      active: false,
+      active: true,
     },
     {
       label: "Transcripts",
-      size: "medium",
       active: true,
     },
   ];

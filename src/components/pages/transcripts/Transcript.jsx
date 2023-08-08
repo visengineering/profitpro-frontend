@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import TranscriptService from "../../../services/plugins/transcipt";
 import { toast } from "react-toastify";
 import DetailLoader from "./DetailLoader";
-import PersonIcon from "@mui/icons-material/Person";
 import Breadcrumbs from "../../generic-components/breadcrumbs";
 
 function Transcript() {
@@ -59,32 +58,28 @@ function Transcript() {
   const crumbs = [
     {
       label: "Sales Representatives",
-      icon: <PersonIcon />,
       onClick: () => navigate("/salesRepresentative"),
-      size: "medium",
-      active: false,
+      active: true,
     },
     {
       label: "Transcripts",
       onClick: () => {
         navigate(`/salesRepresentative/${salesRepresentativeId}/transcripts`);
       },
-      size: "medium",
-      active: false,
+      active: true,
     },
     {
       label: "Transcript Details",
-      size: "medium",
       active: true,
     },
   ];
 
   return (
-    <Box className="box-container">
-      <Breadcrumbs crumbs={crumbs} />
-      <Typography sx={{ margin: "1rem" }} variant="h4">
-        Transcript Details
-      </Typography>
+    <Box className="table-container">
+      <Box sx={{ margin: "1rem" }}>
+        <Breadcrumbs crumbs={crumbs} />
+      </Box>
+
       {isLoading ? (
         <DetailLoader />
       ) : (
