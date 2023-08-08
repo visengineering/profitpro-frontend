@@ -22,6 +22,7 @@ import { useParams } from "react-router-dom";
 import TableLoader from "../../shared-components/Loader/TableLoader";
 import EnhancedTableHead from "../../shared-components/enhanced-table-head";
 import EnhancedTableToolbar from "../../shared-components/enhanced-table-toolbar";
+import debounce from "lodash/debounce";
 
 const headCells = [
   {
@@ -87,14 +88,20 @@ function TranscriptsDataTable({
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
+  const [searchTerm, setSearchTerm] = useState();
+  const debouncedHandleSearch = debounce((value) => {
+    console.log("debounced value = ", value);
+    setSearchTerm(value);
+  }, 500);
 
   useEffect(() => {
     if (currentPage !== page) setPage(currentPage);
   }, [currentPage]);
 
   useEffect(() => {
+    console.log("search term changed = ", searchTerm);
     fetchData(rowsPerPage, page || 1);
-  }, [rowsPerPage, page]);
+  }, [rowsPerPage, page, searchTerm]);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -132,6 +139,7 @@ function TranscriptsDataTable({
                 totalCount={totalCount}
                 numSelected={selected.length}
                 refetchData={() => fetchData(rowsPerPage, page || 1)}
+                setSearchTerm={debouncedHandleSearch}
               />
               <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
@@ -203,9 +211,7 @@ function TranscriptsDataTable({
                     ) : (
                       <TableRow>
                         <TableCell colSpan={12} align="center">
-                          <Typography variant="h6">
-                            no transcripts found
-                          </Typography>
+                          <Typography>no transcripts found</Typography>
                         </TableCell>{" "}
                       </TableRow>
                     )}

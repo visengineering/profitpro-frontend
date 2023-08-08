@@ -28,6 +28,7 @@ import {
 import TableLoader from "../../shared-components/Loader/TableLoader";
 import EnhancedTableHead from "../../shared-components/enhanced-table-head";
 import EnhancedTableToolbar from "../../shared-components/enhanced-table-toolbar";
+import debounce from "lodash/debounce";
 
 const headCells = [
   {
@@ -55,17 +56,17 @@ const headCells = [
     align: "left",
   },
   {
-    id: "Mobile",
+    id: "Mobile Number",
     numeric: true,
     disablePadding: false,
-    label: "Mobile",
+    label: "Mobile Number",
     align: "center",
   },
   {
-    id: "Email",
+    id: "Email Address",
     numeric: true,
     disablePadding: false,
-    label: "Email",
+    label: "Email Address",
     align: "center",
   },
   {
@@ -288,6 +289,11 @@ function SalesRepresentativeDataTable({
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
+  const [searchTerm, setSearchTerm] = useState();
+  const debouncedHandleSearch = debounce((value) => {
+    console.log(value);
+    setSearchTerm(value);
+  }, 500);
 
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
@@ -309,6 +315,7 @@ function SalesRepresentativeDataTable({
                 totalCount={totalCount}
                 numSelected={selected.length}
                 refetchData={() => filterData(rowsPerPage, page || 1)}
+                setSearchTerm={debouncedHandleSearch}
               />
               <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
@@ -338,7 +345,7 @@ function SalesRepresentativeDataTable({
                       <TableRow>
                         {" "}
                         <TableCell colSpan={12} align="center">
-                          <Typography variant="h6">
+                          <Typography>
                             no sales representatives found
                           </Typography>
                         </TableCell>{" "}

@@ -18,7 +18,7 @@ const Breadcrumbs = ({ crumbs }) => {
               sx={{
                 fontWeight: "400",
                 lineHeight: "150%",
-                fontSize: "24px",
+                fontSize: "16px",
                 color: crumb.active ? "#233EAE" : "#9F9F9F",
                 cursor: !crumb?.active ? "default" : "pointer",
               }}

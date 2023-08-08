@@ -1,8 +1,7 @@
-import { IconButton, Toolbar, Typography } from "@mui/material";
+import { Box, IconButton, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 
 const drawerWidth = "15%";
 
@@ -36,9 +35,8 @@ function TopBar() {
           User List
         </Typography>
         <IconButton>
-          <NotificationsNoneIcon sx={{ color: "black", fontSize: "30px" }} />
+          <Box component="img" src="/bellIcon.svg" />
         </IconButton>
-        {/* </Box> */}
       </Toolbar>
     </AppBar>
   );

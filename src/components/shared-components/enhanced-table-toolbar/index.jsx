@@ -3,13 +3,12 @@ import React from "react";
 import { alpha } from "@mui/material/styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SearchIcon from "@mui/icons-material/Search";
-import SettingsIcon from "@mui/icons-material/Settings";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
 import LoadingButton from "../../generic-components/button";
 import AddIcon from "@mui/icons-material/Add";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: "5px",
@@ -48,7 +47,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function EnhancedTableToolbar({ numSelected, refetchData, totalCount }) {
+function EnhancedTableToolbar({
+  numSelected,
+  refetchData,
+  totalCount,
+  setSearchTerm,
+}) {
   return (
     <Toolbar
       sx={{
@@ -99,6 +103,7 @@ function EnhancedTableToolbar({ numSelected, refetchData, totalCount }) {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              // onChange={(e) => setSearchTerm(e.target.value)}
             />
           </Search>
         </Box>
@@ -111,9 +116,14 @@ function EnhancedTableToolbar({ numSelected, refetchData, totalCount }) {
           </IconButton>
         </Tooltip>
       ) : (
-        <Box sx={{ display: "flex", gap: "1rem" }}>
-          <AutorenewIcon onClick={refetchData} className="cursor-pointer" />
-          <SettingsIcon />
+        <Box sx={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+          <Box
+            component="img"
+            src="/refreshIcon.svg"
+            onClick={refetchData}
+            className="cursor-pointer"
+          />
+          <Box component="img" src="/gearIcon.svg" />
           <FilterListIcon />
         </Box>
       )}
