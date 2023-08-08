@@ -51,9 +51,14 @@ $backgroundImage: url("../../../public/SideBar.png"); // Adjust the path
     align-items: center;
     margin: 0 auto;
 
+    .avatar-info > img {
+      width: auto;
+    }
+
     .personal-info {
       display: flex;
       flex-direction: column;
+      
 
       .name {
         font-size: 16px;

@@ -141,7 +141,7 @@ export default function Drawer() {
             <Box className="personal-info-container">
               <Avatar
                 alt="Farhan Tariq"
-                sx={{ width: "auto" }}
+                className="avatar-info"
                 src="/avatar5.jpg"
               />
               <Box className="personal-info">
