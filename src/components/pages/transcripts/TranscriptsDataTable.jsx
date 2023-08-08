@@ -90,10 +90,12 @@ function TranscriptsDataTable({
   };
 
   useEffect(() => {
-    setPage(currentPage);
+    if (currentPage !== page) setPage(currentPage);
   }, [currentPage]);
 
   useEffect(() => {
+    if (currentPage === page && rowsPerPage === 5) return;
+
     fetchData(rowsPerPage, page || 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowsPerPage, page]);

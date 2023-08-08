@@ -55,13 +55,13 @@ const TranscriptsTable = () => {
     },
     {
       label: "Transcripts",
-      active: true,
+      active: false,
     },
   ];
 
   return (
     <Box className="table-container">
-      <Box role="presentation" sx={{ margin: "1rem" }}>
+      <Box role="presentation">
         <Breadcrumbs crumbs={crumbs} />
       </Box>
       <TranscriptsDataTable

@@ -277,7 +277,7 @@ function SalesRepresentativeDataTable({
   const [orderBy, setOrderBy] = useState("");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -286,11 +286,11 @@ function SalesRepresentativeDataTable({
   };
 
   useEffect(() => {
-    setPage(currentPage);
+    if (currentPage !== page) setPage(currentPage);
   }, [currentPage]);
 
   useEffect(() => {
-    if (currentPage === page && rowsPerPage === 1) return;
+    if (currentPage === page && rowsPerPage === 5) return;
 
     filterData(rowsPerPage, page || 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -323,7 +323,7 @@ function SalesRepresentativeDataTable({
               numSelected={selected.length}
               refetchData={() => filterData(rowsPerPage, page || 1)}
             />
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} className="table-list">
               <Table aria-label="collapsible table">
                 <EnhancedTableHead
                   numSelected={selected.length}
@@ -393,6 +393,7 @@ function SalesRepresentativeDataTable({
                       setRowsPerPage(e.target.value);
                     }}
                   >
+                    <MenuItem value={5}>5</MenuItem>
                     <MenuItem value={10}>10</MenuItem>
                     <MenuItem value={15}>15</MenuItem>
                     <MenuItem value={20}>20</MenuItem>

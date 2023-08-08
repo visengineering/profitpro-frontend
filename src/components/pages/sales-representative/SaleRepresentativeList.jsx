@@ -31,7 +31,7 @@ const SaleRepresentativeList = () => {
       const { results: userResult, count, current } = response.data;
 
       setCount(count);
-      setCurrentPage(current || 1);
+      setCurrentPage(current);
       setUsers(userResult);
     } catch (error) {
       console.log("Error while fetching sale representatives", error);
@@ -50,13 +50,13 @@ const SaleRepresentativeList = () => {
   const crumbs = [
     {
       label: "Sales Representatives",
-      active: true,
+      active: false,
     },
   ];
 
   return (
     <Box className="table-container">
-      <Box role="presentation" sx={{ margin: "1rem" }}>
+      <Box role="presentation">
         <Breadcrumbs crumbs={crumbs} />
       </Box>
       <Box

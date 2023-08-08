@@ -70,13 +70,13 @@ function Transcript() {
     },
     {
       label: "Transcript Details",
-      active: true,
+      active: false,
     },
   ];
 
   return (
     <Box className="table-container">
-      <Box sx={{ margin: "1rem" }}>
+      <Box>
         <Breadcrumbs crumbs={crumbs} />
       </Box>
 

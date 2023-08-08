@@ -142,7 +142,7 @@ export default function Drawer() {
               </ListItemButton>
             </List>
             <Box className="personal-info-container">
-              <Avatar alt="Farhan Tariq" src="/avatar5.jpg" />
+              <Avatar alt="Farhan Tariq" style={{ width: "auto" }} src="/avatar.jpg" />
               <Box className="personal-info">
                 <Typography variant="h6" className="name">
                   Farhan Tariq

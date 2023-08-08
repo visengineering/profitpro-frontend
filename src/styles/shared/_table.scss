@@ -1,13 +1,23 @@
 .table-container {
-  // padding: 0 2rem;
-  width: 85%;
   float: right;
   margin-top: 5rem;
-  // height: 100%;
+  width: 100%;
   max-width: calc(100% - 300px);
   height: calc(100vh - 5rem);
+
+  .table-list {
+    height: 100vh;
+  }
 }
 .table-pagination {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  border-top: 2px solid #DFDFDF;
+  
+
   .MuiTextField-root {
     margin: 0 1rem 0 0.5rem;
     outline: none !important;
