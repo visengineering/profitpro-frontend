@@ -219,12 +219,7 @@ function Row(props) {
                         </Link>
                       </TableCell>
                       <TableCell align="center">
-                        {transcriptRow.duration
-                          ? `${Math.floor(transcriptRow.duration / 60000)}:${(
-                              (transcriptRow.duration % 60000) /
-                              1000
-                            ).toFixed(0)}`
-                          : "-"}
+                        {transcriptRow.duration || "-"}
                       </TableCell>
                       <TableCell align="center">
                         <Link
