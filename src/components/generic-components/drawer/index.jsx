@@ -71,21 +71,21 @@ export default function Drawer() {
           </DrawerHeader>
           <Divider />
           <Box className="list-container">
-            <List component="nav" sx={{ marginTop: "2rem" }}>
+            <List component="nav" sx={{ marginTop: "1rem" }}>
               <ListItemButton
                 onClick={() => {
                   navigate("/");
                 }}
-                className={
+                className={`${
                   activeButton === "dashboard" ? "navbar-btn-active" : ""
-                }
+                } main-nav`}
               >
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
               </ListItemButton>
-              <ListItemButton onClick={updateOpen}>
+              <ListItemButton className="main-nav expand-able" onClick={updateOpen}>
                 <ListItemIcon>
                   <StorefrontIcon />
                 </ListItemIcon>
@@ -95,11 +95,11 @@ export default function Drawer() {
               <Collapse in={openDropDown} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItemButton
-                    className={
+                    className={`${
                       activeButton === "sales-representative"
                         ? "navbar-btn-active"
                         : ""
-                    }
+                    } mt-10`}
                     sx={{ pl: 6 }}
                     onClick={() => {
                       navigate("/salesRepresentative");
@@ -108,15 +108,15 @@ export default function Drawer() {
                     {/* <ListItemIcon>
                     <PersonIcon />
                   </ListItemIcon> */}
-                    <ListItemText primary="Sales Representatives" />
+                    <ListItemText primary="Sales Person" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ pl: 6 }}
-                    className={
+                    className={`${
                       activeButton === "all-transcripts"
                         ? "navbar-btn-active"
                         : ""
-                    }
+                    } mt-10`}
                   >
                     {/* <ListItemIcon>
                     <AssignmentIcon />
@@ -125,13 +125,13 @@ export default function Drawer() {
                   </ListItemButton>
                 </List>
               </Collapse>
-              <ListItemButton>
+              <ListItemButton className="main-nav">
                 <ListItemIcon>
                   <StorefrontIcon />
                 </ListItemIcon>
                 <ListItemText primary="Mobile Dealership" />
               </ListItemButton>
-              <ListItemButton>
+              <ListItemButton className="main-nav">
                 <ListItemIcon>
                   <StorefrontIcon />
                 </ListItemIcon>

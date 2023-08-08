@@ -35,6 +35,13 @@ $backgroundImage: url("../../../public/SideBar.png"); // Adjust the path
       background: $navbar-btn-hover;
     }
   }
+
+  .expand-able {
+    &:hover {
+      background: none !important;
+    }
+  }
+
   .navbar-btn-active {
     margin: auto;
     width: 80%;
@@ -71,4 +78,19 @@ $backgroundImage: url("../../../public/SideBar.png"); // Adjust the path
       }
     }
   }
+}
+
+.main-nav {
+  margin: 10px auto 0px 20px !important;
+  width: 90% !important;
+  margin-top: 10px !important;
+  padding-left: 10px !important;
+  padding-right: 20px !important;
+  .MuiListItemIcon-root {
+    min-width: 35px;
+  }
+}
+
+.mt-10 {
+  margin-top: 10px !important;
 }

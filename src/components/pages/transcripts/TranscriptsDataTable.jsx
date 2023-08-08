@@ -99,9 +99,8 @@ function TranscriptsDataTable({
   }, [currentPage]);
 
   useEffect(() => {
-    console.log("search term changed = ", searchTerm);
     fetchData(rowsPerPage, page || 1);
-  }, [rowsPerPage, page, searchTerm]);
+  }, [page, searchTerm]);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -249,6 +248,7 @@ function TranscriptsDataTable({
                     value={rowsPerPage}
                     onChange={(e) => {
                       setRowsPerPage(e.target.value);
+                      fetchData(e.target.value, 1)
                     }}
                   >
                     <MenuItem value={5}>5</MenuItem>
