@@ -1,4 +1,4 @@
-import { Avatar, Box, IconButton, Toolbar, Typography } from "@mui/material";
+import { IconButton, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";

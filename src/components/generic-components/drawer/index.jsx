@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,9 +17,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import PersonIcon from "@mui/icons-material/Person";
-import AssignmentIcon from "@mui/icons-material/Assignment";
 import StorefrontIcon from "@mui/icons-material/Storefront";
+import { AppContext } from "../../../hooks/AppContext";
 const drawerWidth = "300px";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -35,9 +34,7 @@ export default function Drawer() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  const { openDropDown, updateOpen } = useContext(AppContext);
 
   const [activeButton, setActiveButton] = useState(""); // 'home' is the default active button
 
@@ -88,14 +85,14 @@ export default function Drawer() {
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
               </ListItemButton>
-              <ListItemButton onClick={handleClick}>
+              <ListItemButton onClick={updateOpen}>
                 <ListItemIcon>
                   <StorefrontIcon />
                 </ListItemIcon>
                 <ListItemText primary="Car Dealership" />
-                {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                {openDropDown ? <ExpandLessIcon /> : <ExpandMoreIcon />}
               </ListItemButton>
-              <Collapse in={open} timeout="auto" unmountOnExit>
+              <Collapse in={openDropDown} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItemButton
                     className={
@@ -142,7 +139,11 @@ export default function Drawer() {
               </ListItemButton>
             </List>
             <Box className="personal-info-container">
-              <Avatar alt="Farhan Tariq" style={{ width: "auto" }} src="/avatar.jpg" />
+              <Avatar
+                alt="Farhan Tariq"
+                sx={{ width: "auto" }}
+                src="/avatar5.jpg"
+              />
               <Box className="personal-info">
                 <Typography variant="h6" className="name">
                   Farhan Tariq

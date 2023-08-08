@@ -54,6 +54,8 @@ function EnhancedTableToolbar({ numSelected, refetchData, totalCount }) {
       sx={{
         pl: { sm: 2 },
         pr: { sm: 2 },
+        borderTop: "1px solid #EAEAEA",
+        borderBottom: "1px solid #EAEAEA",
         ...(numSelected > 0 && {
           bgcolor: (theme) =>
             alpha(

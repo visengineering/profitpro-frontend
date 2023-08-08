@@ -30,7 +30,7 @@ function EnhancedTableHead({
             align={headCell.align}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
-            sx={{ width: `${headCell.width}` }}
+            sx={{ width: `${headCell.width}`, fontWeight: "500" }}
           >
             {headCell.disableSorting ? (
               <TableSortLabel

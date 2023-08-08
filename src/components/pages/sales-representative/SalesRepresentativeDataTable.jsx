@@ -19,7 +19,6 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import {
   FormControl,
-  InputLabel,
   Link,
   MenuItem,
   Pagination,
@@ -79,7 +78,7 @@ const headCells = [
 ];
 
 function Row(props) {
-  const { row, isItemSelected } = props;
+  const { row } = props;
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -95,26 +94,12 @@ function Row(props) {
     navigate(`/salesRepresentative/${row.user_id}`);
   };
 
-  const handleEdit = (e) => {
-    e.stopPropagation();
-    alert("handle edit");
-  };
-
-  const handleDelete = (e) => {
-    e.stopPropagation();
-    alert("handle delete");
-  };
-
   return (
     <Fragment>
       <TableRow
         hover
         onClick={() => navigateToTranscripts(row.user_id)}
-        role="checkbox"
-        aria-checked={isItemSelected}
-        tabIndex={-1}
         key={row.user_id}
-        selected={isItemSelected}
         sx={{ cursor: "pointer" }}
       >
         <TableCell align="center" size="small">
@@ -140,8 +125,8 @@ function Row(props) {
             onClick={(e) => handleShowUser(e)}
             src={row.user_avatar}
             sx={{
-              width: "3rem",
-              height: "3rem",
+              width: "2.5rem",
+              height: "2.5rem",
               borderRadius: "50%",
               border: "none",
             }}
@@ -282,7 +267,7 @@ function SalesRepresentativeDataTable({
 
   useEffect(() => {
     if (currentPage !== page) setPage(currentPage);
-  }, [currentPage]);
+  }, [page, currentPage]);
 
   useEffect(() => {
     if (currentPage === page && rowsPerPage === 5) return;
@@ -303,72 +288,79 @@ function SalesRepresentativeDataTable({
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", height: "100%" }}>
       <Paper
         sx={{
           width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
         }}
       >
         {isLoading ? (
           <TableLoader />
         ) : (
           <>
-            <EnhancedTableToolbar
-              totalCount={totalCount}
-              numSelected={selected.length}
-              refetchData={() => filterData(rowsPerPage, page || 1)}
-            />
-            <TableContainer component={Paper} className="table-list">
-              <Table aria-label="collapsible table">
-                <EnhancedTableHead
-                  numSelected={selected.length}
-                  order={order}
-                  orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
-                  rowCount={totalCount}
-                  headCells={headCells}
-                />
+            <Box>
+              <EnhancedTableToolbar
+                totalCount={totalCount}
+                numSelected={selected.length}
+                refetchData={() => filterData(rowsPerPage, page || 1)}
+              />
+              <TableContainer component={Paper}>
+                <Table aria-label="collapsible table">
+                  <EnhancedTableHead
+                    numSelected={selected.length}
+                    order={order}
+                    orderBy={orderBy}
+                    onSelectAllClick={handleSelectAllClick}
+                    onRequestSort={handleRequestSort}
+                    rowCount={totalCount}
+                    headCells={headCells}
+                  />
 
-                <TableBody>
-                  {totalCount ? (
-                    rows.map((row, index) => {
-                      const isItemSelected = isSelected(row.name);
-                      return (
-                        <Row
-                          key={row.user_id}
-                          row={row}
-                          isItemSelected={isItemSelected}
-                        />
-                      );
-                    })
-                  ) : (
-                    <TableRow>
-                      {" "}
-                      <TableCell colSpan={12} align="center">
-                        <Typography variant="h6">
-                          no sales representatives found
-                        </Typography>
-                      </TableCell>{" "}
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            {/* <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={totalCount}
-              rowsPerPage={rowsPerPage}
-              page={page - 1}
-              onPageChange={(e, value) => {
-                setPage(value + 1);
-              }}
-              onRowsPerPageChange={(e) => {
-                setRowsPerPage(e?.target?.value || 5);
-              }}
-            /> */}
+                  <TableBody>
+                    {totalCount ? (
+                      rows.map((row, index) => {
+                        const isItemSelected = isSelected(row.name);
+                        return (
+                          <Row
+                            key={row.user_id}
+                            row={row}
+                            isItemSelected={isItemSelected}
+                          />
+                        );
+                      })
+                    ) : (
+                      <TableRow>
+                        {" "}
+                        <TableCell colSpan={12} align="center">
+                          <Typography variant="h6">
+                            no sales representatives found
+                          </Typography>
+                        </TableCell>{" "}
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
             <Box className="table-pagination">
+              <Typography
+                sx={{
+                  p: 2,
+                  color: "#6C757D",
+                  lineHeight: "22px",
+                  fontSize: "14px",
+                }}
+              >
+                Showing {(page - 1) * rowsPerPage + 1} to{" "}
+                {(page - 1) * rowsPerPage + rowsPerPage > totalCount
+                  ? totalCount
+                  : (page - 1) * rowsPerPage + rowsPerPage}{" "}
+                of {totalCount} entries
+              </Typography>
               <Box
                 sx={{
                   display: "flex",
@@ -380,10 +372,8 @@ function SalesRepresentativeDataTable({
                 <Typography sx={{ fontSize: "12px" }}>Display</Typography>
 
                 <FormControl sx={{ m: 1, minWidth: "5rem" }} size="small">
-                  <InputLabel>Rows</InputLabel>
                   <Select
                     value={rowsPerPage}
-                    label="Rows"
                     onChange={(e) => {
                       setRowsPerPage(e.target.value);
                     }}

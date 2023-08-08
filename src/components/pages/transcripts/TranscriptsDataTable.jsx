@@ -10,7 +10,6 @@ import {
   Box,
   FormControl,
   IconButton,
-  InputLabel,
   Link,
   MenuItem,
   Pagination,
@@ -91,7 +90,7 @@ function TranscriptsDataTable({
 
   useEffect(() => {
     if (currentPage !== page) setPage(currentPage);
-  }, [currentPage]);
+  }, [page, currentPage]);
 
   useEffect(() => {
     if (currentPage === page && rowsPerPage === 5) return;
@@ -109,8 +108,6 @@ function TranscriptsDataTable({
     setSelected([]);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
-
   const navigate = useNavigate();
 
   const handleShowDetails = (transcriptId) => {
@@ -119,103 +116,121 @@ function TranscriptsDataTable({
     );
   };
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", height: "100%" }}>
       <Paper
         sx={{
           width: "100%",
-          mb: 2,
-          boxShadow: "rgba(0, 0, 0, 0.15) 5.4px 5.4px 6.2px",
-          borderRadius: "10px",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
         }}
       >
         {loading ? (
           <TableLoader />
         ) : (
           <>
-            <EnhancedTableToolbar
-              totalCount={totalCount}
-              numSelected={selected.length}
-              refetchData={() => fetchData(rowsPerPage, page || 1)}
-            />
-            <TableContainer component={Paper}>
-              <Table aria-label="collapsible table">
-                <EnhancedTableHead
-                  numSelected={selected.length}
-                  order={order}
-                  orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
-                  rowCount={transcripts.length}
-                  headCells={headCells}
-                />
-                <TableBody>
-                  {transcripts && transcripts.length ? (
-                    transcripts?.map((row) => {
-                      // const isItemSelected = isSelected(row.conversation_id);
-                      // const labelId = `enhanced-table-checkbox-${index}`;
-                      return (
-                        <TableRow
-                          key={row.conversation_id}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
-                          <TableCell align="center">
-                            {row.conversation_id}
-                          </TableCell>
-
-                          <TableCell align="center">
-                            {row.created_date}
-                          </TableCell>
-
-                          <TableCell align="center">
-                            {row.modified_date}
-                          </TableCell>
-
-                          <TableCell
+            <Box>
+              <EnhancedTableToolbar
+                totalCount={totalCount}
+                numSelected={selected.length}
+                refetchData={() => fetchData(rowsPerPage, page || 1)}
+              />
+              <TableContainer component={Paper}>
+                <Table aria-label="collapsible table">
+                  <EnhancedTableHead
+                    numSelected={selected.length}
+                    order={order}
+                    orderBy={orderBy}
+                    onSelectAllClick={handleSelectAllClick}
+                    onRequestSort={handleRequestSort}
+                    rowCount={transcripts.length}
+                    headCells={headCells}
+                  />
+                  <TableBody>
+                    {transcripts && transcripts.length ? (
+                      transcripts?.map((row) => {
+                        return (
+                          <TableRow
+                            key={row.conversation_id}
                             sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              gap: "1rem",
-                              alignItems: "center",
+                              "&:last-child td, &:last-child th": { border: 0 },
                             }}
                           >
-                            <Link href={row.conversation_link} target="_blank">
-                              <IconButton size="small">
-                                <SimCardDownloadIcon />
-                              </IconButton>
-                            </Link>
-                          </TableCell>
-                          <TableCell align="center">
-                            {row.duration ?? "-"}
-                          </TableCell>
-                          <TableCell align="center">
-                            <Link
-                              component="button"
-                              variant="body2"
-                              onClick={() =>
-                                handleShowDetails(row.conversation_id)
-                              }
+                            <TableCell align="center">
+                              {row.conversation_id}
+                            </TableCell>
+
+                            <TableCell align="center">
+                              {row.created_date}
+                            </TableCell>
+
+                            <TableCell align="center">
+                              {row.modified_date}
+                            </TableCell>
+
+                            <TableCell
+                              sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                gap: "1rem",
+                                alignItems: "center",
+                              }}
                             >
-                              Details
-                            </Link>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan={12} align="center">
-                        <Typography variant="h6">
-                          no transcripts found
-                        </Typography>
-                      </TableCell>{" "}
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                              <Link
+                                href={row.conversation_link}
+                                target="_blank"
+                              >
+                                <IconButton size="small">
+                                  <SimCardDownloadIcon />
+                                </IconButton>
+                              </Link>
+                            </TableCell>
+                            <TableCell align="center">
+                              {row.duration ?? "-"}
+                            </TableCell>
+                            <TableCell align="center">
+                              <Link
+                                component="button"
+                                variant="body2"
+                                onClick={() =>
+                                  handleShowDetails(row.conversation_id)
+                                }
+                              >
+                                Details
+                              </Link>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={12} align="center">
+                          <Typography variant="h6">
+                            no transcripts found
+                          </Typography>
+                        </TableCell>{" "}
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
             <Box className="table-pagination">
+              <Typography
+                sx={{
+                  p: 2,
+                  color: "#6C757D",
+                  lineHeight: "22px",
+                  fontSize: "14px",
+                }}
+              >
+                Showing {(page - 1) * rowsPerPage + 1} to{" "}
+                {(page - 1) * rowsPerPage + rowsPerPage > totalCount
+                  ? totalCount
+                  : (page - 1) * rowsPerPage + rowsPerPage}{" "}
+                of {totalCount} entries
+              </Typography>
               <Box
                 sx={{
                   display: "flex",
@@ -227,14 +242,13 @@ function TranscriptsDataTable({
                 <Typography sx={{ fontSize: "12px" }}>Display</Typography>
 
                 <FormControl sx={{ m: 1, minWidth: "5rem" }} size="small">
-                  <InputLabel>Rows</InputLabel>
                   <Select
                     value={rowsPerPage}
-                    label="Rows"
                     onChange={(e) => {
                       setRowsPerPage(e.target.value);
                     }}
                   >
+                    <MenuItem value={5}>5</MenuItem>
                     <MenuItem value={10}>10</MenuItem>
                     <MenuItem value={15}>15</MenuItem>
                     <MenuItem value={20}>20</MenuItem>
