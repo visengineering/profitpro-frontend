@@ -17,12 +17,20 @@ const TranscriptsTable = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const fetchTranscriptDetails = async (page_size = 5, selectedPage = 1) => {
+  const fetchTranscriptDetails = async (
+    page_size = 5,
+    selectedPage = 1,
+    searchTerm = "",
+    order = "asc",
+    orderBy = "conversation_id"
+  ) => {
     setLoading(true);
     try {
       const params = {
         page_size,
         page: selectedPage || 1,
+        search: searchTerm || "",
+        ordering: order === "desc" ? `-${orderBy}` : orderBy,
       };
 
       const response = await UserService.getSaleRepresentativeByDealerShipById(

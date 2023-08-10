@@ -32,7 +32,7 @@ function EnhancedTableHead({
             sortDirection={orderBy === headCell.id ? order : false}
             sx={{ width: `${headCell.width}`, fontWeight: "500" }}
           >
-            {headCell.disableSorting ? (
+            {headCell.sorting ? (
               <TableSortLabel
                 active={orderBy === headCell.id}
                 direction={orderBy === headCell.id ? order : "asc"}

@@ -5,46 +5,40 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
-import {
-  Box,
-  FormControl,
-  IconButton,
-  Link,
-  MenuItem,
-  Pagination,
-  PaginationItem,
-  Select,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, Link, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import TableLoader from "../../shared-components/Loader/TableLoader";
 import EnhancedTableHead from "../../shared-components/enhanced-table-head";
 import EnhancedTableToolbar from "../../shared-components/enhanced-table-toolbar";
 import debounce from "lodash/debounce";
+import formatDate from "../../../helpers/date";
+import Pagination from "../../shared-components/pagination";
 
 const headCells = [
   {
-    id: "Transcript ID",
+    id: "conversation_id",
     numeric: true,
     disablePadding: false,
     label: "Customer ID",
     align: "center",
+    sorting: true,
   },
   {
-    id: "Created At",
+    id: "created_date",
     numeric: false,
     disablePadding: true,
     label: "Created At",
     align: "center",
+    sorting: true,
   },
   {
-    id: "Updated At",
+    id: "modified_date",
     numeric: true,
     disablePadding: false,
     label: "Updated At",
     align: "center",
+    sorting: true,
   },
   {
     id: "Audio Link",
@@ -54,11 +48,12 @@ const headCells = [
     align: "center",
   },
   {
-    id: "Time Duration",
+    id: "duration",
     numeric: true,
     disablePadding: false,
     label: "Time Duration (seconds)",
     align: "center",
+    sorting: true,
   },
   {
     id: "Action",
@@ -90,7 +85,6 @@ function TranscriptsDataTable({
   };
   const [searchTerm, setSearchTerm] = useState();
   const debouncedHandleSearch = debounce((value) => {
-    console.log("debounced value = ", value);
     setSearchTerm(value);
   }, 500);
 
@@ -99,8 +93,8 @@ function TranscriptsDataTable({
   }, [currentPage]);
 
   useEffect(() => {
-    fetchData(rowsPerPage, page || 1);
-  }, [page, searchTerm]);
+    fetchData(rowsPerPage, page || 1, searchTerm, order, orderBy);
+  }, [searchTerm, order, orderBy]);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -139,6 +133,7 @@ function TranscriptsDataTable({
                 numSelected={selected.length}
                 refetchData={() => fetchData(rowsPerPage, page || 1)}
                 setSearchTerm={debouncedHandleSearch}
+                searchTerm={searchTerm}
               />
               <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
@@ -166,11 +161,11 @@ function TranscriptsDataTable({
                             </TableCell>
 
                             <TableCell align="center">
-                              {row.created_date}
+                              {formatDate(row.created_date)}
                             </TableCell>
 
                             <TableCell align="center">
-                              {row.modified_date}
+                              {formatDate(row.modified_date)}
                             </TableCell>
 
                             <TableCell
@@ -186,7 +181,11 @@ function TranscriptsDataTable({
                                 target="_blank"
                               >
                                 <IconButton size="small">
-                                  <SimCardDownloadIcon />
+                                  <Box
+                                    component="img"
+                                    src="/downloadIcon.svg"
+                                    sx={{ height: "24px", width: "24px" }}
+                                  />
                                 </IconButton>
                               </Link>
                             </TableCell>
@@ -218,59 +217,14 @@ function TranscriptsDataTable({
                 </Table>
               </TableContainer>
             </Box>
-            <Box className="table-pagination">
-              <Typography
-                sx={{
-                  p: 2,
-                  color: "#6C757D",
-                  lineHeight: "22px",
-                  fontSize: "14px",
-                }}
-              >
-                Showing {(page - 1) * rowsPerPage + 1} to{" "}
-                {(page - 1) * rowsPerPage + rowsPerPage > totalCount
-                  ? totalCount
-                  : (page - 1) * rowsPerPage + rowsPerPage}{" "}
-                of {totalCount} entries
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "end",
-                  padding: 1,
-                  alignItems: "center",
-                }}
-              >
-                <Typography sx={{ fontSize: "12px" }}>Display</Typography>
-
-                <FormControl sx={{ m: 1, minWidth: "5rem" }} size="small">
-                  <Select
-                    value={rowsPerPage}
-                    onChange={(e) => {
-                      setRowsPerPage(e.target.value);
-                      fetchData(e.target.value, 1)
-                    }}
-                  >
-                    <MenuItem value={5}>5</MenuItem>
-                    <MenuItem value={10}>10</MenuItem>
-                    <MenuItem value={15}>15</MenuItem>
-                    <MenuItem value={20}>20</MenuItem>
-                    <MenuItem value={25}>25</MenuItem>
-                  </Select>
-                </FormControl>
-                <Pagination
-                  shape="rounded"
-                  component="div"
-                  count={Math.ceil(totalCount / rowsPerPage)}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onChange={(e, value) => {
-                    if (page !== value) setPage(value);
-                  }}
-                  renderItem={(item) => <PaginationItem {...item} />}
-                />
-              </Box>
-            </Box>
+            <Pagination
+              page={page}
+              rowsPerPage={rowsPerPage}
+              totalCount={totalCount}
+              setRowsPerPage={setRowsPerPage}
+              filterData={fetchData}
+              setPage={setPage}
+            />
           </>
         )}
       </Paper>

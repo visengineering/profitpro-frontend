@@ -13,10 +13,10 @@
   }
 }
 .table-pagination {
-  position: fixed;
+  position: sticky;
   right: 0;
   bottom: 0;
-  width: calc(100% - 300px);
+  width: 100%;
   background-color: white;
   border-top: 2px solid #dfdfdf;
   display: flex;

@@ -8,8 +8,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
-
+import formatDate from "../../../helpers/date";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import PropTypes from "prop-types";
@@ -17,18 +16,12 @@ import LoadingButton from "../../generic-components/button";
 import { useNavigate } from "react-router-dom";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import {
-  FormControl,
-  Link,
-  MenuItem,
-  Pagination,
-  PaginationItem,
-  Select,
-} from "@mui/material";
+import { Link } from "@mui/material";
 import TableLoader from "../../shared-components/Loader/TableLoader";
 import EnhancedTableHead from "../../shared-components/enhanced-table-head";
 import EnhancedTableToolbar from "../../shared-components/enhanced-table-toolbar";
 import debounce from "lodash/debounce";
+import Pagination from "../../shared-components/pagination";
 
 const headCells = [
   {
@@ -48,19 +41,21 @@ const headCells = [
     align: "center",
   },
   {
-    id: "Member Name",
+    id: "first_name",
     numeric: true,
     disablePadding: false,
     label: "Member Name",
     width: "20rem",
     align: "left",
+    sorting: true,
   },
   {
-    id: "Mobile Number",
+    id: "phone",
     numeric: true,
-    disablePadding: false,
     label: "Mobile Number",
+    disablePadding: false,
     align: "center",
+    sorting: true,
   },
   {
     id: "Email Address",
@@ -185,10 +180,10 @@ function Row(props) {
                         {transcriptRow.conversation_id}
                       </TableCell>
                       <TableCell align="center">
-                        {transcriptRow.created_date}
+                        {formatDate(transcriptRow.created_date)}
                       </TableCell>
                       <TableCell align="center">
-                        {transcriptRow.modified_date}
+                        {formatDate(transcriptRow.modified_date)}
                       </TableCell>
                       <TableCell
                         align="center"
@@ -202,7 +197,11 @@ function Row(props) {
                           target="_blank"
                         >
                           <IconButton size="small">
-                            <SimCardDownloadIcon />
+                            <Box
+                              component="img"
+                              src="/downloadIcon.svg"
+                              sx={{ height: "24px", width: "24px" }}
+                            />
                           </IconButton>
                         </Link>
                       </TableCell>
@@ -272,10 +271,16 @@ function SalesRepresentativeDataTable({
     if (currentPage !== page) setPage(currentPage);
   }, [page, currentPage]);
 
+  const [searchTerm, setSearchTerm] = useState();
+
+  const debouncedHandleSearch = debounce((value) => {
+    setSearchTerm(value);
+  }, 500);
+
   useEffect(() => {
-    filterData(rowsPerPage, page || 1);
+    filterData(rowsPerPage, page || 1, searchTerm, order, orderBy);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, rowsPerPage]);
+  }, [searchTerm, order, orderBy]);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -287,11 +292,6 @@ function SalesRepresentativeDataTable({
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-  const [searchTerm, setSearchTerm] = useState();
-  const debouncedHandleSearch = debounce((value) => {
-    console.log(value);
-    setSearchTerm(value);
-  }, 500);
 
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
@@ -314,6 +314,7 @@ function SalesRepresentativeDataTable({
                 numSelected={selected.length}
                 refetchData={() => filterData(rowsPerPage, page || 1)}
                 setSearchTerm={debouncedHandleSearch}
+                searchTerm={searchTerm}
               />
               <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
@@ -353,58 +354,14 @@ function SalesRepresentativeDataTable({
                 </Table>
               </TableContainer>
             </Box>
-            <Box className="table-pagination">
-              <Typography
-                sx={{
-                  p: 2,
-                  color: "#6C757D",
-                  lineHeight: "22px",
-                  fontSize: "14px",
-                }}
-              >
-                Showing {(page - 1) * rowsPerPage + 1} to{" "}
-                {(page - 1) * rowsPerPage + rowsPerPage > totalCount
-                  ? totalCount
-                  : (page - 1) * rowsPerPage + rowsPerPage}{" "}
-                of {totalCount} entries
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "end",
-                  padding: 1,
-                  alignItems: "center",
-                }}
-              >
-                <Typography sx={{ fontSize: "12px" }}>Display</Typography>
-
-                <FormControl sx={{ m: 1, minWidth: "5rem" }} size="small">
-                  <Select
-                    value={rowsPerPage}
-                    onChange={(e) => {
-                      setRowsPerPage(e.target.value);
-                    }}
-                  >
-                    <MenuItem value={5}>5</MenuItem>
-                    <MenuItem value={10}>10</MenuItem>
-                    <MenuItem value={15}>15</MenuItem>
-                    <MenuItem value={20}>20</MenuItem>
-                    <MenuItem value={25}>25</MenuItem>
-                  </Select>
-                </FormControl>
-                <Pagination
-                  shape="rounded"
-                  component="div"
-                  count={Math.ceil(totalCount / rowsPerPage)}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={(e, value) => {
-                    setPage(value);
-                  }}
-                  renderItem={(item) => <PaginationItem {...item} />}
-                />
-              </Box>
-            </Box>
+            <Pagination
+              page={page}
+              rowsPerPage={rowsPerPage}
+              totalCount={totalCount}
+              setRowsPerPage={setRowsPerPage}
+              filterData={filterData}
+              setPage={setPage}
+            />
           </>
         )}
       </Paper>

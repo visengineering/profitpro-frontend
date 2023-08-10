@@ -85,7 +85,10 @@ export default function Drawer() {
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
               </ListItemButton>
-              <ListItemButton className="main-nav expand-able" onClick={updateOpen}>
+              <ListItemButton
+                className="main-nav expand-able"
+                onClick={updateOpen}
+              >
                 <ListItemIcon>
                   <StorefrontIcon />
                 </ListItemIcon>

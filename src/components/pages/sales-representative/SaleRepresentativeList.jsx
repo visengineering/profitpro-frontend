@@ -11,12 +11,20 @@ const SaleRepresentativeList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setLoading] = useState(false);
 
-  const fetchSalesDetails = async (page_size = 5, selectedPage = 1) => {
+  const fetchSalesDetails = async (
+    page_size = 5,
+    selectedPage = 1,
+    searchTerm = "",
+    order = "asc",
+    orderBy = "first_name"
+  ) => {
     setLoading(true);
     try {
       const params = {
         page_size,
         page: selectedPage || 1,
+        search: searchTerm || "",
+        ordering: order === "desc" ? `-${orderBy}` : orderBy,
       };
 
       const response = await UserService.getSaleRepresentativeByDealerShip(
