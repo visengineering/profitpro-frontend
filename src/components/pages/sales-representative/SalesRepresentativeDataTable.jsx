@@ -226,16 +226,23 @@ function Row(props) {
                   ))}
                 </TableBody>
               </Table>
-              {!!row.transcripts.length && row.total_transcript_count > 5 && (
-                <LoadingButton
-                  buttonTitle={"Show more"}
-                  variant="contained"
-                  size="small"
-                  sx={{ margin: "1rem" }}
-                  handleClick={() => navigateToTranscripts(row.user_id)}
-                  styleClass="primary-btn float-right "
-                />
-              )}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                {!!row.transcripts.length && row.total_transcript_count > 5 && (
+                  <LoadingButton
+                    buttonTitle={"Load more"}
+                    variant="outlined"
+                    size="small"
+                    sx={{ margin: "1rem" }}
+                    handleClick={() => navigateToTranscripts(row.user_id)}
+                    styleClass="load-more-btn "
+                  />
+                )}
+              </Box>
             </Box>
           </Collapse>
         </TableCell>

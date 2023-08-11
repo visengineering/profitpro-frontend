@@ -1,0 +1,76 @@
+$backgroundImage: url("../../../public/loginBg.png");
+
+.auth-box-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  .login-img {
+    height: inherit;
+    width: 50%;
+    background-image: $backgroundImage;
+    background-size: cover;
+  }
+  .login-form-container {
+    width: 50%;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+    img {
+      width: 45%;
+    }
+    .form-container {
+      //   border: 1px solid black;
+      width: 100%;
+      gap: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .welcome-msg {
+      font-size: 16px;
+    }
+    .login-msg {
+      font-size: 38px;
+      font-weight: 700;
+    }
+    .login-form {
+      width: 50%;
+
+      form {
+        display: flex;
+        flex-direction: column;
+
+        .MuiInputLabel-root {
+          margin: 10px 0;
+          font-size: 16px;
+          font-weight: 400;
+          color: black !important;
+        }
+        .options-container {
+          margin: 1rem 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 14px;
+
+          .MuiFormControlLabel-label {
+            font-size: 14px;
+          }
+        }
+        .login-field {
+          width: 100%;
+        }
+      }
+    }
+
+    .copyright {
+      color: $light-secondary;
+      font-size: 16px;
+      font-weight: 400;
+      margin-top: 6rem;
+    }
+  }
+}

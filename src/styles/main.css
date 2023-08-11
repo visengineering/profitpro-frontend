@@ -35,13 +35,30 @@
 }
 
 .table-container {
-  width: 85%;
   float: right;
   margin-top: 5rem;
+  width: 100%;
   max-width: calc(100% - 300px);
   height: calc(100vh - 5rem);
 }
+.table-container .table-list {
+  height: 100vh;
+}
+.table-container .MuiTableCell-root {
+  padding: 5px 10px;
+}
 
+.table-pagination {
+  position: sticky;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  border-top: 2px solid #dfdfdf;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .table-pagination .MuiTextField-root {
   margin: 0 1rem 0 0.5rem;
   outline: none !important;
@@ -83,11 +100,39 @@
   background-color: #dc2626 !important;
 }
 
+.load-more-btn {
+  margin: 0 !important;
+  outline: none !important;
+  border: none !important;
+  text-transform: none !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  text-decoration: underline !important;
+  color: #6c757d !important;
+  font-family: "Poppins", sans-serif !important;
+}
+.load-more-btn:hover {
+  background-color: transparent !important;
+  color: black !important;
+}
+
+.login-btn {
+  background: #e86917 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: normal !important;
+  border: none !important;
+  min-height: 50px !important;
+  text-transform: none !important;
+  border-radius: 5px !important;
+}
+
 .side-menu-bar {
   height: 100%;
   background: #383f51;
   color: #fff;
   background-image: url("../../../public/SideBar.png");
+  background-size: cover;
 }
 .side-menu-bar .drawer-head {
   display: flex;
@@ -116,13 +161,16 @@
   border-radius: 4px;
 }
 .side-menu-bar .MuiListItemButton-root:hover {
-  background: #e86917;
+  background: #2d366b;
+}
+.side-menu-bar .expand-able:hover {
+  background: none !important;
 }
 .side-menu-bar .navbar-btn-active {
   margin: auto;
   width: 80%;
   border-radius: 4px;
-  background: #e86917;
+  background: #2d366b;
 }
 .side-menu-bar .MuiListItemIcon-root {
   color: white;
@@ -132,6 +180,9 @@
   gap: 8px;
   align-items: center;
   margin: 0 auto;
+}
+.side-menu-bar .personal-info-container .avatar-info > img {
+  width: auto;
 }
 .side-menu-bar .personal-info-container .personal-info {
   display: flex;
@@ -147,11 +198,95 @@
   font-weight: 400;
 }
 
+.main-nav {
+  margin: 10px auto 0px 20px !important;
+  width: 90% !important;
+  margin-top: 10px !important;
+  padding-left: 10px !important;
+  padding-right: 20px !important;
+}
+.main-nav .MuiListItemIcon-root {
+  min-width: 35px;
+}
+
+.mt-10 {
+  margin-top: 10px !important;
+}
+
 .top-bar-container {
   display: flex;
   width: 85%;
   flex-direction: row;
   max-width: calc(100% - 300px);
+}
+
+.auth-box-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+.auth-box-container .login-img {
+  height: inherit;
+  width: 50%;
+  background-image: url("../../../public/loginBg.png");
+  background-size: cover;
+}
+.auth-box-container .login-form-container {
+  width: 50%;
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+}
+.auth-box-container .login-form-container img {
+  width: 45%;
+}
+.auth-box-container .login-form-container .form-container {
+  width: 100%;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.auth-box-container .login-form-container .welcome-msg {
+  font-size: 16px;
+}
+.auth-box-container .login-form-container .login-msg {
+  font-size: 38px;
+  font-weight: 700;
+}
+.auth-box-container .login-form-container .login-form {
+  width: 50%;
+}
+.auth-box-container .login-form-container .login-form form {
+  display: flex;
+  flex-direction: column;
+}
+.auth-box-container .login-form-container .login-form form .MuiInputLabel-root {
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: black !important;
+}
+.auth-box-container .login-form-container .login-form form .options-container {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+}
+.auth-box-container .login-form-container .login-form form .options-container .MuiFormControlLabel-label {
+  font-size: 14px;
+}
+.auth-box-container .login-form-container .login-form form .login-field {
+  width: 100%;
+}
+.auth-box-container .login-form-container .copyright {
+  color: #6c757d;
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 6rem;
 }
 
 .box-container {
@@ -161,4 +296,8 @@
   margin-top: 7rem;
   height: 100%;
   max-width: calc(100% - 300px);
+}
+
+body {
+  background: white !important;
 }/*# sourceMappingURL=main.css.map */

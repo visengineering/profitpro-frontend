@@ -10,6 +10,7 @@ import SalesRepresentative from "./components/pages/sales-representative/SalesRe
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Dashboard from "./components/pages/dashboard/Dashboard";
+import LoginPage from "./components/pages/login";
 
 function App() {
   const router = createBrowserRouter([
@@ -44,6 +45,10 @@ function App() {
           element: <Transcript />,
         },
       ],
+    },
+    {
+      path: "login",
+      element: <LoginPage />,
     },
   ]);
   return (
