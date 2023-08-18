@@ -11,6 +11,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Dashboard from "./components/pages/dashboard/Dashboard";
 import LoginPage from "./components/pages/login";
+import ActiveUser from "./components/pages/activeUser/ActiveUser";
+
 
 function App() {
   const router = createBrowserRouter([
@@ -43,6 +45,10 @@ function App() {
         {
           path: "salesRepresentative/:salesRepresentativeId/transcripts/:transcriptId",
           element: <Transcript />,
+        },
+        {
+          path: "AllActiveUser",
+          element: <ActiveUser />,
         },
       ],
     },

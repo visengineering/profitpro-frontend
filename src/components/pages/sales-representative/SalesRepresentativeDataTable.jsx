@@ -54,7 +54,7 @@ const headCells = [
     numeric: true,
     label: "Mobile Number",
     disablePadding: false,
-    align: "center",
+    align: "left",
     sorting: true,
   },
   {
@@ -62,14 +62,14 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: "Email Address",
-    align: "center",
+    align: "left",
   },
   {
     id: "Action",
     numeric: true,
     disablePadding: false,
     label: "Action",
-    align: "center",
+    align: "left",
   },
 ];
 
@@ -115,6 +115,9 @@ function Row(props) {
         <TableCell
           align="center"
           className="d-flex justify-center align-center"
+          sx={{
+            borderBottom: "1px solid rgba(224, 224, 224, 1)",
+          }}
         >
           <Box
             component="img"
@@ -122,7 +125,7 @@ function Row(props) {
             src={row.user_avatar}
             sx={{
               width: "2.5rem",
-              height: "2.5rem",
+              height: "2.6rem",
               borderRadius: "50%",
               border: "none",
             }}
@@ -133,22 +136,26 @@ function Row(props) {
         <TableCell align="left">
           {row.first_name} {row.last_name}
         </TableCell>
-        <TableCell align="center">{row.phone}</TableCell>
-        <TableCell align="center">{row.user_email}</TableCell>
-        <TableCell align="center">
-          <Box sx={{ display: "flex", justifyContent: "center", gap: "5px" }}>
-            <LoadingButton
-              buttonTitle="Edit"
-              variant="outlined"
-              styleClass="secondary-btn"
-              handleClick={(e) => e.stopPropagation()}
-            />
-            <LoadingButton
-              buttonTitle="Delete"
-              variant="contained"
-              styleClass="error-btn"
-              handleClick={(e) => e.stopPropagation()}
-            />
+        <TableCell align="left">{row.phone}</TableCell>
+        <TableCell align="left">{row.user_email}</TableCell>
+        <TableCell align="left">
+          <Box sx={{ display: "flex", justifyContent: "left", gap: "20px" }}>
+         <IconButton size="small"   sx={{ paddingLeft:"0px" }}>
+                            <Box
+                              component="img"
+                              src="/edit.svg"
+                              sx={{ height: "20px", width: "20px" }}
+                              handleClick={(e) => e.stopPropagation()}
+                            />
+                          </IconButton>
+        <IconButton size="small">
+                            <Box
+                              component="img"
+                              src="/delete.svg"
+                              sx={{ height: "20px", width: "20px" }}
+                              handleClick={(e) => e.stopPropagation()}
+                            />
+       </IconButton>
           </Box>
         </TableCell>
       </TableRow>

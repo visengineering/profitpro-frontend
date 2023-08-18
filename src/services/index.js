@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const BASE_API_URL = process.env.REACT_APP_BACKEND_API_URL;
+export const BASE_AUTH_API_URL = process.env.REACT_APP_BACKEND_AUTH_API_URL;
 
 export const authInterceptor = [
   (config) => {
@@ -13,13 +14,13 @@ export const authInterceptor = [
   },
 ];
 
-export const Service = (url) =>
+export const Service = (url, isAuth) =>
   axios.create({
-    baseURL: BASE_API_URL + url,
+    baseURL: isAuth ? BASE_AUTH_API_URL : BASE_API_URL + url,
   });
 
-export const AuthorizedService = (url) => {
-  const authorizedService = Service(url);
+export const AuthorizedService = (url, isAuth) => {
+  const authorizedService = Service(url, isAuth);
   authorizedService.interceptors.request.use(...authInterceptor);
   return authorizedService;
 };

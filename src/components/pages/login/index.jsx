@@ -16,7 +16,9 @@ import { useFormik } from "formik";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import LoadingButton from "../../generic-components/button";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { CleaningServices, Visibility, VisibilityOff } from "@mui/icons-material";
+import AuthService from "../../../services/plugins/auth";
+import { useNavigate } from 'react-router-dom';
 const validationSchema = yup.object({
   email: yup
     .string("Enter your email")
@@ -29,6 +31,7 @@ const validationSchema = yup.object({
 });
 
 function LoginPage() {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -36,8 +39,12 @@ function LoginPage() {
       rememberMe: false,
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+       const token= await AuthService.login(values);
+        console.log(token);
+         localStorage.setItem("tokenValues", JSON.stringify(token));
+         
+         navigate('/');
     },
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -107,7 +114,7 @@ function LoginPage() {
                 }}
               />
               <Box className="options-container">
-                <FormControlLabel
+                {/* <FormControlLabel
                   control={
                     <Checkbox
                       id="rememberMe"
@@ -119,7 +126,7 @@ function LoginPage() {
                     />
                   }
                   label="Remember me"
-                />
+                /> */}
                 <Link href="" underline="none">
                   Forgot password?
                 </Link>
