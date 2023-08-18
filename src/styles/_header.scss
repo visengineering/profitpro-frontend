@@ -21,3 +21,20 @@
 .align-center {
   align-items: center;
 }
+
+.active-user {
+  &:hover {
+    background-color: #FFB526;
+    border-radius: 5px;
+    color: #FFFFFF;
+    .suggestion_box {
+      background-color: transparent;
+    }
+
+  }
+    // &:hover {
+    //   border-radius: 0px;
+    // }
+
+}
+ 
