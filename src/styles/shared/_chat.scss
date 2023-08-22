@@ -1,0 +1,40 @@
+$backgroundImage: url("../../../public/AIChat.jpg");
+
+.chatBackgroundImage {
+  background-image: $backgroundImage;
+  background-size: cover;
+  max-height: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  object-fit: fill;
+}
+@media (min-width: 1200px) {
+  .User {
+    font-size: 30px;
+    font-weight: 400;
+  }
+}
+@media (max-width: 1199px) {
+  .User {
+    font-size: 30px;
+    font-weight: 400;
+  }
+}
+@media (max-width: 992px) {
+  .User {
+    font-size: 30px;
+    font-weight: 400;
+  }
+}
+@media (max-width: 768px) {
+  .User {
+    font-size: 30px;
+    font-weight: 400;
+  }
+}
+@media (max-width: 576px) {
+  .User {
+    font-size: 30px;
+    font-weight: 400;
+  }
+}

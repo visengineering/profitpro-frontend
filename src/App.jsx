@@ -13,7 +13,6 @@ import Dashboard from "./components/pages/dashboard/Dashboard";
 import LoginPage from "./components/pages/login";
 import ActiveUser from "./components/pages/activeUser/ActiveUser";
 
-
 function App() {
   const router = createBrowserRouter([
     {
@@ -47,7 +46,7 @@ function App() {
           element: <Transcript />,
         },
         {
-          path: "AllActiveUser",
+          path: "active-user",
           element: <ActiveUser />,
         },
       ],

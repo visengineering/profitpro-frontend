@@ -72,7 +72,7 @@ export default function Drawer() {
           <Divider />
           <Box className="list-container">
             <List component="nav" sx={{ marginTop: "1rem" }}>
-              <ListItemButton
+              {/* <ListItemButton
                 onClick={() => {
                   navigate("/");
                 }}
@@ -84,7 +84,7 @@ export default function Drawer() {
                   <HomeIcon />
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
-              </ListItemButton>
+              </ListItemButton> */}
               <ListItemButton
                 className="main-nav expand-able"
                 onClick={updateOpen}
@@ -92,7 +92,7 @@ export default function Drawer() {
                 <ListItemIcon>
                   <StorefrontIcon />
                 </ListItemIcon>
-                <ListItemText primary="Car Dealership" />
+                <ListItemText primary="All Dealerships" />
                 {openDropDown ? <ExpandLessIcon /> : <ExpandMoreIcon />}
               </ListItemButton>
               <Collapse in={openDropDown} timeout="auto" unmountOnExit>
@@ -111,7 +111,33 @@ export default function Drawer() {
                     {/* <ListItemIcon>
                     <PersonIcon />
                   </ListItemIcon> */}
-                    <ListItemText primary="Sales Person" />
+                    <ListItemText primary="Toyoto" />
+                  </ListItemButton>
+                  <ListItemButton
+                    sx={{ pl: 6 }}
+                    className={`${
+                      activeButton === "all-transcripts"
+                        ? "navbar-btn-active"
+                        : ""
+                    } mt-10`}
+                  >
+                    {/* <ListItemIcon>
+                    <AssignmentIcon />
+                  </ListItemIcon> */}
+                    <ListItemText primary="Honda" />
+                  </ListItemButton>
+                  <ListItemButton
+                    sx={{ pl: 6 }}
+                    className={`${
+                      activeButton === "all-transcripts"
+                        ? "navbar-btn-active"
+                        : ""
+                    } mt-10`}
+                  >
+                    {/* <ListItemIcon>
+                    <AssignmentIcon />
+                  </ListItemIcon> */}
+                    <ListItemText primary="Suzuki" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ pl: 6 }}

@@ -6,7 +6,7 @@ class UserChat {
   static getAllChatUser() {
     return allChatUser({
       method: "GET",
-    //   url: `/${params}`,
+      //   url: `/${params}`,
     });
   }
 }

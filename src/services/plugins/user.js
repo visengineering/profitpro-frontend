@@ -15,7 +15,21 @@ class UserService {
     return userService({
       method: "GET",
       url: `/${userId}/transcripts`,
-      params
+      params,
+    });
+  }
+
+  static getAllActiveUser() {
+    return userService({
+      method: "GET",
+      url: "/active",
+    });
+  }
+
+  static getActiveConversation(userId) {
+    return userService({
+      method: "GET",
+      url: `${userId}/transcripts/active`,
     });
   }
 }
