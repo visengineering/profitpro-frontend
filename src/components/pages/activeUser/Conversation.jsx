@@ -67,7 +67,7 @@ const Conversation = ({ selectedUser, conversationList, isLoading }) => {
         <Box
           sx={{
             height: "80vh",
-            overflow: "scroll",
+            overflowY: "scroll",
           }}
         >
           {conversationList.map((conversation) =>

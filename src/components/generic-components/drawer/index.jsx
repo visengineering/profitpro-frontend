@@ -9,7 +9,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import HomeIcon from "@mui/icons-material/Home";
 import {
   Avatar,
   Collapse,
@@ -17,8 +16,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import StorefrontIcon from "@mui/icons-material/Storefront";
 import { AppContext } from "../../../hooks/AppContext";
+
 const drawerWidth = "300px";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -90,7 +89,11 @@ export default function Drawer() {
                 onClick={updateOpen}
               >
                 <ListItemIcon>
-                  <StorefrontIcon />
+                  {openDropDown ? (
+                    <img src="/setting-selected.svg" />
+                  ) : (
+                    <img src="/setting.svg" />
+                  )}
                 </ListItemIcon>
                 <ListItemText primary="All Dealerships" />
                 {openDropDown ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -154,7 +157,43 @@ export default function Drawer() {
                   </ListItemButton>
                 </List>
               </Collapse>
-              <ListItemButton className="main-nav">
+              <ListItemButton
+                className="main-nav expand-able"
+                disabled
+                onClick={updateOpen}
+              >
+                <ListItemIcon>
+                  {" "}
+                  <img src="/folder.svg" />
+                </ListItemIcon>
+                <ListItemText primary="Dossier" />
+                {openDropDown ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </ListItemButton>
+              <ListItemButton
+                className="main-nav expand-able"
+                disabled
+                onClick={updateOpen}
+              >
+                <ListItemIcon>
+                  {" "}
+                  <img src="/pdf.svg" />
+                </ListItemIcon>
+                <ListItemText primary="Project" />
+                {openDropDown ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </ListItemButton>
+              <ListItemButton
+                className="main-nav expand-able"
+                disabled
+                onClick={updateOpen}
+              >
+                <ListItemIcon>
+                  {" "}
+                  <img src="/monitor.svg" />
+                </ListItemIcon>
+                <ListItemText primary="Direction Technique" />
+                {openDropDown ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </ListItemButton>
+              {/* <ListItemButton className="main-nav">
                 <ListItemIcon>
                   <StorefrontIcon />
                 </ListItemIcon>
@@ -165,7 +204,7 @@ export default function Drawer() {
                   <StorefrontIcon />
                 </ListItemIcon>
                 <ListItemText primary="Bike Dealership" />
-              </ListItemButton>
+              </ListItemButton> */}
             </List>
             <Box className="personal-info-container">
               <Avatar
