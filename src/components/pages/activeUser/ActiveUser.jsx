@@ -36,6 +36,10 @@ const ActiveUser = () => {
         getConversationByUser(results[0]);
       }
 
+      results.forEach((user) => {
+        user.colorStatus = generateRandomColor();
+      });
+
       setUsers(results || []);
     } catch (error) {
       console.log(error);
@@ -49,7 +53,6 @@ const ActiveUser = () => {
       const response = await UserService.getActiveConversation(user.user_id);
       const { results } = response.data;
 
-      console.log(response.data);
       setConversations(results);
       console.log(results);
     } catch (error) {
@@ -132,11 +135,11 @@ const ActiveUser = () => {
                 padding: "0.5rem 0rem",
                 marginLeft: "0.9rem",
                 cursor: "pointer",
-                // ":hover": {
-                //   backgroundColor: " #F1F7FF",
-                //   borderRadius: "5px",
-                // },
-                backgroundColor: user.valueColor,
+                ":hover": {
+                  backgroundColor: user.colorStatus,
+                  borderRadius: "5px",
+                },
+                // backgroundColor: user.colorStatus,
               }}
               className="active-user"
               onClick={() => {
@@ -155,13 +158,13 @@ const ActiveUser = () => {
                   sx={{
                     width: "4px",
                     height: "inherit",
-                    backgroundColor: `${generateRandomColor()}`,
+                    backgroundColor: `${user.colorStatus}`,
                     borderRadius: "3px",
                     cursor: "pointer",
-                    // "&:hover": {
-                    //   backgroundColor: "transparent",
-                    //   borderRadius: "0px !important",
-                    // },
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                      borderRadius: "0px !important",
+                    },
                   }}
                   className="suggestion_box"
                 />
@@ -171,7 +174,6 @@ const ActiveUser = () => {
                   sx={{
                     fontSize: "min(10vh,18px)",
                     lineHeight: "2.5rem",
-
                     // paddingLeft: "1rem",
                   }}
                 >
