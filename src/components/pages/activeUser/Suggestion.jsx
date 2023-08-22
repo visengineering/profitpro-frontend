@@ -67,7 +67,7 @@ const Suggestion = () => {
           >
             <Typography
               sx={{
-                fontSize: "12px",
+                fontSize: "16px",
                 lineHeight: "1.2rem",
                 padding: "0.4rem",
               }}
@@ -184,7 +184,7 @@ const Suggestion = () => {
               backgroundColor: "#F1F7FF",
               padding: "0.2rem",
               borderRadius: "3px",
-              padding: "0.4rem",
+              fontSize: "16px"
             }}
           >
             <Typography
