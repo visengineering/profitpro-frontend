@@ -17,9 +17,8 @@ const UserList = styled("div")(({ theme }) => ({
   paddingTop: "1rem",
   maxWidth: "calc(100% - 300px)",
   backgroundColor: "#F4F5F8",
+  marginBottom: "1rem",
 }));
-
-const colors = ["#00DF09", "#FFB526", "#0066FF", "#DC2626"];
 
 const ActiveUser = () => {
   const [users, setUsers] = useState([]);
@@ -35,10 +34,6 @@ const ActiveUser = () => {
       if (Array.isArray(results) && results.length) {
         getConversationByUser(results[0]);
       }
-
-      results.forEach((user) => {
-        user.colorStatus = generateRandomColor();
-      });
 
       setUsers(results || []);
     } catch (error) {
@@ -61,11 +56,6 @@ const ActiveUser = () => {
     setLoading(false);
   }
 
-  const generateRandomColor = () => {
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    return colors[randomIndex];
-  };
-
   useEffect(() => {
     getAllActiveUsers();
   }, []);
@@ -78,18 +68,18 @@ const ActiveUser = () => {
           sx={{
             width: "25%",
             backgroundColor: "#FFFFFF",
-            height: "90vh",
-            padding: "0.6rem 0.1rem",
+            height: "88vh",
+            padding: "0.3rem 0.1rem",
             borderRadius: "3px",
-            // marginBottom: "1rem",
+            overflowY: "auto",
           }}
         >
           <Box
             className="active_user_portion"
             sx={{
               paddingLeft: "0.9rem",
-              paddingTop: "0.1rem",
-              paddingBottom: "1rem",
+              paddingTop: "0.3rem",
+              paddingBottom: "0.8rem",
               borderBottom: "1px solid #D9D9D9",
             }}
           >
@@ -99,6 +89,7 @@ const ActiveUser = () => {
               sx={{
                 fontSize: "min(10vh,30px)",
                 fontWeight: "700",
+                lineHeight: "1",
               }}
             >
               Active Users
@@ -128,18 +119,20 @@ const ActiveUser = () => {
                 flexDirection: "row",
                 // justifyContent: "space-between",
                 gap: 5,
-                overflow: "hidden",
+                overflowY: "hidden",
                 alignItems: " center",
                 width: "90%",
                 borderRadius: "5px",
                 padding: "0.5rem 0rem",
+
                 marginLeft: "0.9rem",
+                marginTop: "0.5rem",
                 cursor: "pointer",
                 ":hover": {
-                  backgroundColor: user.colorStatus,
+                  backgroundColor: user.state,
                   borderRadius: "5px",
                 },
-                // backgroundColor: user.colorStatus,
+                // backgroundColor: user.state,
               }}
               className="active-user"
               onClick={() => {
@@ -158,7 +151,7 @@ const ActiveUser = () => {
                   sx={{
                     width: "4px",
                     height: "inherit",
-                    backgroundColor: `${user.colorStatus}`,
+                    backgroundColor: `${user.state}`,
                     borderRadius: "3px",
                     cursor: "pointer",
                     "&:hover": {

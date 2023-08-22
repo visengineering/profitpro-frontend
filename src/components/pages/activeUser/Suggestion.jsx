@@ -8,9 +8,9 @@ const Suggestion = () => {
       sx={{
         width: "25%",
         backgroundColor: "#FFFFFF",
-        height: "90vh",
+        height: "88vh",
         borderRadius: "3px",
-        overflow: "hidden",
+        overflowY: "auto",
       }}
     >
       <Box className="chatBackgroundImage">
@@ -19,12 +19,12 @@ const Suggestion = () => {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            padding: "1.5rem",
+            padding: "1.2rem 0.7rem",
             gap: 1,
           }}
         >
           <Avatar sx={{ bgcolor: "#FFB526" }}>AI</Avatar>
-          <Typography sx={{ color: "#FFF", fontSize: "100%", fontWeight: 700 }}>
+          <Typography sx={{ color: "#FFF", fontSize: "20px", fontWeight: 700 }}>
             AI Suggestions
           </Typography>
         </Box>
@@ -184,7 +184,7 @@ const Suggestion = () => {
               backgroundColor: "#F1F7FF",
               padding: "0.2rem",
               borderRadius: "3px",
-              fontSize: "16px"
+              fontSize: "16px",
             }}
           >
             <Typography

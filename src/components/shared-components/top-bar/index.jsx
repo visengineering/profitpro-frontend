@@ -1,7 +1,15 @@
-import { Box, IconButton, Toolbar, Typography } from "@mui/material";
-import React from "react";
+import {
+  Box,
+  IconButton,
+  Toolbar,
+  Typography,
+  Button,
+  LinearProgress,
+} from "@mui/material";
+import React, { useMemo, useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const drawerWidth = "15%";
 
@@ -22,6 +30,18 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 function TopBar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActiveUserPath = useMemo(() => {
+    return location.pathname.includes("/active-user");
+  }, [location]);
+
+  const handleButtonClick = () => {
+    if (isActiveUserPath) navigate("/salesRepresentative");
+    else navigate("/active-user");
+  };
+
   return (
     <AppBar position="fixed" color="inherit" className="top-bar-container">
       <Toolbar
@@ -32,12 +52,43 @@ function TopBar() {
         }}
       >
         <Typography variant="h6" noWrap component="div">
-          User List
+          Active Users List
         </Typography>
-        <IconButton>
-          <Box component="img" src="/bellIcon.svg" />
-        </IconButton>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Button
+            sx={{
+              backgroundColor: !isActiveUserPath ? "#00BE4C" : "#233EAE",
+              color: "#FFFFFF",
+              paddingX: "1.4rem",
+              "&:hover": {
+                backgroundColor: !isActiveUserPath ? "#00BE4C" : "#233EAE",
+              },
+            }}
+            variant="contained"
+            onClick={handleButtonClick}
+          >
+            {!isActiveUserPath ? "View All Active Users" : "View All Users"}
+          </Button>
+          <IconButton>
+            <Box component="img" src="/bellIcon.svg" />
+          </IconButton>
+        </Box>
       </Toolbar>
+      <LinearProgress
+        variant="determinate"
+        value={35}
+        sx={{
+          backgroundColor: "#FFFFFF",
+          "& .MuiLinearProgress-barColorPrimary": {
+            backgroundColor: "#4F46E5", // Custom progress color
+          },
+        }}
+      />
     </AppBar>
   );
 }

@@ -9,14 +9,16 @@ const Conversation = ({ selectedUser, conversationList, isLoading }) => {
       sx={{
         width: "50%",
         backgroundColor: "#FFFFFF",
-        height: "90vh",
+        height: "88vh",
         borderRadius: "3px",
+        // paddingBottom: "5rem",
+        // marginBottom: "10px",
       }}
     >
       <Box
         className="d-flex justify-between"
         sx={{
-          padding: "10px 10px",
+          padding: "0.7rem 0.7rem",
           borderBottom: "1px solid #D9D9D9",
           marginBottom: "10px",
         }}
@@ -67,7 +69,7 @@ const Conversation = ({ selectedUser, conversationList, isLoading }) => {
         <Box
           sx={{
             height: "80vh",
-            overflowY: "scroll",
+            overflowY: "auto",
           }}
         >
           {conversationList.map((conversation) =>
