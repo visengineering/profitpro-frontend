@@ -19,6 +19,8 @@ const UserList = styled("div")(({ theme }) => ({
   backgroundColor: "#F4F5F8",
 }));
 
+const colors = ["#00DF09", "#FFB526", "#0066FF", "#DC2626"];
+
 const ActiveUser = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -55,6 +57,11 @@ const ActiveUser = () => {
     }
     setLoading(false);
   }
+
+  const generateRandomColor = () => {
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[randomIndex];
+  };
 
   useEffect(() => {
     getAllActiveUsers();
@@ -148,7 +155,7 @@ const ActiveUser = () => {
                   sx={{
                     width: "4px",
                     height: "inherit",
-                    backgroundColor: `${user.valueColor}`,
+                    backgroundColor: `${generateRandomColor()}`,
                     borderRadius: "3px",
                     cursor: "pointer",
                     // "&:hover": {

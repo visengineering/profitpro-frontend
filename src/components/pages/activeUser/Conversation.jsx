@@ -9,7 +9,7 @@ const Conversation = ({ selectedUser, conversationList, isLoading }) => {
       sx={{
         width: "50%",
         backgroundColor: "#FFFFFF",
-        height: "auto",
+        height: "90vh",
         borderRadius: "3px",
       }}
     >
@@ -64,7 +64,12 @@ const Conversation = ({ selectedUser, conversationList, isLoading }) => {
       {isLoading ? (
         <ChatSkeletonLoader />
       ) : (
-        <>
+        <Box
+          sx={{
+            height: "80vh",
+            overflow: "scroll",
+          }}
+        >
           {conversationList.map((conversation) =>
             conversation.speaker_type === "sales_person" ? (
               <Box
@@ -141,7 +146,7 @@ const Conversation = ({ selectedUser, conversationList, isLoading }) => {
               </Box>
             )
           )}
-        </>
+        </Box>
       )}
     </Box>
   );
