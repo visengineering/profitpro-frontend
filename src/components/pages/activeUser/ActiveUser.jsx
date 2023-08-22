@@ -78,7 +78,7 @@ const ActiveUser = () => {
           sx={{
             width: "25%",
             backgroundColor: "#FFFFFF",
-            height: "auto",
+            height: "90vh",
             padding: "0.6rem 0.1rem",
             borderRadius: "3px",
             // marginBottom: "1rem",

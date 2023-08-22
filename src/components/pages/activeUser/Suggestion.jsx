@@ -8,7 +8,7 @@ const Suggestion = () => {
       sx={{
         width: "25%",
         backgroundColor: "#FFFFFF",
-        height: "auto",
+        height: "90vh",
         borderRadius: "3px",
         overflow: "hidden",
       }}
