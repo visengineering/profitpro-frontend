@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Box } from "@mui/material";
-import SearchBar from "../../generic-components/SearchList";
 import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
@@ -49,7 +48,7 @@ const ActiveUser = () => {
       const { results } = response.data;
 
       setConversations(results);
-      console.log(results);
+      console.log("conversation data", results);
     } catch (error) {
       console.log(error);
     }
@@ -78,46 +77,20 @@ const ActiveUser = () => {
             className="active_user_portion"
             sx={{
               paddingLeft: "0.9rem",
-              paddingTop: "0.3rem",
+              paddingY: "1.2rem",
               paddingBottom: "0.8rem",
               borderBottom: "1px solid #D9D9D9",
             }}
           >
-            <Typography
-              // variant="h6"
-              className="User"
-              sx={{
-                fontSize: "min(10vh,30px)",
-                fontWeight: "700",
-                lineHeight: "1",
-              }}
-            >
-              Active Users
-            </Typography>
-            <Typography
-              className="Conversation"
-              sx={{
-                fontSize: "16px",
-                fontWeight: "400",
-              }}
-            >
-              Conversation
-            </Typography>
+            <Typography className="username">Active users</Typography>
+            <Typography className="userconversation">Conversation</Typography>
           </Box>
-          {/* <Box
-            sx={{
-              padding: "0.5rem 1rem",
-            }}
-          >
-            <SearchBar />
-          </Box> */}
 
           {users.map((user) => (
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "row",
-                // justifyContent: "space-between",
                 gap: 5,
                 overflowY: "hidden",
                 alignItems: " center",
@@ -132,7 +105,7 @@ const ActiveUser = () => {
                   backgroundColor: user.state,
                   borderRadius: "5px",
                 },
-                // backgroundColor: user.state,
+                // { selectedUser === user.user_id ? backgroundColor: user.state : "" }
               }}
               className="active-user"
               onClick={() => {
@@ -162,28 +135,10 @@ const ActiveUser = () => {
                   className="suggestion_box"
                 />
                 <Avatar alt="Remy Sharp" src={user.image} />
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontSize: "min(10vh,18px)",
-                    lineHeight: "2.5rem",
-                    // paddingLeft: "1rem",
-                  }}
-                >
+                <Typography variant="h6" className="displayname">
                   {user.user_display_name}
                 </Typography>
               </Box>
-              {/* <Typography
-                variant="body1"
-                sx={{
-                  fontSize: "12px",
-                  lineHeight: "2.5rem",
-
-                  // paddingLeft: "2rem",
-                }}
-              >
-                {pro.date}
-              </Typography> */}
             </Box>
           ))}
         </Box>
@@ -194,6 +149,7 @@ const ActiveUser = () => {
           conversationList={conversations}
           selectedUser={selectedUser}
           isLoading={isLoading}
+          className="conversationBox"
         />
 
         {/* AI SUGGESTION */}

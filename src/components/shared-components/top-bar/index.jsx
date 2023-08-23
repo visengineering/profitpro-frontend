@@ -51,13 +51,17 @@ function TopBar() {
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="h6" noWrap component="div">
+        <Typography
+          variant="h6"
+          noWrap
+          component="div"
+          sx={{ color: "#343A40" }}
+        >
           Active Users List
         </Typography>
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
           }}
         >
           <Button
@@ -65,6 +69,7 @@ function TopBar() {
               backgroundColor: !isActiveUserPath ? "#00BE4C" : "#233EAE",
               color: "#FFFFFF",
               paddingX: "1.4rem",
+              marginX: "2.5rem",
               "&:hover": {
                 backgroundColor: !isActiveUserPath ? "#00BE4C" : "#233EAE",
               },

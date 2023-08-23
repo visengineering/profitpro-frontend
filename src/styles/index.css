@@ -38,6 +38,14 @@
   align-items: center;
 }
 
+.pl-10 {
+  padding-left: 10px;
+}
+
+.justify-end {
+  justify-content: end !important;
+}
+
 .w-100 {
   width: 100%;
 }
@@ -186,7 +194,7 @@
   margin: auto;
   width: 80%;
   border-radius: 4px;
-  background: #2d366b;
+  background: #ffb526;
 }
 .side-menu-bar .MuiListItemIcon-root {
   color: white;
@@ -308,13 +316,182 @@
 .chatBackgroundImage {
   background-image: url("../../../public/AIChat.jpg");
   background-size: cover;
-  max-height: auto;
+  max-height: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: fill;
+     object-fit: fill;
 }
 
+.conversationBox {
+  width: 50%;
+  background-color: #ffffff;
+  height: 88vh;
+  border-radius: 3px;
+}
+
+@media (min-width: 1400px) {
+  .username {
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+  .userconversation {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+  }
+  .suggestion {
+    font-size: 16px !important;
+    line-height: 1.2rem !important;
+  }
+  .mikediv {
+    background-color: #ffffff !important;
+    font-size: 16px !important;
+    color: #1b2b48 !important;
+    border-left: 5px solid #0e1b6b !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1 !important;
+    padding: 4px !important;
+    border-radius: 5px !important;
+    margin: 0.1rem !important;
+  }
+  .aisuggestion {
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    color: #fff;
+  }
+  .displayname {
+    font-size: 18px !important;
+    line-height: 2.5rem !important;
+    padding-left: 0.7rem !important;
+  }
+  .customer-ai-conversation {
+    font-size: 16px !important;
+  }
+  .avatarsuggestion {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #0d082c;
+  }
+  .objection {
+    color: #ffb526 !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+  }
+  .saletip {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    display: flex !important;
+    line-height: 30px !important;
+  }
+}
+@media (min-width: 1300px) and (max-width: 1400px) {
+  .username {
+    font-size: 25px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+  .userconversation {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+  }
+  .suggestion {
+    font-size: 16px !important;
+    line-height: 1.2rem !important;
+  }
+  .mikediv {
+    background-color: #ffffff !important;
+    font-size: 16px !important;
+    color: #1b2b48 !important;
+    border-left: 5px solid #0e1b6b !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1 !important;
+    padding: 4px !important;
+    border-radius: 5px !important;
+    margin: 0.1rem !important;
+  }
+  .aisuggestion {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #fff;
+  }
+  .displayname {
+    font-size: 18px !important;
+    line-height: 2.5rem !important;
+    padding-left: 0.7rem !important;
+  }
+  .customer-ai-conversation {
+    font-size: 16px !important;
+  }
+  .avatarsuggestion {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #0d082c;
+  }
+  .objection {
+    color: #ffb526 !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+  }
+  .saletip {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    display: flex !important;
+    line-height: 30px !important;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1300px) {
+  .username {
+    font-size: 30px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+  }
+  .userconversation {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+  }
+  .suggestion {
+    font-size: 12px !important;
+    line-height: 1rem !important;
+  }
+  .mikediv {
+    background-color: #ffffff !important;
+    font-size: 12px !important;
+    color: #1b2b48 !important;
+    border-left: 3px solid #0e1b6b !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1 !important;
+    padding: 2px 3px !important;
+    border-radius: 4px !important;
+    margin: 0.1rem !important;
+  }
+  .aisuggestion {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    color: #fff;
+  }
+  .displayname {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 2.5rem !important;
+    padding-left: 0.3rem !important;
+  }
+  .customer-ai-conversation {
+    font-size: 12px !important;
+  }
+  .avatarsuggestion {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+  }
+  .objection {
+    color: #ffb526 !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+  }
+}
 .box-container {
   padding: 0 2rem;
   width: 85%;

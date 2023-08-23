@@ -6,6 +6,8 @@ import TranscriptService from "../../../services/plugins/transcipt";
 import { toast } from "react-toastify";
 import DetailLoader from "./DetailLoader";
 import Breadcrumbs from "../../generic-components/breadcrumbs";
+import Conversation from "../activeUser/Conversation";
+import Suggestion from "../activeUser/Suggestion";
 
 function Transcript() {
   const { transcriptId, salesRepresentativeId } = useParams();
@@ -80,9 +82,35 @@ function Transcript() {
         <Breadcrumbs crumbs={crumbs} />
       </Box>
 
+      <Box
+        sx={{
+          display: "flex",
+          // justifyContent: "space-evenly",
+          // backgroundColor: "#F4F5F8",
+          // paddingTop: "1rem",
+        }}
+      >
+        <Conversation />
+        <Suggestion />
+      </Box>
+
+      {/* 
       {isLoading ? (
         <DetailLoader />
       ) : (
+        <Box
+          sx={
+            {
+              // display: "flex",
+              // justifyContent: "space-evenly",
+              // backgroundColor: "#F4F5F8",
+              // paddingTop: "1rem",
+            }
+          }
+        >
+          <Conversation />
+          <Suggestion />
+        </Box>
         <Card
           sx={{
             boxShadow: "rgba(0, 0, 0, 0.15) 5.4px 5.4px 6.2px",
@@ -118,7 +146,7 @@ function Transcript() {
             </Typography>
           </CardContent>
         </Card>
-      )}
+      )} */}
     </Box>
   );
 }

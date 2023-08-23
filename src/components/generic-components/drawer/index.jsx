@@ -39,8 +39,8 @@ export default function Drawer() {
   useEffect(() => {
     if (location.pathname === "/salesRepresentative") {
       setActiveButton("sales-representative");
-    } else if (location.pathname === "/") {
-      setActiveButton("dashboard");
+    } else {
+      setActiveButton("");
     }
     // } else if (
     //   location.pathname.match(/^\/salesRepresentative\/(\d+)\/transcripts$/)
@@ -70,7 +70,7 @@ export default function Drawer() {
           </DrawerHeader>
           <Divider />
           <Box className="list-container">
-            <List component="nav" sx={{ marginTop: "1rem" }}>
+            <List component="nav" sx={{ marginTop: "0.1rem" }}>
               {/* <ListItemButton
                 onClick={() => {
                   navigate("/");
@@ -96,7 +96,7 @@ export default function Drawer() {
                   )}
                 </ListItemIcon>
                 <ListItemText primary="All Dealerships" />
-                {openDropDown ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                {openDropDown ? <ExpandMoreIcon /> : <ExpandLessIcon />}
               </ListItemButton>
               <Collapse in={openDropDown} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
@@ -111,11 +111,9 @@ export default function Drawer() {
                       navigate("/salesRepresentative");
                     }}
                   >
-                    {/* <ListItemIcon>
-                    <PersonIcon />
-                  </ListItemIcon> */}
                     <ListItemText primary="Toyoto" />
                   </ListItemButton>
+
                   <ListItemButton
                     sx={{ pl: 6 }}
                     className={`${
@@ -124,9 +122,6 @@ export default function Drawer() {
                         : ""
                     } mt-10`}
                   >
-                    {/* <ListItemIcon>
-                    <AssignmentIcon />
-                  </ListItemIcon> */}
                     <ListItemText primary="Honda" />
                   </ListItemButton>
                   <ListItemButton
@@ -137,10 +132,47 @@ export default function Drawer() {
                         : ""
                     } mt-10`}
                   >
-                    {/* <ListItemIcon>
-                    <AssignmentIcon />
-                  </ListItemIcon> */}
                     <ListItemText primary="Suzuki" />
+                  </ListItemButton>
+                  <ListItemButton
+                    sx={{ pl: 6 }}
+                    className={`${
+                      activeButton === "all-transcripts"
+                        ? "navbar-btn-active"
+                        : ""
+                    } mt-10`}
+                  >
+                    <ListItemText primary="Hyundai" />
+                  </ListItemButton>
+                  <ListItemButton
+                    sx={{ pl: 6 }}
+                    className={`${
+                      activeButton === "all-transcripts"
+                        ? "navbar-btn-active"
+                        : ""
+                    } mt-10`}
+                  >
+                    <ListItemText primary="Mitsubishi" />
+                  </ListItemButton>
+                  <ListItemButton
+                    sx={{ pl: 6 }}
+                    className={`${
+                      activeButton === "all-transcripts"
+                        ? "navbar-btn-active"
+                        : ""
+                    } mt-10`}
+                  >
+                    <ListItemText primary="Tesla" />
+                  </ListItemButton>
+                  <ListItemButton
+                    sx={{ pl: 6 }}
+                    className={`${
+                      activeButton === "all-transcripts"
+                        ? "navbar-btn-active"
+                        : ""
+                    } mt-10`}
+                  >
+                    <ListItemText primary="preferences" />
                   </ListItemButton>
                   <ListItemButton
                     sx={{ pl: 6 }}
@@ -153,7 +185,7 @@ export default function Drawer() {
                     {/* <ListItemIcon>
                     <AssignmentIcon />
                   </ListItemIcon> */}
-                    <ListItemText primary="All Transcripts" />
+                    <ListItemText primary="View All Dealership" />
                   </ListItemButton>
                 </List>
               </Collapse>
@@ -166,8 +198,8 @@ export default function Drawer() {
                   {" "}
                   <img src="/folder.svg" />
                 </ListItemIcon>
-                <ListItemText primary="Dossier" />
-                {openDropDown ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                <ListItemText primary="Manage" />
+                {openDropDown ? <ExpandMoreIcon /> : <ExpandLessIcon />}
               </ListItemButton>
               <ListItemButton
                 className="main-nav expand-able"
@@ -178,8 +210,8 @@ export default function Drawer() {
                   {" "}
                   <img src="/pdf.svg" />
                 </ListItemIcon>
-                <ListItemText primary="Project" />
-                {openDropDown ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                <ListItemText primary="Projects" />
+                {openDropDown ? <ExpandMoreIcon /> : <ExpandLessIcon />}
               </ListItemButton>
               <ListItemButton
                 className="main-nav expand-able"
@@ -191,7 +223,19 @@ export default function Drawer() {
                   <img src="/monitor.svg" />
                 </ListItemIcon>
                 <ListItemText primary="Direction Technique" />
-                {openDropDown ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                {openDropDown ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+              </ListItemButton>
+              <ListItemButton
+                className="main-nav expand-able"
+                disabled
+                onClick={updateOpen}
+              >
+                <ListItemIcon>
+                  {" "}
+                  <img src="/protection.svg" />
+                </ListItemIcon>
+                <ListItemText primary="Protection" />
+                {openDropDown ? <ExpandMoreIcon /> : <ExpandLessIcon />}
               </ListItemButton>
               {/* <ListItemButton className="main-nav">
                 <ListItemIcon>
