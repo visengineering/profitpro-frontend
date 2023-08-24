@@ -140,22 +140,22 @@ function Row(props) {
         <TableCell align="left">{row.user_email}</TableCell>
         <TableCell align="left">
           <Box sx={{ display: "flex", justifyContent: "left", gap: "20px" }}>
-         <IconButton size="small"   sx={{ paddingLeft:"0px" }}>
-                            <Box
-                              component="img"
-                              src="/edit.svg"
-                              sx={{ height: "20px", width: "20px" }}
-                              handleClick={(e) => e.stopPropagation()}
-                            />
-                          </IconButton>
-        <IconButton size="small">
-                            <Box
-                              component="img"
-                              src="/delete.svg"
-                              sx={{ height: "20px", width: "20px" }}
-                              handleClick={(e) => e.stopPropagation()}
-                            />
-       </IconButton>
+            <IconButton size="small" sx={{ paddingLeft: "0px" }}>
+              <Box
+                component="img"
+                src="/edit.svg"
+                sx={{ height: "20px", width: "20px" }}
+                handleClick={(e) => e.stopPropagation()}
+              />
+            </IconButton>
+            <IconButton size="small">
+              <Box
+                component="img"
+                src="/delete.svg"
+                sx={{ height: "20px", width: "20px" }}
+                handleClick={(e) => e.stopPropagation()}
+              />
+            </IconButton>
           </Box>
         </TableCell>
       </TableRow>
@@ -359,7 +359,7 @@ function SalesRepresentativeDataTable({
                         {" "}
                         <TableCell colSpan={12} align="center">
                           <Typography>
-                            no sales representatives found
+                            no sales representatives founds
                           </Typography>
                         </TableCell>{" "}
                       </TableRow>

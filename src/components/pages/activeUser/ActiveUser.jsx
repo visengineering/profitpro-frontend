@@ -6,6 +6,7 @@ import Stack from "@mui/material/Stack";
 import Conversation from "./Conversation";
 import Suggestion from "./Suggestion";
 import UserService from "../../../services/plugins/user";
+import { toast } from "react-toastify";
 
 const UserList = styled("div")(({ theme }) => ({
   padding: "0 2rem",
@@ -20,8 +21,8 @@ const UserList = styled("div")(({ theme }) => ({
 }));
 
 const ActiveUser = () => {
-  const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [users, setUsers] = useState();
+  const [selectedUser, setSelectedUser] = useState();
   const [isLoading, setLoading] = useState(true);
   const [conversations, setConversations] = useState([]);
 
@@ -37,6 +38,13 @@ const ActiveUser = () => {
       setUsers(results || []);
     } catch (error) {
       console.log(error);
+      // toast.error("Something went wrong while fetching details", {
+      //   position: "top-right",
+      //   autoClose: 2000,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   theme: "colored",
+      // });
     }
   }
 
@@ -44,13 +52,20 @@ const ActiveUser = () => {
     setLoading(true);
     try {
       setSelectedUser(user);
+
       const response = await UserService.getActiveConversation(user.user_id);
       const { results } = response.data;
 
       setConversations(results);
-      console.log("conversation data", results);
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong while fetching details", {
+        position: "top-right",
+        autoClose: 2000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        theme: "colored",
+      });
     }
     setLoading(false);
   }
@@ -86,7 +101,7 @@ const ActiveUser = () => {
             <Typography className="userconversation">Conversation</Typography>
           </Box>
 
-          {users.map((user) => (
+          {users?.map((user) => (
             <Box
               sx={{
                 display: "flex",
@@ -101,11 +116,16 @@ const ActiveUser = () => {
                 marginLeft: "0.9rem",
                 marginTop: "0.5rem",
                 cursor: "pointer",
+
                 ":hover": {
-                  backgroundColor: user.state,
+                  backgroundColor:
+                    selectedUser.user_id === user.user_id
+                      ? user.state
+                      : "#F1F7FF",
                   borderRadius: "5px",
                 },
-                // { selectedUser === user.user_id ? backgroundColor: user.state : "" }
+                backgroundColor:
+                  selectedUser.user_id === user.user_id ? user.state : "",
               }}
               className="active-user"
               onClick={() => {
@@ -134,7 +154,7 @@ const ActiveUser = () => {
                   }}
                   className="suggestion_box"
                 />
-                <Avatar alt="Remy Sharp" src={user.image} />
+                <Avatar alt="Remy Sharp" src={user.user_avatar} />
                 <Typography variant="h6" className="displayname">
                   {user.user_display_name}
                 </Typography>
@@ -154,7 +174,7 @@ const ActiveUser = () => {
 
         {/* AI SUGGESTION */}
 
-        <Suggestion />
+        <Suggestion className="suggestionBox" />
       </Stack>
     </UserList>
   );

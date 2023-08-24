@@ -57,7 +57,7 @@ function TopBar() {
           component="div"
           sx={{ color: "#343A40" }}
         >
-          Active Users List
+          {!isActiveUserPath ? "Conversation record " : "Active Users List"}
         </Typography>
         <Box
           sx={{

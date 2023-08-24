@@ -15,7 +15,25 @@ $backgroundImage: url("../../../public/AIChat.jpg");
   height: 88vh;
   border-radius: 3px;
 }
-
+.suggestionBox {
+  width: 25%;
+  background-color: #ffffff;
+  height: 88vh;
+  border-radius: 3px;
+}
+.transcriptConversationBox {
+  width: 65%;
+  background-color: #ffffff;
+  height: 80vh;
+  border-radius: 3px;
+  margin-left: 1rem;
+}
+.transcriptSuggestionBox {
+  width: 31%;
+  background-color: #ffffff;
+  height: 80vh;
+  border-radius: 3px;
+}
 @media (min-width: 1400px) {
   .username {
     font-size: 28px !important;
@@ -179,21 +197,21 @@ $backgroundImage: url("../../../public/AIChat.jpg");
   }
 }
 
-// .customscrollbar {
-//   ::-webkit-scrollbar {
-//     width: 5px !important;
-//     border-radius: 10px 10px 0 0 !important;
-//   }
+.customscrollbar::-webkit-scrollbar {
+  width: 5px;
+}
 
-//   ::-webkit-scrollbar-track {
-//     background: transparent !important;
-//   }
+.customscrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px 10px 0 0;
+}
 
-//   ::-webkit-scrollbar-thumb {
-//     background: #f1f7ff !important;
-//   }
+.customscrollbar::-webkit-scrollbar-thumb {
+  background: #f1f7ff;
+  height: 10px;
+  border-radius: 10px;
+}
 
-//   ::-webkit-scrollbar-thumb:hover {
-//     background: #555 !important;
-//   }
-// }
+.customscrollbar::-webkit-scrollbar-thumb:hover {
+  background: #f1f7ff;
+}

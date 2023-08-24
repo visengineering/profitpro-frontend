@@ -2,16 +2,9 @@ import React from "react";
 import { Typography, Box } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 
-const Suggestion = () => {
+const Suggestion = ({ className }) => {
   return (
-    <Box
-      sx={{
-        width: "25%",
-        backgroundColor: "#FFFFFF",
-        height: "88vh",
-        borderRadius: "3px",
-      }}
-    >
+    <Box className={className}>
       <Box className="chatBackgroundImage">
         <Box
           sx={{
@@ -29,185 +22,195 @@ const Suggestion = () => {
         </Box>
       </Box>
       {/* ai chat */}
-
-      <Box
-        sx={{
-          height: "79vh",
-          overflowY: "auto",
-        }}
-      >
+      <Box>
         <Box
+          className="customscrollbar"
           sx={{
-            display: "flex",
-            padding: "1.5rem  0.5rem",
+            height: "80%",
+            maxHeight: "76vh",
+            overflow: "scroll",
+            marginRight: "0.5rem",
           }}
         >
-          <Avatar
-            alt="Remy Sharp"
-            src="Ellipse 1.svg"
-            sx={{ width: 30, height: 30 }}
-          />
           <Box
             sx={{
-              paddingLeft: "0.4rem",
+              display: "flex",
+              padding: "1.5rem  0.5rem",
             }}
           >
-            <Typography className="avatarsuggestion">AI Suggestions</Typography>
-
+            <Avatar
+              alt="Remy Sharp"
+              src="Ellipse 1.svg"
+              sx={{ width: 30, height: 30 }}
+            />
             <Box
               sx={{
-                height: "auto",
-                width: "95%",
-                backgroundColor: "#F1F7FF",
-                padding: "0.2rem",
-                borderRadius: "3px",
+                paddingLeft: "0.4rem",
               }}
             >
-              <Typography
-                className="suggestion"
+              <Typography className="avatarsuggestion">
+                AI Suggestions
+              </Typography>
+
+              <Box
                 sx={{
-                  padding: "0.4rem",
+                  height: "auto",
+                  width: "95%",
+                  backgroundColor: "#F1F7FF",
+                  padding: "0.2rem",
+                  borderRadius: "3px",
                 }}
               >
-                <Typography className="mikediv">
-                  <Typography
-                    sx={{
-                      color: "#0E1B6B",
-                      fontSize: "10px",
-                      fontWeight: 600,
-                      lineHeight: "16px",
-                    }}
-                  >
-                    {" "}
-                    Mike Bean
+                <Typography
+                  className="suggestion"
+                  sx={{
+                    padding: "0.4rem",
+                  }}
+                >
+                  <Typography className="mikediv">
+                    <Typography
+                      sx={{
+                        color: "#0E1B6B",
+                        fontSize: "10px",
+                        fontWeight: 600,
+                        lineHeight: "16px",
+                      }}
+                    >
+                      {" "}
+                      Mike Bean
+                    </Typography>
+                    I have a question about the return policy.
                   </Typography>
-                  I have a question about the return policy.
+                  <Typography className="objection">Objection:</Typography>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type and scrambled it to make a type
+                  specimen book. It has survived not only five centuries,but
+                  also the leap into electronic typesetting, remaining
+                  essentially unchanged.
                 </Typography>
-                <Typography className="objection">Objection:</Typography>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries,but also the leap into
-                electronic typesetting, remaining essentially unchanged.
-              </Typography>
-            </Box>
+              </Box>
 
-            {/* ThumsIcon */}
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                paddingRight: "1rem",
-              }}
-            >
+              {/* ThumsIcon */}
               <Box
-                src="/ThumbsDown.svg"
-                alt="User Avatar"
-                component="img"
                 sx={{
-                  maxHeight: "3vh",
-                  maxWidth: "10%",
-                  paddingLeft: "3px",
-                  marginTop: "2px",
-                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  paddingRight: "1rem",
                 }}
-              />
-              <Box
-                src="/ThumbsUp.svg"
-                alt="User Avatar"
-                component="img"
-                sx={{
-                  maxHeight: "3vh",
-                  maxWidth: "10%",
-                  paddingLeft: "3px",
-                  marginTop: "2px",
-                  cursor: "pointer",
-                }}
-              />
+              >
+                <Box
+                  src="/ThumbsDown.svg"
+                  alt="User Avatar"
+                  component="img"
+                  sx={{
+                    maxHeight: "3vh",
+                    maxWidth: "10%",
+                    paddingLeft: "3px",
+                    marginTop: "2px",
+                    cursor: "pointer",
+                  }}
+                />
+                <Box
+                  src="/ThumbsUp.svg"
+                  alt="User Avatar"
+                  component="img"
+                  sx={{
+                    maxHeight: "3vh",
+                    maxWidth: "10%",
+                    paddingLeft: "3px",
+                    marginTop: "2px",
+                    cursor: "pointer",
+                  }}
+                />
+              </Box>
             </Box>
           </Box>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            padding: "0  0.5rem",
-          }}
-        >
-          <Avatar
-            alt="Remy Sharp"
-            src="Ellipse 1.svg"
-            sx={{ width: 30, height: 30 }}
-          />
           <Box
             sx={{
-              paddingLeft: "0.4rem",
+              display: "flex",
+              padding: "0  0.5rem",
             }}
           >
-            <Typography className="avatarsuggestion">AI Suggestions</Typography>
-
+            <Avatar
+              alt="Remy Sharp"
+              src="Ellipse 1.svg"
+              sx={{ width: 30, height: 30 }}
+            />
             <Box
               sx={{
-                height: "auto",
-                width: "95%",
-                backgroundColor: "#F1F7FF",
-                padding: "0.2rem",
-                borderRadius: "3px",
-                fontSize: "16px",
+                paddingLeft: "0.4rem",
               }}
             >
-              <Typography className="suggestion">
-                <Typography className="saletip">
-                  Sale TIP:
-                  <Box
-                    src="/Bulb.svg"
-                    alt="User Avatar"
-                    component="img"
-                    sx={{
-                      maxHeight: "10vh",
-                      maxWidth: "20%",
-                      paddingLeft: "3px",
-                    }}
-                  />
-                </Typography>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries,but also the leap into
-                electronic typesetting, remaining essentially unchanged.
+              <Typography className="avatarsuggestion">
+                AI Suggestions
               </Typography>
-            </Box>
-            {/* ThumbsIcons */}
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                paddingRight: "1rem",
-              }}
-            >
+
               <Box
-                src="/ThumbsDown.svg"
-                alt="User Avatar"
-                component="img"
                 sx={{
-                  maxHeight: "3vh",
-                  maxWidth: "10%",
-                  paddingLeft: "3px",
-                  marginTop: "2px",
+                  height: "auto",
+                  width: "95%",
+                  backgroundColor: "#F1F7FF",
+                  padding: "0.2rem",
+                  borderRadius: "3px",
+                  fontSize: "16px",
                 }}
-              />
+              >
+                <Typography className="suggestion">
+                  <Typography className="saletip">
+                    Sale TIP:
+                    <Box
+                      src="/Bulb.svg"
+                      alt="User Avatar"
+                      component="img"
+                      sx={{
+                        maxHeight: "10vh",
+                        maxWidth: "20%",
+                        paddingLeft: "3px",
+                      }}
+                    />
+                  </Typography>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type and scrambled it to make a type
+                  specimen book. It has survived not only five centuries,but
+                  also the leap into electronic typesetting, remaining
+                  essentially unchanged.
+                </Typography>
+              </Box>
+              {/* ThumbsIcons */}
               <Box
-                src="/ThumbsUp.svg"
-                alt="User Avatar"
-                component="img"
                 sx={{
-                  maxHeight: "3vh",
-                  maxWidth: "10%",
-                  paddingLeft: "3px",
-                  marginTop: "2px",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  paddingRight: "1rem",
                 }}
-              />
+              >
+                <Box
+                  src="/ThumbsDown.svg"
+                  alt="User Avatar"
+                  component="img"
+                  sx={{
+                    maxHeight: "3vh",
+                    maxWidth: "10%",
+                    paddingLeft: "3px",
+                    marginTop: "2px",
+                  }}
+                />
+                <Box
+                  src="/ThumbsUp.svg"
+                  alt="User Avatar"
+                  component="img"
+                  sx={{
+                    maxHeight: "3vh",
+                    maxWidth: "10%",
+                    paddingLeft: "3px",
+                    marginTop: "2px",
+                  }}
+                />
+              </Box>
             </Box>
           </Box>
         </Box>

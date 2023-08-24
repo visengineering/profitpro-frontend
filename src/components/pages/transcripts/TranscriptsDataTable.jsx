@@ -17,15 +17,15 @@ import Pagination from "../../shared-components/pagination";
 
 const headCells = [
   {
-    id: "conversation_id",
+    id: "dialog_id",
     numeric: true,
     disablePadding: false,
-    label: "Customer ID",
+    label: "Transcript ID",
     align: "center",
     sorting: true,
   },
   {
-    id: "created_date",
+    id: "created_at",
     numeric: false,
     disablePadding: true,
     label: "Created At",
@@ -33,7 +33,7 @@ const headCells = [
     sorting: true,
   },
   {
-    id: "modified_date",
+    id: "updated_at",
     numeric: true,
     disablePadding: false,
     label: "Updated At",
@@ -41,7 +41,7 @@ const headCells = [
     sorting: true,
   },
   {
-    id: "Audio Link",
+    id: "conversation_url",
     numeric: true,
     disablePadding: false,
     label: "Audio Link",
@@ -112,6 +112,9 @@ function TranscriptsDataTable({
       `/salesRepresentative/${salesRepresentativeId}/transcripts/${transcriptId}`
     );
   };
+  // console.log("Selected:::", JSON.stringify(selected, null, 2));
+  // console.log("TRans:::", JSON.stringify(transcripts, null, 2));
+
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
       <Paper
@@ -130,7 +133,7 @@ function TranscriptsDataTable({
             <Box>
               <EnhancedTableToolbar
                 totalCount={totalCount}
-                numSelected={selected.length}
+                numSelected={selected?.length ?? 2}
                 refetchData={() => fetchData(rowsPerPage, page || 1)}
                 setSearchTerm={debouncedHandleSearch}
                 searchTerm={searchTerm}
@@ -138,34 +141,34 @@ function TranscriptsDataTable({
               <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
                   <EnhancedTableHead
-                    numSelected={selected.length}
+                    numSelected={selected?.length ?? 2}
                     order={order}
                     orderBy={orderBy}
                     onSelectAllClick={handleSelectAllClick}
                     onRequestSort={handleRequestSort}
-                    rowCount={transcripts.length}
+                    rowCount={transcripts?.length ?? 2}
                     headCells={headCells}
                   />
                   <TableBody>
-                    {transcripts && transcripts.length ? (
+                    {transcripts && transcripts?.length ? (
                       transcripts?.map((row) => {
                         return (
                           <TableRow
-                            key={row.conversation_id}
+                            key={row.dialog_id}
                             sx={{
                               "&:last-child td, &:last-child th": { border: 0 },
                             }}
                           >
                             <TableCell align="center">
-                              {row.conversation_id}
+                              {row.dialog_id}
                             </TableCell>
 
                             <TableCell align="center">
-                              {formatDate(row.created_date)}
+                              {formatDate(row.created_at)}
                             </TableCell>
 
                             <TableCell align="center">
-                              {formatDate(row.modified_date)}
+                              {formatDate(row.updated_at)}
                             </TableCell>
 
                             <TableCell
@@ -176,10 +179,7 @@ function TranscriptsDataTable({
                                 alignItems: "center",
                               }}
                             >
-                              <Link
-                                href={row.conversation_link}
-                                target="_blank"
-                              >
+                              <Link href={row.conversation_url} target="_blank">
                                 <IconButton size="small">
                                   <Box
                                     component="img"
@@ -196,9 +196,7 @@ function TranscriptsDataTable({
                               <Link
                                 component="button"
                                 variant="body2"
-                                onClick={() =>
-                                  handleShowDetails(row.conversation_id)
-                                }
+                                onClick={() => handleShowDetails(row.dialog_id)}
                               >
                                 Details
                               </Link>

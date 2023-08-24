@@ -26,8 +26,8 @@ function Transcript() {
       const response = await TranscriptService.getTranscriptByUser(
         transcriptId
       );
-
-      setTranscript(response.data);
+      setTranscript(response.data.results);
+      console.log("transcript Data = ", response.data.results);
     } catch (error) {
       setLoading(false);
       if (error.response?.status === 400) {
@@ -86,12 +86,17 @@ function Transcript() {
         sx={{
           display: "flex",
           // justifyContent: "space-evenly",
-          // backgroundColor: "#F4F5F8",
-          // paddingTop: "1rem",
+          backgroundColor: "#F4F5F8",
+          paddingTop: "1rem",
+          gap: 2,
         }}
       >
-        <Conversation />
-        <Suggestion />
+        <Conversation
+          conversationList={transcript}
+          isLoading={isLoading}
+          className="transcriptConversationBox"
+        />
+        <Suggestion className="transcriptSuggestionBox" />
       </Box>
 
       {/* 

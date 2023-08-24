@@ -37,6 +37,7 @@ const TranscriptsTable = () => {
         salesRepresentativeId,
         params
       );
+      console.log(" transcript data = ", response);
 
       const { results, current, count } = response.data;
       setCurrentPage(current);

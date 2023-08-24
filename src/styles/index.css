@@ -330,6 +330,28 @@
   border-radius: 3px;
 }
 
+.suggestionBox {
+  width: 25%;
+  background-color: #ffffff;
+  height: 88vh;
+  border-radius: 3px;
+}
+
+.transcriptConversationBox {
+  width: 65%;
+  background-color: #ffffff;
+  height: 80vh;
+  border-radius: 3px;
+  margin-left: 1rem;
+}
+
+.transcriptSuggestionBox {
+  width: 31%;
+  background-color: #ffffff;
+  height: 80vh;
+  border-radius: 3px;
+}
+
 @media (min-width: 1400px) {
   .username {
     font-size: 28px !important;
@@ -492,6 +514,25 @@
     font-size: 14px !important;
   }
 }
+.customscrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.customscrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px 10px 0 0;
+}
+
+.customscrollbar::-webkit-scrollbar-thumb {
+  background: #f1f7ff;
+  height: 10px;
+  border-radius: 10px;
+}
+
+.customscrollbar::-webkit-scrollbar-thumb:hover {
+  background: #f1f7ff;
+}
+
 .box-container {
   padding: 0 2rem;
   width: 85%;
