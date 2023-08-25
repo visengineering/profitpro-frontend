@@ -27,7 +27,6 @@ function Transcript() {
         transcriptId
       );
       setTranscript(response.data.results);
-      console.log("transcript Data = ", response.data.results);
     } catch (error) {
       setLoading(false);
       if (error.response?.status === 400) {

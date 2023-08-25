@@ -81,8 +81,14 @@ function Row(props) {
   const navigateToTranscripts = (user_id) => {
     navigate(`/salesRepresentative/${user_id}/transcripts`);
   };
+
   const handleShowDetails = (userId, transcriptId) => {
-    navigate(`/salesRepresentative/${userId}/transcripts/${transcriptId}`);
+    console.log("row", row);
+    navigate(`/salesRepresentative/${userId}/transcripts/${transcriptId}`, {
+      state: {
+        rowData: row,
+      },
+    });
   };
 
   const handleShowUser = (e) => {
@@ -274,7 +280,7 @@ function SalesRepresentativeDataTable({
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
+  const navigate = useNavigate();
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");

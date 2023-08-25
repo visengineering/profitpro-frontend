@@ -11,12 +11,15 @@ const Conversation = ({
   className,
 }) => {
   const location = useLocation();
+  const rowData = location?.state?.rowData;
+  console.log("lcoation = ", location);
   const isActiveUserPath = useMemo(() => {
-    return location.pathname.includes(
-      "/salesRepresentative/${salesRepresentativeId}/transcripts/${transcriptId}"
-    );
+    return location.pathname
+      .includes
+      // "/salesRepresentative/${salesRepresentativeId}/transcripts/${transcriptId}"
+      ();
   }, [location]);
-
+  console.log("roooooooooooooow data", rowData);
   return (
     <Box className={className}>
       <Box
@@ -39,7 +42,7 @@ const Conversation = ({
               {selectedUser?.user_display_name}
             </Typography>
 
-            {isActiveUserPath ? (
+            {!isActiveUserPath ? (
               <Typography className="userconversation">
                 Active Conversation
               </Typography>
@@ -48,16 +51,16 @@ const Conversation = ({
             )}
           </Box>
         </Box>
-        {isActiveUserPath ? (
+        {!isActiveUserPath ? (
           <Typography
-            className="align-self-center  userconversation"
-            sx={{
-              paddingTop: "25px",
-              textDecoration: "underline",
-              paddingRight: "30px",
-            }}
+            className="align-self-center  userconversation userAllConversation"
+            // sx={{
+            //   paddingTop: "25px",
+            //   textDecoration: "underline",
+            //   paddingRight: "30px",
+            // }}
           >
-            View Mike's all Conversations
+            View {selectedUser?.first_name}'s all conversations
           </Typography>
         ) : (
           ""

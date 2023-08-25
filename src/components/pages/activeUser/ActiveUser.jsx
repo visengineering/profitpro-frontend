@@ -80,7 +80,7 @@ const ActiveUser = () => {
         <Box
           className="active_user_div"
           sx={{
-            width: "25%",
+            width: "22%",
             backgroundColor: "#FFFFFF",
             height: "88vh",
             padding: "0.3rem 0.1rem",
@@ -117,15 +117,15 @@ const ActiveUser = () => {
                 marginTop: "0.5rem",
                 cursor: "pointer",
 
-                ":hover": {
-                  backgroundColor:
-                    selectedUser.user_id === user.user_id
-                      ? user.state
-                      : "#F1F7FF",
-                  borderRadius: "5px",
-                },
-                backgroundColor:
-                  selectedUser.user_id === user.user_id ? user.state : "",
+                // ":hover": {
+                //   backgroundColor:
+                //     selectedUser.user_id === user.user_id
+                //       ? user.state
+                //       : "#F1F7FF",
+                //   borderRadius: "5px",
+                // },
+                // backgroundColor:
+                //   selectedUser.user_id === user.user_id ? user.state : "",
               }}
               className="active-user"
               onClick={() => {
