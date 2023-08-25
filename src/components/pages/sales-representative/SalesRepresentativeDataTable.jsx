@@ -79,14 +79,18 @@ function Row(props) {
   const navigate = useNavigate();
 
   const navigateToTranscripts = (user_id) => {
-    navigate(`/salesRepresentative/${user_id}/transcripts`);
+    navigate(`/salesRepresentative/${user_id}/transcripts`, {
+      state: {
+        userName: row.user_display_name,
+      },
+    });
   };
 
   const handleShowDetails = (userId, transcriptId) => {
     console.log("row", row);
     navigate(`/salesRepresentative/${userId}/transcripts/${transcriptId}`, {
       state: {
-        rowData: row,
+        userName: row.user_display_name,
       },
     });
   };
@@ -188,15 +192,15 @@ function Row(props) {
                 </TableHead>
                 <TableBody>
                   {row.transcripts.map((transcriptRow) => (
-                    <TableRow key={transcriptRow.created_date}>
+                    <TableRow key={transcriptRow.created_at}>
                       <TableCell align="center">
-                        {transcriptRow.conversation_id}
+                        {transcriptRow.dialog_id}
                       </TableCell>
                       <TableCell align="center">
-                        {formatDate(transcriptRow.created_date)}
+                        {formatDate(transcriptRow.created_at)}
                       </TableCell>
                       <TableCell align="center">
-                        {formatDate(transcriptRow.modified_date)}
+                        {formatDate(transcriptRow.updated_at)}
                       </TableCell>
                       <TableCell
                         align="center"
@@ -206,7 +210,7 @@ function Row(props) {
                         }}
                       >
                         <Link
-                          href={transcriptRow.conversation_link}
+                          href={transcriptRow.conversation_url}
                           target="_blank"
                         >
                           <IconButton size="small">
@@ -228,7 +232,7 @@ function Row(props) {
                           onClick={() =>
                             handleShowDetails(
                               row.user_id,
-                              transcriptRow.conversation_id
+                              transcriptRow.dialog_id
                             )
                           }
                         >

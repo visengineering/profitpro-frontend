@@ -1,7 +1,7 @@
 import { Box, CardContent, Typography } from "@mui/material";
 import Card from "../../generic-components/card";
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import TranscriptService from "../../../services/plugins/transcipt";
 import { toast } from "react-toastify";
 import DetailLoader from "./DetailLoader";
@@ -14,6 +14,9 @@ function Transcript() {
   const [transcript, setTranscript] = useState({});
   const [isLoading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const userName = location?.state?.userName;
 
   useEffect(() => {
     fetchTranscriptDetailsById(transcriptId);
