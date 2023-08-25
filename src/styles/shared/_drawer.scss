@@ -16,6 +16,13 @@ $backgroundImage: url("../../../public/SideBar.png"); // Adjust the path
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    .toggler-btn {
+      height: 40px;
+      width: 40px;
+      position: fixed;
+      background: #1e2e8c;
+    }
   }
 
   img {
@@ -81,7 +88,7 @@ $backgroundImage: url("../../../public/SideBar.png"); // Adjust the path
 }
 
 .main-nav {
-  margin: 10px auto 0px 20px !important;
+  margin: 10px !important;
   width: 90% !important;
   margin-top: 10px !important;
   padding-left: 10px !important;

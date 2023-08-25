@@ -16,7 +16,7 @@ const AppContextProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("openDropDown", JSON.stringify(openDropDown));
   }, [openDropDown]);
-
+  
   return (
     <AppContext.Provider value={{ openDropDown, updateOpen }}>
       {children}
