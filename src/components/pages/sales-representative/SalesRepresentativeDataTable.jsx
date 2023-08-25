@@ -82,6 +82,7 @@ function Row(props) {
     navigate(`/salesRepresentative/${user_id}/transcripts`, {
       state: {
         userName: row.user_display_name,
+        userAvatar: row.user_avatar,
       },
     });
   };
@@ -91,6 +92,7 @@ function Row(props) {
     navigate(`/salesRepresentative/${userId}/transcripts/${transcriptId}`, {
       state: {
         userName: row.user_display_name,
+        userAvatar: row.user_avatar,
       },
     });
   };

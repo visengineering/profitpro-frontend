@@ -30,21 +30,22 @@ const ActiveUser = () => {
     try {
       const response = await UserService.getAllActiveUser();
       const { results } = response.data;
-
+      // const result = results.reverse();
+      const result = results.sort((a, b) => b.user_id - a.user_id);
       if (Array.isArray(results) && results.length) {
         getConversationByUser(results[0]);
       }
 
-      setUsers(results || []);
+      setUsers(result || []);
     } catch (error) {
       console.log(error);
-      // toast.error("Something went wrong while fetching details", {
-      //   position: "top-right",
-      //   autoClose: 2000,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   theme: "colored",
-      // });
+      toast.error("Something went wrong while fetching details", {
+        position: "top-right",
+        autoClose: 2000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        theme: "colored",
+      });
     }
   }
 
@@ -117,15 +118,16 @@ const ActiveUser = () => {
                 marginTop: "0.5rem",
                 cursor: "pointer",
 
-                // ":hover": {
-                //   backgroundColor:
-                //     selectedUser.user_id === user.user_id
-                //       ? user.state
-                //       : "#F1F7FF",
-                //   borderRadius: "5px",
-                // },
-                // backgroundColor:
-                //   selectedUser.user_id === user.user_id ? user.state : "",
+                ":hover": {
+                  backgroundColor:
+                    selectedUser.user_id === user.user_id
+                      ? user.state
+                      : "#F1F7FF",
+                  borderRadius: "5px",
+                },
+                backgroundColor:
+                  selectedUser.user_id === user.user_id ? user.state : "",
+                color: selectedUser.user_id === user.user_id ? "#FFF" : "",
               }}
               className="active-user"
               onClick={() => {

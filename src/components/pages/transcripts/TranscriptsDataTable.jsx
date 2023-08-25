@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box, IconButton, Link, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import TableLoader from "../../shared-components/Loader/TableLoader";
 import EnhancedTableHead from "../../shared-components/enhanced-table-head";
@@ -71,6 +71,12 @@ function TranscriptsDataTable({
   totalCount,
   fetchData,
 }) {
+  const location = useLocation();
+
+  const userName = location?.state?.userName;
+  const userAvatar = location?.state?.userAvatar;
+  console.log("rowwww", userName);
+
   const { salesRepresentativeId } = useParams();
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("");
@@ -109,7 +115,13 @@ function TranscriptsDataTable({
 
   const handleShowDetails = (transcriptId) => {
     navigate(
-      `/salesRepresentative/${salesRepresentativeId}/transcripts/${transcriptId}`
+      `/salesRepresentative/${salesRepresentativeId}/transcripts/${transcriptId}`,
+      {
+        state: {
+          userName: userName,
+          userAvatar: userAvatar,
+        },
+      }
     );
   };
   // console.log("Selected:::", JSON.stringify(selected, null, 2));

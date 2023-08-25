@@ -12,7 +12,8 @@ const Conversation = ({
 }) => {
   const location = useLocation();
 
-  const userName = location?.state?.userName;
+  const userName = location?.state?.userName || location?.userName;
+  const userAvatar = location?.state?.userAvatar || location?.userAvatar;
 
   return (
     <Box className={className}>
@@ -28,7 +29,7 @@ const Conversation = ({
         <Box className="d-flex" sx={{ gap: 1, paddingY: "0.2rem" }}>
           <Avatar
             alt="Remy Sharp"
-            src={selectedUser?.user_avatar}
+            src={selectedUser?.user_avatar || userAvatar}
             sx={{ width: 60, height: 60 }}
           />
           <Box className="d-flex flex-col align-self-center">
