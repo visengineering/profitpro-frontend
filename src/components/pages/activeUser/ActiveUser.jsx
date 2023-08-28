@@ -30,7 +30,6 @@ const ActiveUser = () => {
     try {
       const response = await UserService.getAllActiveUser();
       const { results } = response.data;
-      // const result = results.reverse();
       const result = results.sort((a, b) => b.user_id - a.user_id);
       if (Array.isArray(results) && results.length) {
         getConversationByUser(results[0]);
@@ -101,68 +100,81 @@ const ActiveUser = () => {
             <Typography className="username">Active users</Typography>
             <Typography className="userconversation">Conversation</Typography>
           </Box>
-
-          {users?.map((user) => (
+          {!(Array.isArray(users) && users.length) ? (
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "row",
-                gap: 5,
-                overflowY: "hidden",
-                alignItems: " center",
-                width: "90%",
-                borderRadius: "5px",
-                padding: "0.5rem 0rem",
-
-                marginLeft: "0.9rem",
-                marginTop: "0.5rem",
-                cursor: "pointer",
-
-                ":hover": {
-                  backgroundColor:
-                    selectedUser.user_id === user.user_id
-                      ? user.state
-                      : "#F1F7FF",
-                  borderRadius: "5px",
-                },
-                backgroundColor:
-                  selectedUser.user_id === user.user_id ? user.state : "",
-                color: selectedUser.user_id === user.user_id ? "#FFF" : "",
-              }}
-              className="active-user"
-              onClick={() => {
-                getConversationByUser(user);
+                justifyContent: "center",
+                paddingTop: "0.3rem",
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: 1,
-                }}
-                className="activer-user__box"
-              >
+              <Typography> No Active users found</Typography>
+            </Box>
+          ) : (
+            <Box>
+              {users?.map((user) => (
                 <Box
                   sx={{
-                    width: "4px",
-                    height: "inherit",
-                    backgroundColor: `${user.state}`,
-                    borderRadius: "3px",
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: 5,
+                    overflowY: "hidden",
+                    alignItems: " center",
+                    width: "90%",
+                    borderRadius: "5px",
+                    padding: "0.5rem 0rem",
+
+                    marginLeft: "0.9rem",
+                    marginTop: "0.5rem",
                     cursor: "pointer",
-                    "&:hover": {
-                      backgroundColor: "transparent",
-                      borderRadius: "0px !important",
+
+                    ":hover": {
+                      backgroundColor:
+                        selectedUser.user_id === user.user_id
+                          ? user.state
+                          : "#F1F7FF",
+                      borderRadius: "5px",
                     },
+                    backgroundColor:
+                      selectedUser.user_id === user.user_id ? user.state : "",
+                    color: selectedUser.user_id === user.user_id ? "#FFF" : "",
                   }}
-                  className="suggestion_box"
-                />
-                <Avatar alt="Remy Sharp" src={user.user_avatar} />
-                <Typography variant="h6" className="displayname">
-                  {user.user_display_name}
-                </Typography>
-              </Box>
+                  className="active-user"
+                  onClick={() => {
+                    getConversationByUser(user);
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: 1,
+                    }}
+                    className="activer-user__box"
+                  >
+                    <Box
+                      sx={{
+                        width: "4px",
+                        height: "inherit",
+                        backgroundColor: `${user.state}`,
+                        borderRadius: "3px",
+                        cursor: "pointer",
+                        "&:hover": {
+                          backgroundColor: "transparent",
+                          borderRadius: "0px !important",
+                        },
+                      }}
+                      className="suggestion_box"
+                    />
+                    <Avatar alt="Remy Sharp" src={user.user_avatar} />
+                    <Typography variant="h6" className="displayname">
+                      {user.user_display_name}
+                    </Typography>
+                  </Box>
+                </Box>
+              ))}
             </Box>
-          ))}
+          )}
         </Box>
 
         {/* second div */}

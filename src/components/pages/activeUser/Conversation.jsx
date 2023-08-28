@@ -47,14 +47,7 @@ const Conversation = ({
           </Box>
         </Box>
         {!userName ? (
-          <Typography
-            className="align-self-center  userconversation userAllConversation"
-            // sx={{
-            //   paddingTop: "25px",
-            //   textDecoration: "underline",
-            //   paddingRight: "30px",
-            // }}
-          >
+          <Typography className="align-self-center  userconversation userAllConversation">
             View {selectedUser?.first_name}'s all conversations
           </Typography>
         ) : (
@@ -80,17 +73,16 @@ const Conversation = ({
             }}
           >
             {!(Array.isArray(conversationList) && conversationList.length) ? (
-              ""
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  paddingTop: "0.3rem",
+                }}
+              >
+                <Typography>Record not Found</Typography>
+              </Box>
             ) : (
-              // <Box
-              //   sx={{
-              //     display: "flex",
-              //     justifyContent: "center",
-              //     paddingTop: "0.3rem",
-              //   }}
-              // >
-              //   <Typography>No Messages Found</Typography>
-              // </Box>
               <Box>
                 {conversationList.map((conversation) =>
                   conversation.speaker_type === "sales_person" ? (

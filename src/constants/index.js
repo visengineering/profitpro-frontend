@@ -9,7 +9,7 @@ const routes = [
   },
   {
     path: "/active-user",
-    pageTitle: "Active User",
+    pageTitle: "Active Users List",
   },
 ];
 
