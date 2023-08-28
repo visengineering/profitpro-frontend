@@ -152,7 +152,7 @@ const Suggestion = ({ className }) => {
                   height: "auto",
                   width: "95%",
                   backgroundColor: "#F1F7FF",
-                  padding: "0.2rem",
+                  padding: "0.6rem",
                   borderRadius: "3px",
                   fontSize: "16px",
                 }}

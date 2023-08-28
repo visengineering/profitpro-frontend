@@ -10,6 +10,7 @@ import React, { useMemo, useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import { useNavigate, useLocation } from "react-router-dom";
+import { routes } from "../../../constants";
 
 const drawerWidth = "15%";
 
@@ -37,6 +38,14 @@ function TopBar() {
     return location.pathname.includes("/active-user");
   }, [location]);
 
+  const pageTitle = useMemo(() => {
+    const route = routes.find((route) =>
+      location.pathname.includes(route.path)
+    );
+
+    return route?.pageTitle || "Test";
+  }, [location]);
+
   const handleButtonClick = () => {
     if (isActiveUserPath) navigate("/salesRepresentative");
     else navigate("/active-user");
@@ -57,7 +66,7 @@ function TopBar() {
           component="div"
           sx={{ color: "#343A40" }}
         >
-          {!isActiveUserPath ? "Conversation record " : "Active Users List"}
+          {pageTitle}
         </Typography>
         <Box
           sx={{

@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Typography, Box } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import ChatSkeletonLoader from "../../shared-components/Loader/ChatLoader";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const Conversation = ({
   selectedUser,
@@ -11,15 +11,10 @@ const Conversation = ({
   className,
 }) => {
   const location = useLocation();
-  const rowData = location?.state?.rowData;
-  console.log("lcoation = ", location);
-  const isActiveUserPath = useMemo(() => {
-    return location.pathname
-      .includes
-      // "/salesRepresentative/${salesRepresentativeId}/transcripts/${transcriptId}"
-      ();
-  }, [location]);
-  console.log("roooooooooooooow data", rowData);
+
+  const userName = location?.state?.userName || location?.userName;
+  const userAvatar = location?.state?.userAvatar || location?.userAvatar;
+
   return (
     <Box className={className}>
       <Box
@@ -34,15 +29,15 @@ const Conversation = ({
         <Box className="d-flex" sx={{ gap: 1, paddingY: "0.2rem" }}>
           <Avatar
             alt="Remy Sharp"
-            src={selectedUser?.user_avatar}
+            src={selectedUser?.user_avatar || userAvatar}
             sx={{ width: 60, height: 60 }}
           />
           <Box className="d-flex flex-col align-self-center">
             <Typography variant="h6" className="username">
-              {selectedUser?.user_display_name}
+              {selectedUser?.user_display_name || userName}
             </Typography>
 
-            {!isActiveUserPath ? (
+            {!userName ? (
               <Typography className="userconversation">
                 Active Conversation
               </Typography>
@@ -51,7 +46,7 @@ const Conversation = ({
             )}
           </Box>
         </Box>
-        {!isActiveUserPath ? (
+        {!userName ? (
           <Typography
             className="align-self-center  userconversation userAllConversation"
             // sx={{
