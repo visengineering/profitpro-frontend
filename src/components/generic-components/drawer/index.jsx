@@ -20,7 +20,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../../../hooks/AppContext";
 
 const drawerOpenWidth = "300px";
-// const drawerCloseWidth = "70px";
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -31,9 +30,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function Drawer() {
   const navigate = useNavigate();
-  // const [drawerWidth, setDrawerWidth] = useState(drawerW);
   const location = useLocation();
-  // const [draweropen, setDrawerOpen] = useState(true);
 
   const { openDropDown, updateOpen } = useContext(AppContext);
 
@@ -45,19 +42,7 @@ export default function Drawer() {
     } else {
       setActiveButton("");
     }
-    // } else if (
-    //   location.pathname.match(/^\/salesRepresentative\/(\d+)\/transcripts$/)
-    // ) {
-    //   setActiveButton("all-transcripts");
-    // }
-    // }, [location, draweropen]);
   }, [location]);
-
-  // const changeDrawerWidth = () => {
-  //   console.log("coming");
-  //   setDrawerOpen(!draweropen);
-  //   console.log(draweropen);
-  // };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -66,9 +51,7 @@ export default function Drawer() {
         sx={{
           flexShrink: 0,
           "& .MuiDrawer-paper": {
-            // width: draweropen ? drawerOpenWidth : drawerCloseWidth,
             width: drawerOpenWidth,
-            // minWidth: draweropen ? drawerOpenWidth : drawerCloseWidth,
           },
         }}
         variant="persistent"
@@ -77,11 +60,7 @@ export default function Drawer() {
       >
         <Box className="side-menu-bar" sx={{ height: "100%" }}>
           <DrawerHeader className="drawer-head">
-            {/* {draweropen ? ( */}
             <Box component="img" src="/logo.png" />
-            {/* // ) : (
-            //   <Box component="img" src="/Newlogo.png" />
-            // )} */}
           </DrawerHeader>
           <Divider />
           <Box className="list-container">
@@ -91,19 +70,11 @@ export default function Drawer() {
                 onClick={updateOpen}
               >
                 <ListItemIcon>
-                  {/* {draweropen ? (
-                    <Box>
-                      ( */}
                   {openDropDown ? (
                     <img src="/setting-selected.svg" />
                   ) : (
                     <img src="/setting.svg" />
                   )}
-                  {/* ){" "}
-                    </Box>
-                  ) : (
-                    <Box component="img" src="/setting-selected.svg" />
-                  )} */}
                 </ListItemIcon>
                 <ListItemText primary="All Dealerships" />
                 {openDropDown ? <ExpandMoreIcon /> : <ExpandLessIcon />}

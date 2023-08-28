@@ -169,6 +169,12 @@
   flex-direction: column;
   justify-content: space-between;
 }
+.side-menu-bar .list-container .toggler-btn {
+  height: 40px;
+  width: 40px;
+  position: fixed;
+  background: #1e2e8c;
+}
 .side-menu-bar img {
   width: 60%;
 }
@@ -223,7 +229,7 @@
 }
 
 .main-nav {
-  margin: 10px auto 0px 20px !important;
+  margin: 10px !important;
   width: 90% !important;
   margin-top: 10px !important;
   padding-left: 10px !important;
@@ -324,14 +330,14 @@
 }
 
 .conversationBox {
-  width: 50%;
+  width: 48%;
   background-color: #ffffff;
   height: 88vh;
   border-radius: 3px;
 }
 
 .suggestionBox {
-  width: 25%;
+  width: 30%;
   background-color: #ffffff;
   height: 88vh;
   border-radius: 3px;
@@ -352,11 +358,22 @@
   border-radius: 3px;
 }
 
+.userAllConversation {
+  padding-top: 25px;
+  text-decoration: underline;
+  padding-right: 30px;
+}
+
 @media (min-width: 1400px) {
   .username {
     font-size: 28px !important;
     font-weight: 700 !important;
     line-height: 1 !important;
+  }
+  .userAllConversation {
+    padding-top: 25px;
+    text-decoration: underline;
+    padding-right: 30px;
   }
   .userconversation {
     font-size: 16px !important;
@@ -466,12 +483,16 @@
 }
 @media (min-width: 1200px) and (max-width: 1300px) {
   .username {
-    font-size: 30px !important;
+    font-size: 26px !important;
     font-weight: 700 !important;
-    line-height: 1 !important;
+  }
+  .userAllConversation {
+    padding-top: 35px;
+    text-decoration: underline;
+    padding-right: 30px;
   }
   .userconversation {
-    font-size: 12px !important;
+    font-size: 10px !important;
     font-weight: 400 !important;
   }
   .suggestion {
