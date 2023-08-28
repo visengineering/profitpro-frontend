@@ -93,8 +93,12 @@
 .table-pagination .MuiTextField-root input {
   padding: 5px;
 }
-.table-pagination .MuiTextField-root input[type=number]::-webkit-inner-spin-button,
-.table-pagination .MuiTextField-root input[type=number]::-webkit-outer-spin-button {
+.table-pagination
+  .MuiTextField-root
+  input[type="number"]::-webkit-inner-spin-button,
+.table-pagination
+  .MuiTextField-root
+  input[type="number"]::-webkit-outer-spin-button {
   opacity: 1;
 }
 .table-pagination .MuiPaginationItem-previousNext {
@@ -306,7 +310,12 @@
   justify-content: space-between;
   font-size: 14px;
 }
-.auth-box-container .login-form-container .login-form form .options-container .MuiFormControlLabel-label {
+.auth-box-container
+  .login-form-container
+  .login-form
+  form
+  .options-container
+  .MuiFormControlLabel-label {
   font-size: 14px;
 }
 .auth-box-container .login-form-container .login-form form .login-field {
@@ -326,7 +335,7 @@
   max-width: 100%;
   box-sizing: border-box;
   -o-object-fit: fill;
-     object-fit: fill;
+  object-fit: fill;
 }
 
 .conversationBox {
@@ -577,4 +586,4 @@ body {
 
 * {
   font-family: "Roboto", sans-serif !important;
-}/*# sourceMappingURL=index.css.map */
+} /*# sourceMappingURL=index.css.map */

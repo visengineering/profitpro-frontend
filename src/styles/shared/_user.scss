@@ -1,0 +1,25 @@
+.userlist-default {
+  padding: 0 2rem;
+  width: 100%;
+  margin-left: 4rem;
+  //   padding-bottom: 4rem;
+  margin-top: 4rem;
+  height: 91vh;
+  padding-top: 1rem;
+  max-width: calc(100% - 64px);
+  background-color: #f4f5f8;
+  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms !important;
+  //   margin-bottom: 4rem;
+}
+.userlist-open {
+  padding: 0 2rem;
+  width: 85%;
+  margin-left: 18.7rem;
+  margin-top: 4rem;
+  height: 91vh;
+  padding-top: 1rem;
+  max-width: calc(100% - 300px);
+  background-color: #f4f5f8;
+  margin-bottom: 1rem;
+  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms !important;
+}

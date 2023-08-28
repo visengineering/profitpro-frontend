@@ -6,11 +6,12 @@ import {
   Button,
   LinearProgress,
 } from "@mui/material";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useContext } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import { useNavigate, useLocation } from "react-router-dom";
 import { routes } from "../../../constants";
+import { AppContext } from "../../../hooks/AppContext";
 
 const drawerWidth = "15%";
 
@@ -31,6 +32,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 function TopBar() {
+  const { open, toggleDrawer } = useContext(AppContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -52,7 +54,11 @@ function TopBar() {
   };
 
   return (
-    <AppBar position="fixed" color="inherit" className="top-bar-container">
+    <AppBar
+      position="fixed"
+      color="inherit"
+      className={open ? "top-bar-container-open" : "top-bar-container-close"}
+    >
       <Toolbar
         sx={{
           width: "100%",
@@ -93,7 +99,7 @@ function TopBar() {
           </IconButton>
         </Box>
       </Toolbar>
-      <LinearProgress
+      {/* <LinearProgress
         variant="determinate"
         value={35}
         sx={{
@@ -102,7 +108,7 @@ function TopBar() {
             backgroundColor: "#4F46E5", // Custom progress color
           },
         }}
-      />
+      /> */}
     </AppBar>
   );
 }

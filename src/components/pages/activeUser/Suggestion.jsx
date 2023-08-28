@@ -58,7 +58,7 @@ const Suggestion = ({ className }) => {
                   width: "95%",
                   backgroundColor: "#F1F7FF",
                   padding: "0.2rem",
-                  borderRadius: "3px",
+                  borderRadius: "4px",
                 }}
               >
                 <Typography
@@ -82,13 +82,10 @@ const Suggestion = ({ className }) => {
                     I have a question about the return policy.
                   </Typography>
                   <Typography className="objection">Objection:</Typography>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries,but
-                  also the leap into electronic typesetting, remaining
-                  essentially unchanged.
+                  This is simply dummy text of the printing and typesetting
+                  industry. Lorem Ipsum has been the industry's standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
                 </Typography>
               </Box>
 
@@ -153,7 +150,7 @@ const Suggestion = ({ className }) => {
                   width: "95%",
                   backgroundColor: "#F1F7FF",
                   padding: "0.6rem",
-                  borderRadius: "3px",
+                  borderRadius: "4px",
                   fontSize: "16px",
                 }}
               >
@@ -171,13 +168,10 @@ const Suggestion = ({ className }) => {
                       }}
                     />
                   </Typography>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book. It has survived not only five centuries,but
-                  also the leap into electronic typesetting, remaining
-                  essentially unchanged.
+                  This is simply dummy text of the printing and typesetting
+                  industry. Lorem Ipsum has been the industry's standard dummy
+                  text ever since the 1500s, when an unknown printer took a
+                  galley of type and scrambled it to make a type specimen book.
                 </Typography>
               </Box>
               {/* ThumbsIcons */}

@@ -13,12 +13,23 @@ const AppContextProvider = ({ children }) => {
     setOpen((prevOpen) => !prevOpen);
   };
 
+  const [open, setOpenToggle] = useState(() => {
+    const toggleOpen = localStorage.getItem("open");
+    return toggleOpen ? JSON.parse(toggleOpen) : false;
+  });
+  const toggleDrawer = () => {
+    setOpenToggle(!open);
+  };
+
   useEffect(() => {
     localStorage.setItem("openDropDown", JSON.stringify(openDropDown));
-  }, [openDropDown]);
-  
+    localStorage.setItem("toggledrawer", JSON.stringify(open));
+  }, [openDropDown, open]);
+
   return (
-    <AppContext.Provider value={{ openDropDown, updateOpen }}>
+    <AppContext.Provider
+      value={{ openDropDown, updateOpen, open, toggleDrawer }}
+    >
       {children}
     </AppContext.Provider>
   );

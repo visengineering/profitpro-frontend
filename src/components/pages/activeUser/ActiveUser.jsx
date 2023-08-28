@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Typography, Box } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Conversation from "./Conversation";
 import Suggestion from "./Suggestion";
 import UserService from "../../../services/plugins/user";
 import { toast } from "react-toastify";
-
-const UserList = styled("div")(({ theme }) => ({
-  padding: "0 2rem",
-  width: "85%",
-  marginLeft: "18.7rem",
-  marginTop: "4rem",
-  height: "91vh",
-  paddingTop: "1rem",
-  maxWidth: "calc(100% - 300px)",
-  backgroundColor: "#F4F5F8",
-  marginBottom: "1rem",
-}));
+import { AppContext } from "../../../hooks/AppContext";
 
 const ActiveUser = () => {
+  const { open } = useContext(AppContext);
+
   const [users, setUsers] = useState();
   const [selectedUser, setSelectedUser] = useState();
   const [isLoading, setLoading] = useState(true);
@@ -37,6 +27,7 @@ const ActiveUser = () => {
 
       setUsers(result || []);
     } catch (error) {
+      setLoading(false);
       console.log(error);
       toast.error("Something went wrong while fetching details", {
         position: "top-right",
@@ -75,7 +66,7 @@ const ActiveUser = () => {
   }, []);
 
   return (
-    <UserList>
+    <Box className={open ? "userlist-open" : "userlist-default"}>
       <Stack direction="row" spacing={2}>
         <Box
           className="active_user_div"
@@ -84,7 +75,7 @@ const ActiveUser = () => {
             backgroundColor: "#FFFFFF",
             height: "88vh",
             padding: "0.3rem 0.1rem",
-            borderRadius: "3px",
+            borderRadius: "4px",
             overflowY: "auto",
           }}
         >
@@ -190,7 +181,7 @@ const ActiveUser = () => {
 
         <Suggestion className="suggestionBox" />
       </Stack>
-    </UserList>
+    </Box>
   );
 };
 

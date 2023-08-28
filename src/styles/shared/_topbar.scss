@@ -1,6 +1,13 @@
-.top-bar-container {
+.top-bar-container-close {
   display: flex;
   width: 85%;
   flex-direction: row;
-  max-width: calc(100% - 300px);
+  max-width: calc(100% - 64px);
+}
+
+.top-bar-container-open {
+  display: flex;
+  width: 85%;
+  flex-direction: row;
+  max-width: calc(100% - 299px);
 }

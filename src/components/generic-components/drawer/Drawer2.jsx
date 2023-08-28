@@ -2,25 +2,20 @@ import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
+
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { Avatar, Button, Collapse } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Avatar, Collapse } from "@mui/material";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../../hooks/AppContext";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -42,11 +37,26 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `calc(${theme.spacing()} + 1px)`,
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
+
+const TogglerBox = styled(Box)(({ theme, open }) => ({
+  display: "flex",
+  justifyContent: "flex-end",
+  transition: theme.transitions.create("left", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  left: open ? "280px" : "40px",
+}));
+
+const CustomIconButton = styled(IconButton)(({ theme }) => ({
+  color: "white",
+  border: "1px solid #D9D9D93B",
+}));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -56,24 +66,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
-
-// const AppBar = styled(MuiAppBar, {
-//   shouldForwardProp: (prop) => prop !== "open",
-// })(({ theme, open }) => ({
-//   zIndex: theme.zIndex.drawer + 1,
-//   transition: theme.transitions.create(["width", "margin"], {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen,
-//   }),
-//   ...(open && {
-//     marginLeft: drawerWidth,
-//     width: `calc(100% - ${drawerWidth}px)`,
-//     transition: theme.transitions.create(["width", "margin"], {
-//       easing: theme.transitions.easing.sharp,
-//       duration: theme.transitions.duration.enteringScreen,
-//     }),
-//   }),
-// }));
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -95,13 +87,10 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Drawer2() {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
-  const { openDropDown, updateOpen } = useContext(AppContext);
+  const { openDropDown, updateOpen, open, toggleDrawer } =
+    useContext(AppContext);
   const [activeButton, setActiveButton] = useState(""); // 'home' is the default active button
   const navigate = useNavigate();
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -111,11 +100,11 @@ export default function Drawer2() {
           <DrawerHeader className="drawer-head">
             <Box
               component="img"
-              sx={{ maxHeight: "3rem" }}
-              src={open ? "./logo.png" : "./Newlogo.png"}
+              sx={{ maxHeight: "4.2rem" }}
+              src={open ? "/logo.png" : "/new-logo.png"}
             />
           </DrawerHeader>
-          <Divider />
+          {/* <Divider /> */}
           <Box className="list-container">
             <List component="nav" sx={{ marginTop: "0.1rem" }}>
               <ListItemButton
@@ -312,20 +301,15 @@ export default function Drawer2() {
                 )}
               </ListItemButton>
             </List>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-            >
-              <IconButton
+            <TogglerBox open={open}>
+              <CustomIconButton
                 className="toggler-btn"
                 sx={{ color: "white", left: `${open ? "280px" : "40px"}` }}
                 onClick={toggleDrawer}
               >
                 {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-              </IconButton>
-            </Box>
+              </CustomIconButton>
+            </TogglerBox>
             <Box className="personal-info-container">
               <Avatar
                 alt="Farhan Tariq"
