@@ -1,22 +1,11 @@
-const URLPath = [
-  {
-    default: "/",
-  },
-  {
-    salesRepresentative: "/salesRepresentative",
-  },
-  {
-    salesRepresentativeid: (id) => `/salesRepresentative/${id}`,
-  },
-  {
-    transcripts: (id) => `salesRepresentative/${id}/transcripts`,
-  },
-  {
-    salesTranscriptsid: (id) => `salesRepresentative/${id}/transcripts/${id}`,
-  },
-  {
-    activeUser: "/active-user",
-  },
-];
+const urlPath = {
+  default: "/",
+  salesRepresentative: "/salesRepresentative",
+  salesRepresentativeid: "/salesRepresentative/:salesRepresentativeId",
+  transcripts: "salesRepresentative/:salesRepresentativeId/transcripts",
+  salesTranscriptsid:
+    "salesRepresentative/:salesRepresentativeId/transcripts/:transcriptId",
+  activeUser: "/active-user",
+};
 
-export { URLPath };
+export { urlPath };

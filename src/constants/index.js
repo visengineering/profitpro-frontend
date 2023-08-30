@@ -1,28 +1,34 @@
-import { URLPath } from "./routes";
+import { urlPath } from "./routes";
 const routes = [
   {
-    path: URLPath.transcripts,
+    path: urlPath.transcripts,
     pageTitle: "Conversation List",
+    // component: "./components/pages/transcripts/TranscriptsTable",
   },
   {
-    path: URLPath.salesRepresentative,
+    path: urlPath.salesRepresentative,
     pageTitle: "Sales Representative",
+    // component: "./components/pages/sales-representative/SalesRepresentative",
   },
   {
-    path: URLPath.salesRepresentativeid,
+    path: urlPath.salesRepresentativeid,
     pageTitle: "Sales Representative",
+    // component: "./components/pages/sales-representative/SalesRepresentative",
   },
   {
-    path: URLPath.activeUser,
+    path: urlPath.activeUser,
     pageTitle: "Active Users List",
+    // component: "./components/pages/sales-representative/SalesRepresentative",
   },
   {
-    path: URLPath.default,
+    path: urlPath.default,
     pageTitle: "Dashboard",
+    // component: "./components/pages/sales-representative/SalesRepresentative",
   },
   {
-    path: URLPath.salesTranscriptsid,
+    path: urlPath.salesTranscriptsid,
     pageTitle: "Conversation history",
+    // component: "./components/pages/sales-representative/SalesRepresentative",
   },
 ];
 

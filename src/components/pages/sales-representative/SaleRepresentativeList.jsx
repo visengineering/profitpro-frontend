@@ -5,8 +5,9 @@ import UserService from "../../../services/plugins/user";
 import { toast } from "react-toastify";
 import Breadcrumbs from "../../generic-components/breadcrumbs";
 import { AppContext } from "../../../hooks/AppContext";
+import SaveHeading from "../../shared-components/SaveHeading";
 
-const SaleRepresentativeList = () => {
+const SaleRepresentativeList = ({ heading }) => {
   const { open } = useContext(AppContext);
 
   const [users, setUsers] = useState([]);
@@ -61,26 +62,29 @@ const SaleRepresentativeList = () => {
   ];
 
   return (
-    <Box className={open ? "table-container-open " : "table-container "}>
-      <Box role="presentation">
-        <Breadcrumbs crumbs={crumbs} />
+    <>
+      <SaveHeading heading={heading} />
+      <Box className={open ? "table-container-open " : "table-container "}>
+        <Box role="presentation">
+          <Breadcrumbs crumbs={crumbs} />
+        </Box>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        ></Box>
+        <SalesRepresentativeDataTable
+          rows={users}
+          isLoading={isLoading}
+          totalCount={totalCount}
+          currentPage={currentPage}
+          filterData={fetchSalesDetails}
+        />
       </Box>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      ></Box>
-      <SalesRepresentativeDataTable
-        rows={users}
-        isLoading={isLoading}
-        totalCount={totalCount}
-        currentPage={currentPage}
-        filterData={fetchSalesDetails}
-      />
-    </Box>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import MuiAppBar from "@mui/material/AppBar";
 import { useNavigate, useLocation, useMatch } from "react-router-dom";
 import { routes } from "../../../constants";
 import { AppContext } from "../../../hooks/AppContext";
+import { useHeading } from "../../../hooks/useHeading";
 
 const drawerWidth = "15%";
 
@@ -28,6 +29,7 @@ function TopBar() {
   const { open } = useContext(AppContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const { heading } = useHeading();
 
   const isActiveUserPath = useMemo(() => {
     return location.pathname.includes("/active-user");
@@ -37,7 +39,6 @@ function TopBar() {
     const route = routes.find((route) =>
       location.pathname.includes(route.path)
     );
-
     return route?.pageTitle || "Test";
   }, [location]);
 
@@ -65,7 +66,7 @@ function TopBar() {
           component="div"
           sx={{ color: "#343A40" }}
         >
-          {pageTitle}
+          {heading}
         </Typography>
         <Box
           sx={{

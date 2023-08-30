@@ -14,6 +14,7 @@ import LoadingButton from "../../generic-components/button";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AuthService from "../../../services/plugins/auth";
 import { useNavigate } from "react-router-dom";
+
 const validationSchema = yup.object({
   email: yup
     .string("Enter your email")

@@ -9,8 +9,9 @@ import Breadcrumbs from "../../generic-components/breadcrumbs";
 import Conversation from "../activeUser/Conversation";
 import Suggestion from "../activeUser/Suggestion";
 import { AppContext } from "../../../hooks/AppContext";
+import SaveHeading from "../../shared-components/SaveHeading";
 
-function Transcript() {
+function Transcript({ heading }) {
   const { open } = useContext(AppContext);
   const { transcriptId, salesRepresentativeId } = useParams();
   const [transcript, setTranscript] = useState({});
@@ -81,29 +82,30 @@ function Transcript() {
   ];
 
   return (
-    <Box className={open ? "table-container-open " : "table-container "}>
-      <Box>
-        <Breadcrumbs crumbs={crumbs} />
-      </Box>
+    <>
+      <SaveHeading heading={heading} />
+      <Box className={open ? "table-container-open " : "table-container "}>
+        <Box>
+          <Breadcrumbs crumbs={crumbs} />
+        </Box>
 
-      <Box
-        sx={{
-          display: "flex",
-          // justifyContent: "space-evenly",
-          backgroundColor: "#F4F5F8",
-          paddingTop: "1rem",
-          gap: 2,
-        }}
-      >
-        <Conversation
-          conversationList={transcript}
-          isLoading={isLoading}
-          className="transcriptConversationBox"
-        />
-        <Suggestion className="transcriptSuggestionBox" />
-      </Box>
+        <Box
+          sx={{
+            display: "flex",
+            backgroundColor: "#F4F5F8",
+            paddingTop: "1rem",
+            gap: 2,
+          }}
+        >
+          <Conversation
+            conversationList={transcript}
+            isLoading={isLoading}
+            className="transcriptConversationBox"
+          />
+          <Suggestion className="transcriptSuggestionBox" />
+        </Box>
 
-      {/* 
+        {/* 
       {isLoading ? (
         <DetailLoader />
       ) : (
@@ -156,7 +158,8 @@ function Transcript() {
           </CardContent>
         </Card>
       )} */}
-    </Box>
+      </Box>
+    </>
   );
 }
 

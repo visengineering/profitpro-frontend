@@ -7,8 +7,9 @@ import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import Breadcrumbs from "../../generic-components/breadcrumbs";
 import { AppContext } from "../../../hooks/AppContext";
+import SaveHeading from "../../shared-components/SaveHeading";
 
-const TranscriptsTable = () => {
+const TranscriptsTable = ({ heading }) => {
   const { open, toggleDrawer } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -72,18 +73,21 @@ const TranscriptsTable = () => {
   ];
 
   return (
-    <Box className={open ? "table-container-open " : "table-container "}>
-      <Box role="presentation">
-        <Breadcrumbs crumbs={crumbs} />
+    <>
+      <SaveHeading heading={heading} />
+      <Box className={open ? "table-container-open " : "table-container "}>
+        <Box role="presentation">
+          <Breadcrumbs crumbs={crumbs} />
+        </Box>
+        <TranscriptsDataTable
+          loading={loading}
+          totalCount={totalCount}
+          transcripts={transcripts}
+          currentPage={currentPage || 1}
+          fetchData={fetchTranscriptDetails}
+        />
       </Box>
-      <TranscriptsDataTable
-        loading={loading}
-        totalCount={totalCount}
-        transcripts={transcripts}
-        currentPage={currentPage || 1}
-        fetchData={fetchTranscriptDetails}
-      />
-    </Box>
+    </>
   );
 };
 

@@ -19,6 +19,7 @@ import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { AppContext } from "../../../hooks/AppContext";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import { useHeading } from "../../../hooks/useHeading";
 
 const drawerWidth = 300;
 
@@ -90,10 +91,9 @@ export default function Drawer2() {
   const { openDropDown, updateOpen, open, toggleDrawer } =
     useContext(AppContext);
   const [activeButton, setActiveButton] = useState(""); // 'home' is the default active button
+
   const navigate = useNavigate();
   const location = useLocation();
-  const contextResult = useOutletContext();
-  console.log(location, "location", contextResult);
 
   useEffect(() => {
     if (location.pathname === "/salesRepresentative") {
