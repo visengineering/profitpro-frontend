@@ -1,6 +1,6 @@
 import { Box, CardContent, Typography } from "@mui/material";
 import Card from "../../generic-components/card";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import TranscriptService from "../../../services/plugins/transcipt";
 import { toast } from "react-toastify";
@@ -8,8 +8,10 @@ import DetailLoader from "./DetailLoader";
 import Breadcrumbs from "../../generic-components/breadcrumbs";
 import Conversation from "../activeUser/Conversation";
 import Suggestion from "../activeUser/Suggestion";
+import { AppContext } from "../../../hooks/AppContext";
 
 function Transcript() {
+  const { open } = useContext(AppContext);
   const { transcriptId, salesRepresentativeId } = useParams();
   const [transcript, setTranscript] = useState({});
   const [isLoading, setLoading] = useState(true);
@@ -79,7 +81,7 @@ function Transcript() {
   ];
 
   return (
-    <Box className="table-container">
+    <Box className={open ? "table-container-open " : "table-container "}>
       <Box>
         <Breadcrumbs crumbs={crumbs} />
       </Box>

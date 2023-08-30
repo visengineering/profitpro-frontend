@@ -36,13 +36,13 @@ export default function Drawer() {
 
   const [activeButton, setActiveButton] = useState(""); // 'home' is the default active button
 
-  useEffect(() => {
-    if (location.pathname === "/salesRepresentative") {
-      setActiveButton("sales-representative");
-    } else {
-      setActiveButton("");
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   if (location.pathname === "/salesRepresentative") {
+  //     setActiveButton("sales-representative");
+  //   } else {
+  //     setActiveButton("");
+  //   }
+  // }, [location]);
 
   return (
     <Box sx={{ display: "flex" }}>

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -15,7 +15,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Avatar, Collapse } from "@mui/material";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
 import { AppContext } from "../../../hooks/AppContext";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -91,6 +91,17 @@ export default function Drawer2() {
     useContext(AppContext);
   const [activeButton, setActiveButton] = useState(""); // 'home' is the default active button
   const navigate = useNavigate();
+  const location = useLocation();
+  const contextResult = useOutletContext();
+  console.log(location, "location", contextResult);
+
+  useEffect(() => {
+    if (location.pathname === "/salesRepresentative") {
+      setActiveButton("sales-representative");
+    } else {
+      setActiveButton("");
+    }
+  }, [location]);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -132,11 +143,11 @@ export default function Drawer2() {
               <Collapse in={openDropDown && open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItemButton
-                    className={`${
-                      activeButton === "sales-representative"
-                        ? "navbar-btn-active"
-                        : ""
-                    } mt-10`}
+                    // className={`${
+                    //   activeButton === "sales-representative"
+                    //     ? "navbar-btn-active"
+                    //     : ""
+                    // } mt-10`}
                     sx={{ pl: 6 }}
                     onClick={() => {
                       navigate("/salesRepresentative");
@@ -303,7 +314,7 @@ export default function Drawer2() {
             </List>
             <TogglerBox open={open}>
               <CustomIconButton
-                className="toggler-btn"
+                className={open ? "toggler-btn-open" : "toggler-btn"}
                 sx={{ color: "white", left: `${open ? "280px" : "40px"}` }}
                 onClick={toggleDrawer}
               >

@@ -16,9 +16,13 @@ import { useFormik } from "formik";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import LoadingButton from "../../generic-components/button";
-import { CleaningServices, Visibility, VisibilityOff } from "@mui/icons-material";
+import {
+  CleaningServices,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
 import AuthService from "../../../services/plugins/auth";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 const validationSchema = yup.object({
   email: yup
     .string("Enter your email")
@@ -40,11 +44,15 @@ function LoginPage() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-       const token= await AuthService.login(values);
+      try {
+        const token = await AuthService.login(values);
         console.log(token);
-         localStorage.setItem("tokenValues", JSON.stringify(token));
-         
-         navigate('/');
+        localStorage.setItem("tokenValues", JSON.stringify(token));
+
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
   const [showPassword, setShowPassword] = useState(false);

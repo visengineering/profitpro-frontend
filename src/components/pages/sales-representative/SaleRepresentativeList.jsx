@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import SalesRepresentativeDataTable from "./SalesRepresentativeDataTable";
 import { Box } from "@mui/material";
 import UserService from "../../../services/plugins/user";
 import { toast } from "react-toastify";
 import Breadcrumbs from "../../generic-components/breadcrumbs";
+import { AppContext } from "../../../hooks/AppContext";
 
 const SaleRepresentativeList = () => {
+  const { open } = useContext(AppContext);
+
   const [users, setUsers] = useState([]);
   const [totalCount, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,7 +61,7 @@ const SaleRepresentativeList = () => {
   ];
 
   return (
-    <Box className="table-container">
+    <Box className={open ? "table-container-open " : "table-container "}>
       <Box role="presentation">
         <Breadcrumbs crumbs={crumbs} />
       </Box>

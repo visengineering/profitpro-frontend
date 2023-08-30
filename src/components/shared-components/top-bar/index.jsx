@@ -1,15 +1,8 @@
-import {
-  Box,
-  IconButton,
-  Toolbar,
-  Typography,
-  Button,
-  LinearProgress,
-} from "@mui/material";
+import { Box, IconButton, Toolbar, Typography, Button } from "@mui/material";
 import React, { useMemo, useContext } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useMatch } from "react-router-dom";
 import { routes } from "../../../constants";
 import { AppContext } from "../../../hooks/AppContext";
 
@@ -32,7 +25,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 function TopBar() {
-  const { open, toggleDrawer } = useContext(AppContext);
+  const { open } = useContext(AppContext);
   const navigate = useNavigate();
   const location = useLocation();
 

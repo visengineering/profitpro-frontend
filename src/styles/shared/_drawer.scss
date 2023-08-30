@@ -22,6 +22,12 @@ $backgroundImage: url("../../../public/SideBar.png"); // Adjust the path
       // width: 40px;
       position: fixed;
       background: #1e2e8c;
+      transition: all 0.195s ease-in-out !important;
+    }
+    .toggler-btn-open {
+      position: fixed;
+      background: #1e2e8c;
+      transition: all 0.225s ease-in-out !important;
     }
   }
 

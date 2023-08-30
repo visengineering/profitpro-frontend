@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import TranscriptsDataTable from "./TranscriptsDataTable";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -6,8 +6,11 @@ import UserService from "../../../services/plugins/user";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import Breadcrumbs from "../../generic-components/breadcrumbs";
+import { AppContext } from "../../../hooks/AppContext";
 
 const TranscriptsTable = () => {
+  const { open, toggleDrawer } = useContext(AppContext);
+
   const navigate = useNavigate();
 
   const { salesRepresentativeId } = useParams();
@@ -69,7 +72,7 @@ const TranscriptsTable = () => {
   ];
 
   return (
-    <Box className="table-container">
+    <Box className={open ? "table-container-open " : "table-container "}>
       <Box role="presentation">
         <Breadcrumbs crumbs={crumbs} />
       </Box>

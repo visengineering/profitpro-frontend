@@ -1,15 +1,28 @@
+import { URLPath } from "./routes";
 const routes = [
   {
-    path: "/transcripts",
+    path: URLPath.transcripts,
     pageTitle: "Conversation List",
   },
   {
-    path: "/salesRepresentative",
+    path: URLPath.salesRepresentative,
     pageTitle: "Sales Representative",
   },
   {
-    path: "/active-user",
+    path: URLPath.salesRepresentativeid,
+    pageTitle: "Sales Representative",
+  },
+  {
+    path: URLPath.activeUser,
     pageTitle: "Active Users List",
+  },
+  {
+    path: URLPath.default,
+    pageTitle: "Dashboard",
+  },
+  {
+    path: URLPath.salesTranscriptsid,
+    pageTitle: "Conversation history",
   },
 ];
 

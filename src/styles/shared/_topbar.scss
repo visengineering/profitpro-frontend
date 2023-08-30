@@ -1,13 +1,11 @@
 .top-bar-container-close {
-  display: flex;
   width: 85%;
-  flex-direction: row;
   max-width: calc(100% - 64px);
+  transition: all 0.195s ease-in-out !important;
 }
 
 .top-bar-container-open {
-  display: flex;
   width: 85%;
-  flex-direction: row;
   max-width: calc(100% - 299px);
+  transition: all 0.225s ease-in-out !important;
 }

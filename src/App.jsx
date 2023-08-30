@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Dashboard from "./components/pages/dashboard/Dashboard";
 import LoginPage from "./components/pages/login";
 import ActiveUser from "./components/pages/activeUser/ActiveUser";
+import OutletContext from "./components/shared-components/OutletContext";
 
 function App() {
   const router = createBrowserRouter([
@@ -34,15 +35,15 @@ function App() {
           element: <SaleRepresentativeList />,
         },
         {
-          path: "salesRepresentative/:salesRepresentativeId",
+          path: "salesRepresentative/:id",
           element: <SalesRepresentative />,
         },
         {
-          path: "salesRepresentative/:salesRepresentativeId/transcripts",
+          path: "salesRepresentative/:id/transcripts",
           element: <TranscriptsTable />,
         },
         {
-          path: "salesRepresentative/:salesRepresentativeId/transcripts/:transcriptId",
+          path: "salesRepresentative/:id/transcripts/:id",
           element: <Transcript />,
         },
         {

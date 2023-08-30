@@ -3,9 +3,25 @@
   margin-top: 5rem;
   width: 100%;
   max-width: calc(100% - 64px);
-  // height: 80vh;
+  transition: all 0.195s ease-in-out !important;
+  height: 80vh;
   height: calc(100vh - 5rem);
 
+  .table-list {
+    height: 100vh;
+  }
+  .MuiTableCell-root {
+    padding: 5px 10px;
+  }
+}
+.table-container-open {
+  float: right;
+  margin-top: 5rem;
+  width: 100%;
+  max-width: calc(100% - 300px);
+  transition: all 0.225s ease-in-out !important;
+  height: 80vh;
+  height: calc(100vh - 5rem);
   .table-list {
     height: 100vh;
   }
