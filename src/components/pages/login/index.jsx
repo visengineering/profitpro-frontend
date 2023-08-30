@@ -1,11 +1,8 @@
 import {
   Box,
   InputLabel,
-  Button,
   TextField,
   Typography,
-  FormControlLabel,
-  Checkbox,
   Link,
   InputAdornment,
   IconButton,
@@ -13,14 +10,8 @@ import {
 import React, { useState } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import LoadingButton from "../../generic-components/button";
-import {
-  CleaningServices,
-  Visibility,
-  VisibilityOff,
-} from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AuthService from "../../../services/plugins/auth";
 import { useNavigate } from "react-router-dom";
 const validationSchema = yup.object({
@@ -44,11 +35,13 @@ function LoginPage() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      const data = {
+        username: "atuny0",
+        password: values.password,
+      };
       try {
-        const token = await AuthService.login(values);
-        console.log(token);
-        localStorage.setItem("tokenValues", JSON.stringify(token));
-
+        const response = await AuthService.login(data);
+        localStorage.setItem("token", JSON.stringify(response.data.token));
         navigate("/");
       } catch (error) {
         console.log(error);
@@ -67,7 +60,7 @@ function LoginPage() {
         />
       </Box>
       <Box className="login-form-container">
-        <Box component="img" src="/logo2.png" />
+        <Box component="img" src="/logo4.png" />
         <Box className="form-container">
           <Box sx={{ width: "50%" }}>
             <Typography className="welcome-msg">Welcome back</Typography>

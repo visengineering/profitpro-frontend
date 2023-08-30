@@ -1,6 +1,11 @@
 import "./styles/main.scss";
 import SaleRepresentativeList from "./components/pages/sales-representative/SaleRepresentativeList";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  RouterProvider,
+} from "react-router-dom";
 import TranscriptsTable from "./components/pages/transcripts/TranscriptsTable";
 import SideMenu from "./components/shared-components/side-menu";
 import TopBar from "./components/shared-components/top-bar";
@@ -12,18 +17,22 @@ import "react-toastify/dist/ReactToastify.css";
 import Dashboard from "./components/pages/dashboard/Dashboard";
 import LoginPage from "./components/pages/login";
 import ActiveUser from "./components/pages/activeUser/ActiveUser";
-import OutletContext from "./components/shared-components/OutletContext";
+import { useContext } from "react";
+import { AppContext } from "./hooks/AppContext";
 
 function App() {
+  const { isAuthenticated } = useContext(AppContext);
   const router = createBrowserRouter([
     {
       path: "",
-      element: (
+      element: isAuthenticated ? (
         <>
           <TopBar />
           <SideMenu />
           <Outlet />
         </>
+      ) : (
+        <Navigate to="/login" />
       ),
       children: [
         {

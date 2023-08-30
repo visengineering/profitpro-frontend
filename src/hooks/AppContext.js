@@ -9,6 +9,10 @@ const AppContextProvider = ({ children }) => {
     return storedOpen ? JSON.parse(storedOpen) : false;
   });
 
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem("token")
+  );
+
   const updateOpen = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -28,7 +32,14 @@ const AppContextProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ openDropDown, updateOpen, open, toggleDrawer }}
+      value={{
+        openDropDown,
+        updateOpen,
+        open,
+        toggleDrawer,
+        isAuthenticated,
+        setIsAuthenticated,
+      }}
     >
       {children}
     </AppContext.Provider>
