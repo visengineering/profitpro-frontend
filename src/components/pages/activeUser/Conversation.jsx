@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Typography, Box } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import ChatSkeletonLoader from "../../shared-components/Loader/ChatLoader";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Conversation = ({
   selectedUser,

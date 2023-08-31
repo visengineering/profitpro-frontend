@@ -18,8 +18,8 @@ const ActiveUser = ({ heading }) => {
   const [isLoading, setLoading] = useState(true);
   const [conversations, setConversations] = useState([]);
 
-  const { message } = useSocket();
-  console.log("sssssssssssssss", message);
+  const { newActiveUser } = useSocket();
+  console.log("sssssssssssssss", newActiveUser);
 
   async function getAllActiveUsers() {
     try {
@@ -52,11 +52,7 @@ const ActiveUser = ({ heading }) => {
       const response = await UserService.getActiveConversation(user.user_id);
       const { results } = response.data;
 
-      // setConversations(results);
-      const newConversation = selectedUser === message.user_id;
-      newConversation
-        ? setConversations(...results, message.data)
-        : setConversations(results);
+      setConversations(results);
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong while fetching details", {
@@ -69,8 +65,38 @@ const ActiveUser = ({ heading }) => {
     }
     setLoading(false);
   }
+  const identifyUser = (users, newActiveUser) => {
+    const newUser = users.find(
+      (user) => user.user_id === newActiveUser.user_id
+    );
 
-  useEffect(() => {});
+    if (!newUser) {
+      setUsers((prevUsers) => [...prevUsers, newActiveUser]);
+    }
+  };
+  const identifyUserConveration = (users, newActiveUser) => {
+    console.log("Users = ", users);
+    const newUser = users?.find(
+      (user) => user.user_id === newActiveUser.user_id
+    );
+
+    if (newUser) {
+      const newConversation = newActiveUser.data;
+      setConversations((prevConversation) => [
+        ...prevConversation,
+        ...newConversation,
+      ]);
+    }
+  };
+
+  useEffect(() => {
+    const identifyUserAndChunks =
+      newActiveUser?.event_type === "new_active_user";
+    identifyUserAndChunks
+      ? identifyUser(users, newActiveUser)
+      : identifyUserConveration(users, newActiveUser);
+  }, [newActiveUser]);
+
   useEffect(() => {
     getAllActiveUsers();
   }, []);

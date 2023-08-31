@@ -15,13 +15,12 @@ function getRandomUserId(userIdsArray) {
 
 export function useSocket() {
   const [isConnected, setIsConnected] = useState(false);
-  const [message, setMessage] = useState();
+  const [newActiveUser, setNewActiveUser] = useState();
 
   const randomUserId =
     localStorage.getItem("userId") || getRandomUserId(userIds);
 
   const data = {
-    action: "join",
     client_type: "frontend",
     room_name: "Innovative Insights",
     newUser: randomUserId,
@@ -29,21 +28,22 @@ export function useSocket() {
 
   webSocket.onopen = () => {
     setIsConnected(true);
-
     webSocket.send(JSON.stringify(data));
   };
 
   webSocket.onmessage = (event) => {
-    setMessage(event.data);
+    setNewActiveUser(event.data);
   };
 
-  webSocket.onclose = () => console.log("isClosed");
+  webSocket.onclose = () => {
+    setIsConnected(false);
+    webSocket.close();
+  };
 
   function connectWithWebSocket() {
     if (!isConnected) return;
-
     webSocket.send(JSON.stringify(data));
   }
 
-  return { webSocket, connectWithWebSocket, message };
+  return { webSocket, connectWithWebSocket, newActiveUser };
 }
