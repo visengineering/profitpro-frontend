@@ -35,7 +35,6 @@ export function useSocket() {
 
   webSocket.onmessage = (event) => {
     const data = JSON.parse(event.data);
-    console.log("json data", data);
 
     setNewWebSocketData(data);
     if (data.event_type === "new_active_user") {
@@ -50,11 +49,7 @@ export function useSocket() {
     webSocket.close();
   };
 
-  useEffect(() => {
-    console.log("newUser", newWebSocketData);
-    console.log("newActiveUser", newActiveUser);
-    console.log("newActiveConversation", newActiveConversation);
-  }, [newWebSocketData]);
+  useEffect(() => {}, [newWebSocketData]);
 
   function connectWithWebSocket() {
     if (!isConnected) return;

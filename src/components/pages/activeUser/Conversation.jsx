@@ -14,11 +14,7 @@ const Conversation = ({
 
   const userName = location?.state?.userName || location?.userName;
   const userAvatar = location?.state?.userAvatar || location?.userAvatar;
-  console.log("vvvvvvvv", conversationList);
-  console.log(
-    "condition = ",
-    !(Array.isArray(conversationList) && conversationList.length)
-  );
+
   return (
     <>
       <Box className={className}>

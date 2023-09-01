@@ -15,12 +15,10 @@ const ActiveUser = ({ heading }) => {
 
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState();
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const [conversations, setConversations] = useState([]);
 
-  const { newActiveUser, newActiveConversation } = useSocket();
-  console.log("newActiveUser", newActiveUser);
-  console.log("newActiveConversation ", newActiveConversation);
+  const { newActiveUser, newActiveConversation, webSocket } = useSocket();
 
   async function getAllActiveUsers() {
     try {
@@ -53,7 +51,10 @@ const ActiveUser = ({ heading }) => {
 
       const response = await UserService.getActiveConversation(user.user_id);
       const { results } = response.data;
-      setConversations(results);
+      if (Array.isArray(results) && results.length) {
+        setConversations(results);
+      }
+
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -68,61 +69,68 @@ const ActiveUser = ({ heading }) => {
     }
     setLoading(false);
   }
-  console.log("users data = ", users);
-  console.log("--------------------- = ", newActiveUser);
-  const identifyUser = (users, newActiveUser) => {
-    if (users.length) {
-      var newUserFind = users.find(
-        (user) => user?.user_id === newActiveUser.user_id
-      );
 
-      if (!newUserFind) {
-        setUsers((prevUsers) => [...prevUsers, newActiveUser]);
-      } else {
-        return;
-      }
+  webSocket.onmessage = (event) => {
+    if (!event.data) return;
+
+    const notification = JSON.parse(event.data);
+
+    if (notification.event_type === "new_active_user") {
+      addNewActiveUser(notification?.user || {});
+    } else if (notification.event_type === "new_conversation_chunk") {
+      addTranscriptToConversation(notification);
+    } else if (notification.event_type === "test") {
+      removeUserFromList(notification.user);
     }
+  };
+
+  const removeUserFromList = (user) => {
+    console.log(user);
+  };
+
+  const addNewActiveUser = (newActiveUser) => {
+    const isUserExist = users.find(
+      (user) => user?.user_id === newActiveUser.user_id
+    );
+
+    if (isUserExist) return;
+
+    const userList = [...users];
+    userList.push(newActiveUser);
 
     if (!users.length) {
-      setSelectedUser(newActiveUser);
-      setUsers((prevUsers) => [...prevUsers, newActiveUser]);
-      // var newConversation = newActiveConversation.data;
-      // setConversations((prevConversation) => [
-      //   ...prevConversation,
-      //   ...newConversation,
-      // ]);
+      getConversationByUser(newActiveUser);
     }
-  };
-  const identifyUserConveration = (users, newActiveConversation) => {
-    const newUser = users?.find((user) => {
-      return user?.user_id === newActiveConversation.user_id;
-    });
-    if (newUser) {
-      const newConversation = newActiveConversation.data;
-      console.log("conversation array:", newConversation);
-      const updatedConversations = [...conversations, ...newConversation];
-      console.log("Updated conversations:", updatedConversations);
 
-      setConversations(updatedConversations);
-    }
+    setUsers(userList);
   };
 
-  useEffect(() => {
-    if (Object.keys(newActiveUser).length > 0) {
-      identifyUser(users, newActiveUser);
+  const addTranscriptToConversation = (newActiveConversation) => {
+    if (newActiveConversation.is_last === "True") {
+      const updatedUsers = users?.filter(
+        (user) => user.user_id !== newActiveConversation.user_id
+      );
+
+      setUsers([...updatedUsers]);
+      setConversations([]);
+      setSelectedUser(null);
+
+      updatedUsers.length && getConversationByUser(updatedUsers[0]);
+
+      return;
     }
 
-    if (Object.keys(newActiveConversation).length > 0) {
-      identifyUserConveration(users, newActiveConversation);
-    }
-  }, [newActiveUser, newActiveConversation]);
+    if (selectedUser !== newActiveConversation.user_id) return;
+
+    const newConversation = newActiveConversation.data;
+    const updatedConversations = [...conversations, ...newConversation];
+    setConversations(updatedConversations);
+  };
 
   useEffect(() => {
     getAllActiveUsers();
   }, []);
-  {
-    console.log("====conversations====", conversations);
-  }
+
   return (
     <>
       <SaveHeading heading={heading} />
