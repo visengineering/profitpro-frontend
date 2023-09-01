@@ -13,19 +13,21 @@ import { useSocket } from "../../../hooks/useSocket";
 const ActiveUser = ({ heading }) => {
   const { open } = useContext(AppContext);
 
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState();
   const [isLoading, setLoading] = useState(true);
   const [conversations, setConversations] = useState([]);
 
-  const { newActiveUser } = useSocket();
-  console.log("sssssssssssssss", newActiveUser);
+  const { newActiveUser, newActiveConversation } = useSocket();
+  console.log("newActiveUser", newActiveUser);
+  console.log("newActiveConversation ", newActiveConversation);
 
   async function getAllActiveUsers() {
     try {
       const response = await UserService.getAllActiveUser();
       const { results } = response.data;
       const result = results.sort((a, b) => b.user_id - a.user_id);
+
       if (Array.isArray(results) && results.length) {
         getConversationByUser(results[0]);
       }
@@ -51,10 +53,11 @@ const ActiveUser = ({ heading }) => {
 
       const response = await UserService.getActiveConversation(user.user_id);
       const { results } = response.data;
-
       setConversations(results);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
       toast.error("Something went wrong while fetching details", {
         position: "top-right",
         autoClose: 2000,
@@ -65,42 +68,61 @@ const ActiveUser = ({ heading }) => {
     }
     setLoading(false);
   }
+  console.log("users data = ", users);
+  console.log("--------------------- = ", newActiveUser);
   const identifyUser = (users, newActiveUser) => {
-    const newUser = users.find(
-      (user) => user.user_id === newActiveUser.user_id
-    );
+    if (users.length) {
+      var newUserFind = users.find(
+        (user) => user?.user_id === newActiveUser.user_id
+      );
 
-    if (!newUser) {
+      if (!newUserFind) {
+        setUsers((prevUsers) => [...prevUsers, newActiveUser]);
+      } else {
+        return;
+      }
+    }
+
+    if (!users.length) {
+      setSelectedUser(newActiveUser);
       setUsers((prevUsers) => [...prevUsers, newActiveUser]);
+      // var newConversation = newActiveConversation.data;
+      // setConversations((prevConversation) => [
+      //   ...prevConversation,
+      //   ...newConversation,
+      // ]);
     }
   };
-  const identifyUserConveration = (users, newActiveUser) => {
-    console.log("Users = ", users);
-    const newUser = users?.find(
-      (user) => user.user_id === newActiveUser.user_id
-    );
-
+  const identifyUserConveration = (users, newActiveConversation) => {
+    const newUser = users?.find((user) => {
+      return user?.user_id === newActiveConversation.user_id;
+    });
     if (newUser) {
-      const newConversation = newActiveUser.data;
-      setConversations((prevConversation) => [
-        ...prevConversation,
-        ...newConversation,
-      ]);
+      const newConversation = newActiveConversation.data;
+      console.log("conversation array:", newConversation);
+      const updatedConversations = [...conversations, ...newConversation];
+      console.log("Updated conversations:", updatedConversations);
+
+      setConversations(updatedConversations);
     }
   };
 
   useEffect(() => {
-    const identifyUserAndChunks =
-      newActiveUser?.event_type === "new_active_user";
-    identifyUserAndChunks
-      ? identifyUser(users, newActiveUser)
-      : identifyUserConveration(users, newActiveUser);
-  }, [newActiveUser]);
+    if (Object.keys(newActiveUser).length > 0) {
+      identifyUser(users, newActiveUser);
+    }
+
+    if (Object.keys(newActiveConversation).length > 0) {
+      identifyUserConveration(users, newActiveConversation);
+    }
+  }, [newActiveUser, newActiveConversation]);
 
   useEffect(() => {
     getAllActiveUsers();
   }, []);
-
+  {
+    console.log("====conversations====", conversations);
+  }
   return (
     <>
       <SaveHeading heading={heading} />
@@ -141,7 +163,7 @@ const ActiveUser = ({ heading }) => {
               </Box>
             ) : (
               <Box>
-                {users?.map((user) => (
+                {users.map((user) => (
                   <Box
                     sx={{
                       display: "flex",
@@ -159,15 +181,17 @@ const ActiveUser = ({ heading }) => {
 
                       ":hover": {
                         backgroundColor:
-                          selectedUser.user_id === user.user_id
+                          selectedUser?.user_id === user?.user_id
                             ? user.state
                             : "#F1F7FF",
                         borderRadius: "5px",
                       },
                       backgroundColor:
-                        selectedUser.user_id === user.user_id ? user.state : "",
+                        selectedUser?.user_id === user?.user_id
+                          ? user?.state
+                          : "",
                       color:
-                        selectedUser.user_id === user.user_id ? "#FFF" : "",
+                        selectedUser?.user_id === user?.user_id ? "#FFF" : "",
                     }}
                     className="active-user"
                     onClick={() => {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
@@ -10,12 +10,14 @@ function getRandomUserId(userIdsArray) {
 
   localStorage.setItem("userId", userId);
 
-  return;
+  return userId;
 }
 
 export function useSocket() {
   const [isConnected, setIsConnected] = useState(false);
-  const [newActiveUser, setNewActiveUser] = useState();
+  const [newWebSocketData, setNewWebSocketData] = useState();
+  const [newActiveUser, setNewActiveUser] = useState({});
+  const [newActiveConversation, setNewActiveConversation] = useState({});
 
   const randomUserId =
     localStorage.getItem("userId") || getRandomUserId(userIds);
@@ -32,7 +34,15 @@ export function useSocket() {
   };
 
   webSocket.onmessage = (event) => {
-    setNewActiveUser(event.data);
+    const data = JSON.parse(event.data);
+    console.log("json data", data);
+
+    setNewWebSocketData(data);
+    if (data.event_type === "new_active_user") {
+      setNewActiveUser(data.user);
+    } else {
+      setNewActiveConversation(data);
+    }
   };
 
   webSocket.onclose = () => {
@@ -40,10 +50,21 @@ export function useSocket() {
     webSocket.close();
   };
 
+  useEffect(() => {
+    console.log("newUser", newWebSocketData);
+    console.log("newActiveUser", newActiveUser);
+    console.log("newActiveConversation", newActiveConversation);
+  }, [newWebSocketData]);
+
   function connectWithWebSocket() {
     if (!isConnected) return;
     webSocket.send(JSON.stringify(data));
   }
 
-  return { webSocket, connectWithWebSocket, newActiveUser };
+  return {
+    webSocket,
+    connectWithWebSocket,
+    newActiveUser,
+    newActiveConversation,
+  };
 }
