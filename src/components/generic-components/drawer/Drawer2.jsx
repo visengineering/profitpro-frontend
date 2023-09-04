@@ -47,10 +47,8 @@ const closedMixin = (theme) => ({
 const TogglerBox = styled(Box)(({ theme, open }) => ({
   display: "flex",
   justifyContent: "flex-end",
-  transition: theme.transitions.create("left", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
+  position: "fixed",
+  top: "80%",
   left: open ? "280px" : "40px",
 }));
 
@@ -88,9 +86,10 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Drawer2() {
   const theme = useTheme();
-  const { openDropDown, updateOpen, open, toggleDrawer } =
+  const { openDropDown, updateOpen, open, toggleDrawer, expandValue } =
     useContext(AppContext);
-  const [activeButton, setActiveButton] = useState(""); // 'home' is the default active button
+  const [activeButton, setActiveButton] = useState("");
+  // const [expandIconCheck, setExpandIconCheck] = useState();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -111,8 +110,11 @@ export default function Drawer2() {
           <DrawerHeader className="drawer-head">
             <Box
               component="img"
-              sx={{ maxHeight: "4.2rem" }}
+              sx={{ maxHeight: "4.2rem", cursor: "pointer" }}
               src={open ? "/logo.png" : "/new-logo.png"}
+              onClick={() => {
+                navigate("/");
+              }}
             />
           </DrawerHeader>
           {/* <Divider /> */}
@@ -241,15 +243,15 @@ export default function Drawer2() {
                   <Box component="img" src="/folder.svg" />
                 </ListItemIcon>
                 {open && <ListItemText primary="Manage" />}
-                {openDropDown ? (
+                {/* {openDropDown ? (
                   <ExpandMoreIcon
                     sx={{ display: `${!open ? "none" : "block"}` }}
                   />
-                ) : (
-                  <ExpandLessIcon
-                    sx={{ display: `${!open ? "none" : "block"}` }}
-                  />
-                )}
+                ) : ( */}
+                <ExpandLessIcon
+                  sx={{ display: `${!open ? "none" : "block"}` }}
+                />
+                {/* )} */}
               </ListItemButton>
               <ListItemButton
                 className="main-nav expand-able"
@@ -261,15 +263,15 @@ export default function Drawer2() {
                   <Box component="img" src="/pdf.svg" />
                 </ListItemIcon>
                 {open && <ListItemText primary="Projects" />}
-                {openDropDown ? (
+                {/* {openDropDown ? (
                   <ExpandMoreIcon
                     sx={{ display: `${!open ? "none" : "block"}` }}
                   />
-                ) : (
-                  <ExpandLessIcon
-                    sx={{ display: `${!open ? "none" : "block"}` }}
-                  />
-                )}
+                ) : ( */}
+                <ExpandLessIcon
+                  sx={{ display: `${!open ? "none" : "block"}` }}
+                />
+                {/* )} */}
               </ListItemButton>
               <ListItemButton
                 className="main-nav expand-able"
@@ -281,15 +283,15 @@ export default function Drawer2() {
                   <Box component="img" src="/monitor.svg" />
                 </ListItemIcon>
                 {open && <ListItemText primary="Direction Technique" />}
-                {openDropDown ? (
+                {/* {openDropDown ? (
                   <ExpandMoreIcon
                     sx={{ display: `${!open ? "none" : "block"}` }}
                   />
-                ) : (
-                  <ExpandLessIcon
-                    sx={{ display: `${!open ? "none" : "block"}` }}
-                  />
-                )}
+                ) : ( */}
+                <ExpandLessIcon
+                  sx={{ display: `${!open ? "none" : "block"}` }}
+                />
+                {/* )} */}
               </ListItemButton>
               <ListItemButton
                 className="main-nav expand-able"
@@ -301,15 +303,15 @@ export default function Drawer2() {
                   <Box component="img" src="/protection.svg" />
                 </ListItemIcon>
                 {open && <ListItemText primary="Protection" />}
-                {openDropDown ? (
+                {/* {openDropDown ? (
                   <ExpandMoreIcon
                     sx={{ display: `${!open ? "none" : "block"}` }}
                   />
-                ) : (
-                  <ExpandLessIcon
-                    sx={{ display: `${!open ? "none" : "block"}` }}
-                  />
-                )}
+                ) : ( */}
+                <ExpandLessIcon
+                  sx={{ display: `${!open ? "none" : "block"}` }}
+                />
+                {/* )} */}
               </ListItemButton>
             </List>
             <TogglerBox open={open}>
@@ -321,20 +323,24 @@ export default function Drawer2() {
                 {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
               </CustomIconButton>
             </TogglerBox>
-            <Box className="personal-info-container">
+            <Box
+              className={
+                !open
+                  ? "personal-info-container"
+                  : "personal-info-containerOpenCase "
+              }
+            >
               <Avatar
                 alt="Farhan Tariq"
                 className="avatar-info"
-                src="/avatar5.jpg"
+                src="/Avatar2.png"
               />
               {open && (
                 <Box className="personal-info">
                   <Typography variant="h6" className="name">
-                    Farhan Tariq
+                    Tim Hock
                   </Typography>
-                  <Typography className="email">
-                    dev.farhantariq12b@gmail.com
-                  </Typography>
+                  <Typography className="email">timhock@vis.com</Typography>
                 </Box>
               )}
             </Box>

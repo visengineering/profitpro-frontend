@@ -177,7 +177,7 @@ function Row(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Sale Representative Transcripts
+                Sale Representative Details
               </Typography>
               <Table aria-label="purchases">
                 <TableHead>
@@ -185,7 +185,7 @@ function Row(props) {
                     <TableCell align="center">Transcript ID</TableCell>
                     <TableCell align="center">Created At</TableCell>
                     <TableCell align="center">Updated At</TableCell>
-                    <TableCell align="center">Audio Link</TableCell>
+                    <TableCell align="center">Download Audio File</TableCell>
                     <TableCell align="center">
                       Time Duration (seconds)
                     </TableCell>

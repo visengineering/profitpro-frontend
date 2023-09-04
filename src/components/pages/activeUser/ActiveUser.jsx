@@ -106,6 +106,7 @@ const ActiveUser = ({ heading }) => {
   };
 
   const addTranscriptToConversation = (newActiveConversation) => {
+    console.log("running function", newActiveConversation);
     if (newActiveConversation.is_last === "True") {
       const updatedUsers = users?.filter(
         (user) => user.user_id !== newActiveConversation.user_id
@@ -120,11 +121,12 @@ const ActiveUser = ({ heading }) => {
       return;
     }
 
-    if (selectedUser !== newActiveConversation.user_id) return;
-
+    if (selectedUser.user_id !== newActiveConversation.user_id) return;
+    console.log("beforeConversation", conversations);
     const newConversation = newActiveConversation.data;
     const updatedConversations = [...conversations, ...newConversation];
     setConversations(updatedConversations);
+    console.log("updateConversation", conversations);
   };
 
   useEffect(() => {

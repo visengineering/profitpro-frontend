@@ -3,6 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
+  const [expandValue, setExpandValue] = useState();
   const [openDropDown, setOpen] = useState(() => {
     // Load state from local storage, or use a default value
     const storedOpen = localStorage.getItem("openDropDown");
@@ -39,6 +40,7 @@ const AppContextProvider = ({ children }) => {
         toggleDrawer,
         isAuthenticated,
         setIsAuthenticated,
+        expandValue,
       }}
     >
       {children}

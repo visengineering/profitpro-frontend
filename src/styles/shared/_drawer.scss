@@ -92,6 +92,30 @@ $backgroundImage: url("../../../public/SideBar.png"); // Adjust the path
     }
   }
 }
+.personal-info-containerOpenCase {
+  display: flex;
+  gap: 8px;
+  padding-left: 2rem;
+
+  .avatar-info > img {
+    width: auto;
+  }
+
+  .personal-info {
+    display: flex;
+    flex-direction: column;
+
+    .name {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1;
+    }
+    .email {
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+}
 
 .main-nav {
   margin: 10px !important;

@@ -44,7 +44,7 @@ const headCells = [
     id: "conversation_url",
     numeric: true,
     disablePadding: false,
-    label: "Audio Link",
+    label: "Download Audio File",
     align: "center",
   },
   {
@@ -124,8 +124,6 @@ function TranscriptsDataTable({
       }
     );
   };
-  // console.log("Selected:::", JSON.stringify(selected, null, 2));
-  // console.log("TRans:::", JSON.stringify(transcripts, null, 2));
 
   return (
     <Box sx={{ width: "100%", height: "100%" }}>
