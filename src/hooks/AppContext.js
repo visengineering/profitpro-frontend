@@ -10,6 +10,14 @@ const AppContextProvider = ({ children }) => {
     return storedOpen ? JSON.parse(storedOpen) : false;
   });
 
+  // const [openDropDown, setOpen] = useState([]);
+  const [token, setToken] = useState();
+
+  const updateToken = (token) => {
+    localStorage.setItem("token", JSON.stringify(token));
+    setToken(token);
+  };
+
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("token")
   );
@@ -17,6 +25,15 @@ const AppContextProvider = ({ children }) => {
   const updateOpen = () => {
     setOpen((prevOpen) => !prevOpen);
   };
+  // const updateOpen = (value) => {
+  //   if (!openDropDown){
+  //     setOpen((prevNames) => [...prevNames, value]);
+  //   }
+  //   const dropDownExist =openDropDown.find(
+  //     (menu) => menu === value
+  //   );
+  //   setOpen((prevNames) => [...prevNames, value]);
+  // };
 
   const [open, setOpenToggle] = useState(() => {
     const toggleOpen = localStorage.getItem("open");
@@ -41,6 +58,9 @@ const AppContextProvider = ({ children }) => {
         isAuthenticated,
         setIsAuthenticated,
         expandValue,
+        setToken,
+        token,
+        updateToken,
       }}
     >
       {children}
