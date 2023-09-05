@@ -1,0 +1,56 @@
+.box-container-default {
+  padding: 0 2rem;
+  width: 100%;
+  margin-left: 3.2rem;
+  margin-top: 4rem;
+  height: 84vh;
+  padding-top: 1rem;
+  max-width: calc(100% - 52px);
+  background-color: #f4f5f8;
+  transition: all 0.195s ease-in-out !important;
+}
+.box-container-open {
+  padding: 0 2rem;
+  width: 85%;
+  margin-left: 17.9rem;
+  margin-top: 4rem;
+  height: 84vh;
+  padding-top: 1rem;
+  max-width: calc(100% - 286px);
+  background-color: #f4f5f8;
+  transition: all 0.225s ease-in-out !important;
+}
+.dashboard-heading {
+  color: #343a40;
+  font-size: 42px !important;
+  font-weight: 700 !important;
+}
+
+.dash-container-default {
+  width: 100%;
+  margin-left: 4rem;
+  height: 2vh;
+  max-width: calc(100% - 64px);
+  transition: all 0.195s ease-in-out !important;
+}
+.dash-container-open {
+  width: 85%;
+  margin-left: 18.7rem;
+  max-width: calc(100% - 300px);
+  transition: all 0.225s ease-in-out !important;
+}
+.dashboard-searchbar {
+  background-color: #ffffff;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1.5rem;
+  padding-right: 1rem;
+  border-radius: 5px;
+}
+.current-dealership {
+  margin-top: 0.5rem;
+  height: 18vh;
+  background-color: #45536c;
+}

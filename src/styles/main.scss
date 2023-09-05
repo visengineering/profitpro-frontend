@@ -8,15 +8,7 @@
 @import "./shared/auth.scss";
 @import "./shared/chat.scss";
 @import "./shared/user.scss";
-
-.box-container {
-  padding: 0 2rem;
-  width: 85%;
-  float: right;
-  margin-top: 7rem;
-  height: 100%;
-  max-width: calc(100% - 300px);
-}
+@import "./shared/dashboard.scss";
 
 body {
   background: white !important;
