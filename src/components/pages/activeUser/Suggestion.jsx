@@ -15,7 +15,14 @@ const Suggestion = ({ className }) => {
             gap: 1,
           }}
         >
-          <Avatar sx={{ bgcolor: "#FFB526", border: "1px solid #FFFFFF" }}>
+          <Avatar
+            sx={{
+              height: "60px",
+              width: "60px",
+              bgcolor: "#FFB526",
+              border: "1px solid #FFFFFF",
+            }}
+          >
             AI
           </Avatar>
           <Typography className="aisuggestion">AI Suggestions</Typography>
@@ -41,7 +48,7 @@ const Suggestion = ({ className }) => {
             <Avatar
               alt="Remy Sharp"
               src="Ellipse 1.svg"
-              sx={{ width: 30, height: 30 }}
+              sx={{ width: 40, height: 40 }}
             />
             <Box
               sx={{
@@ -133,7 +140,7 @@ const Suggestion = ({ className }) => {
             <Avatar
               alt="Remy Sharp"
               src="Ellipse 1.svg"
-              sx={{ width: 30, height: 30 }}
+              sx={{ width: 40, height: 40 }}
             />
             <Box
               sx={{

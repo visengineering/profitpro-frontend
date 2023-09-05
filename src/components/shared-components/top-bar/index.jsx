@@ -82,6 +82,7 @@ function TopBar() {
               "&:hover": {
                 backgroundColor: !isActiveUserPath ? "#00BE4C" : "#233EAE",
               },
+              boxShadow: "none",
             }}
             variant="contained"
             onClick={handleButtonClick}

@@ -57,7 +57,7 @@ function LoginPage() {
         <Box
           component="img"
           src="/logo3.png"
-          sx={{ width: "30%", margin: "4rem" }}
+          sx={{ width: "25%", margin: "3rem" }}
         />
       </Box>
       <Box className="login-form-container">

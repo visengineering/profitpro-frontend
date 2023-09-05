@@ -39,6 +39,9 @@ $backgroundImage: url("../../../public/AIChat.jpg");
   text-decoration: underline;
   padding-right: 30px;
 }
+.aisuggestion {
+  color: #fff;
+}
 @media (min-width: 1400px) {
   .username {
     font-size: 28px !important;
@@ -73,7 +76,6 @@ $backgroundImage: url("../../../public/AIChat.jpg");
   .aisuggestion {
     font-size: 26px !important;
     font-weight: 700 !important;
-    color: #fff;
   }
   .displayname {
     font-size: 18px !important;
@@ -129,7 +131,6 @@ $backgroundImage: url("../../../public/AIChat.jpg");
   .aisuggestion {
     font-size: 22px !important;
     font-weight: 700 !important;
-    color: #fff;
   }
   .displayname {
     font-size: 18px !important;
@@ -190,7 +191,6 @@ $backgroundImage: url("../../../public/AIChat.jpg");
   .aisuggestion {
     font-size: 16px !important;
     font-weight: 500 !important;
-    color: #fff;
   }
   .displayname {
     font-size: 14px !important;

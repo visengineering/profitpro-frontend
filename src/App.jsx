@@ -35,6 +35,8 @@ function App() {
     connectWithWebSocket();
   }, []);
 
+  console.log("is authenticated = ", isAuthenticated);
+
   const router = createBrowserRouter([
     {
       path: "",

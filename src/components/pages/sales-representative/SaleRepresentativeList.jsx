@@ -68,14 +68,6 @@ const SaleRepresentativeList = ({ heading }) => {
         <Box role="presentation">
           <Breadcrumbs crumbs={crumbs} />
         </Box>
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        ></Box>
         <SalesRepresentativeDataTable
           rows={users}
           isLoading={isLoading}

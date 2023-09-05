@@ -62,13 +62,31 @@
   float: right;
   margin-top: 5rem;
   width: 100%;
-  max-width: calc(100% - 300px);
+  max-width: calc(100% - 64px);
+  transition: all 0.195s ease-in-out !important;
+  height: 80vh;
   height: calc(100vh - 5rem);
 }
 .table-container .table-list {
   height: 100vh;
 }
 .table-container .MuiTableCell-root {
+  padding: 5px 10px;
+}
+
+.table-container-open {
+  float: right;
+  margin-top: 5rem;
+  width: 100%;
+  max-width: calc(100% - 300px);
+  transition: all 0.225s ease-in-out !important;
+  height: 80vh;
+  height: calc(100vh - 5rem);
+}
+.table-container-open .table-list {
+  height: 100vh;
+}
+.table-container-open .MuiTableCell-root {
   padding: 5px 10px;
 }
 
@@ -93,12 +111,8 @@
 .table-pagination .MuiTextField-root input {
   padding: 5px;
 }
-.table-pagination
-  .MuiTextField-root
-  input[type="number"]::-webkit-inner-spin-button,
-.table-pagination
-  .MuiTextField-root
-  input[type="number"]::-webkit-outer-spin-button {
+.table-pagination .MuiTextField-root input[type=number]::-webkit-inner-spin-button,
+.table-pagination .MuiTextField-root input[type=number]::-webkit-outer-spin-button {
   opacity: 1;
 }
 .table-pagination .MuiPaginationItem-previousNext {
@@ -153,6 +167,7 @@
   min-height: 50px !important;
   text-transform: none !important;
   border-radius: 5px !important;
+  box-shadow: none !important;
 }
 
 .side-menu-bar {
@@ -174,10 +189,14 @@
   justify-content: space-between;
 }
 .side-menu-bar .list-container .toggler-btn {
-  height: 40px;
-  width: 40px;
   position: fixed;
   background: #1e2e8c;
+  transition: all 0.195s ease-in-out !important;
+}
+.side-menu-bar .list-container .toggler-btn-open {
+  position: fixed;
+  background: #1e2e8c;
+  transition: all 0.225s ease-in-out !important;
 }
 .side-menu-bar img {
   width: 60%;
@@ -232,6 +251,28 @@
   font-weight: 400;
 }
 
+.personal-info-containerOpenCase {
+  display: flex;
+  gap: 8px;
+  padding-left: 2rem;
+}
+.personal-info-containerOpenCase .avatar-info > img {
+  width: auto;
+}
+.personal-info-containerOpenCase .personal-info {
+  display: flex;
+  flex-direction: column;
+}
+.personal-info-containerOpenCase .personal-info .name {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+}
+.personal-info-containerOpenCase .personal-info .email {
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .main-nav {
   margin: 10px !important;
   width: 90% !important;
@@ -247,17 +288,23 @@
   margin-top: 10px !important;
 }
 
-.top-bar-container {
-  display: flex;
+.top-bar-container-close {
   width: 85%;
-  flex-direction: row;
-  max-width: calc(100% - 300px);
+  max-width: calc(100% - 64px);
+  transition: all 0.195s ease-in-out !important;
+}
+
+.top-bar-container-open {
+  width: 85%;
+  max-width: calc(100% - 299px);
+  transition: all 0.225s ease-in-out !important;
 }
 
 .auth-box-container {
   width: 100%;
   height: 100vh;
   display: flex;
+  font-family: "Roboto", sans-serif;
 }
 .auth-box-container .login-img {
   height: inherit;
@@ -310,12 +357,7 @@
   justify-content: space-between;
   font-size: 14px;
 }
-.auth-box-container
-  .login-form-container
-  .login-form
-  form
-  .options-container
-  .MuiFormControlLabel-label {
+.auth-box-container .login-form-container .login-form form .options-container .MuiFormControlLabel-label {
   font-size: 14px;
 }
 .auth-box-container .login-form-container .login-form form .login-field {
@@ -323,9 +365,10 @@
 }
 .auth-box-container .login-form-container .copyright {
   color: #6c757d;
+  position: absolute;
   font-size: 16px;
   font-weight: 400;
-  margin-top: 6rem;
+  bottom: 50px;
 }
 
 .chatBackgroundImage {
@@ -335,28 +378,28 @@
   max-width: 100%;
   box-sizing: border-box;
   -o-object-fit: fill;
-  object-fit: fill;
+     object-fit: fill;
 }
 
 .conversationBox {
   width: 48%;
   background-color: #ffffff;
   height: 88vh;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 .suggestionBox {
   width: 30%;
   background-color: #ffffff;
   height: 88vh;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 .transcriptConversationBox {
   width: 65%;
   background-color: #ffffff;
   height: 80vh;
-  border-radius: 3px;
+  border-radius: 4px;
   margin-left: 1rem;
 }
 
@@ -364,13 +407,17 @@
   width: 31%;
   background-color: #ffffff;
   height: 80vh;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 .userAllConversation {
   padding-top: 25px;
   text-decoration: underline;
   padding-right: 30px;
+}
+
+.aisuggestion {
+  color: #fff;
 }
 
 @media (min-width: 1400px) {
@@ -407,7 +454,6 @@
   .aisuggestion {
     font-size: 26px !important;
     font-weight: 700 !important;
-    color: #fff;
   }
   .displayname {
     font-size: 18px !important;
@@ -463,7 +509,6 @@
   .aisuggestion {
     font-size: 22px !important;
     font-weight: 700 !important;
-    color: #fff;
   }
   .displayname {
     font-size: 18px !important;
@@ -523,7 +568,6 @@
   .aisuggestion {
     font-size: 16px !important;
     font-weight: 500 !important;
-    color: #fff;
   }
   .displayname {
     font-size: 14px !important;
@@ -563,6 +607,31 @@
   background: #f1f7ff;
 }
 
+.userlist-default {
+  padding: 0 2rem;
+  width: 100%;
+  margin-left: 4rem;
+  margin-top: 4rem;
+  height: 91vh;
+  padding-top: 1rem;
+  max-width: calc(100% - 64px);
+  background-color: #f4f5f8;
+  transition: all 0.195s ease-in-out !important;
+}
+
+.userlist-open {
+  padding: 0 2rem;
+  width: 85%;
+  margin-left: 18.7rem;
+  margin-top: 4rem;
+  height: 91vh;
+  padding-top: 1rem;
+  max-width: calc(100% - 300px);
+  background-color: #f4f5f8;
+  margin-bottom: 1rem;
+  transition: all 0.225s ease-in-out !important;
+}
+
 .box-container {
   padding: 0 2rem;
   width: 85%;
@@ -586,4 +655,4 @@ body {
 
 * {
   font-family: "Roboto", sans-serif !important;
-} /*# sourceMappingURL=index.css.map */
+}/*# sourceMappingURL=index.css.map */
