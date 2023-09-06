@@ -54,3 +54,48 @@
   height: 18vh;
   background-color: #45536c;
 }
+
+.dashboard-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+}
+.status-content {
+  width: 45%;
+  height: 55vh;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.record-heading {
+  font-size: 1.2rem !important;
+  font-weight: 500 !important;
+  color: #000000 !important;
+}
+.record-text {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  color: rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+// .add-dealersips {
+//   background-color: #fff;
+//   width: 80%;
+//   height: 55vh;
+//   border-radius: 15px;
+//   padding: 2rem;
+// }
+.dealerships-inputLabel {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  color: #000000 !important;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.dealerships-field {
+  width: 100%;
+  //   height: 16px;
+}

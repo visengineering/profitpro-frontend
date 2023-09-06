@@ -8,7 +8,9 @@ import SearchBar from "../../shared-components/uncontrolled-search-bar";
 import LoadingButton from "../../generic-components/button";
 import AddIcon from "@mui/icons-material/Add";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import DashboardCard from "../../generic-components/card/DashboardCard";
+import DashboardGrid from "../../generic-components/Grid/DashboardGrid";
+import DashboardSatusIndicator from "./DashboardStatusIndicator";
+import AddNewDealerships from "./AddNewDealerships";
 
 const Dashboard = ({ heading }) => {
   const { open } = useContext(AppContext);
@@ -19,7 +21,13 @@ const Dashboard = ({ heading }) => {
         <Typography className="dashboard-heading">
           Welcome to ProfitPro!
         </Typography>
-        <Box className="dashboard-searchbar">
+        {/* <Box className="dashboard-status">
+          <AddNewDealerships />
+        </Box> */}
+        <Box className="dashboard-status">
+          <DashboardSatusIndicator />
+        </Box>
+        {/* <Box className="dashboard-searchbar">
           <Box
             sx={{
               display: "flex",
@@ -54,13 +62,13 @@ const Dashboard = ({ heading }) => {
           </Box>
         </Box>
         {/*  current dealerships */}
-        <Box className="current-dealership">
-          <DashboardCard />
-        </Box>
+        {/* <Box className="current-dealership">
+          <DashboardGrid />
+        </Box>  */}
       </Box>
-      <Box className={open ? "dash-container-open" : "dash-container-default"}>
+      {/* <Box className={open ? "dash-container-open" : "dash-container-default"}>
         <Pagination />
-      </Box>
+      </Box> */}
     </>
   );
 };

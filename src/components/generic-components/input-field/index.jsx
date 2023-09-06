@@ -7,6 +7,7 @@ function InputField({
   type,
   className,
   onChange,
+  placeholder,
   min,
   max,
   value,
@@ -16,6 +17,7 @@ function InputField({
       label={label}
       variant={variant}
       type={type}
+      placeholder={placeholder}
       className={className}
       onChange={onChange}
       value={value}
