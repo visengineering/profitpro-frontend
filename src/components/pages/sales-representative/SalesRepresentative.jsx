@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Typography, Grid, Paper } from "@mui/material";
 import { Box } from "@mui/material";
 import SaveHeading from "../../shared-components/SaveHeading";
+import { AppContext } from "../../../hooks/AppContext";
 
 const user = {
   image: "/avatar1.jpg",
@@ -12,10 +13,11 @@ const user = {
 };
 
 const SalesRepresentative = ({ heading }) => {
+  const { open } = useContext(AppContext);
   return (
     <>
       <SaveHeading heading={heading} />
-      <Box className="box-container">
+      <Box className={open ? "box-container-open" : "box-container-default"}>
         <Paper
           sx={{
             display: "flex",

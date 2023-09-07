@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import SaveHeading from "../../shared-components/SaveHeading";
@@ -10,9 +10,13 @@ import AddIcon from "@mui/icons-material/Add";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import DashboardGrid from "../../generic-components/Grid/DashboardGrid";
 import DashboardSatusIndicator from "./DashboardStatusIndicator";
+import Modal from "../../generic-components/model";
 import AddNewDealerships from "./AddNewDealerships";
 
 const Dashboard = ({ heading }) => {
+  const [openModel, setOpenModel] = useState(false);
+  const handleOpen = () => setOpenModel(true);
+  const handleClose = () => setOpenModel(false);
   const { open } = useContext(AppContext);
   return (
     <>
@@ -21,13 +25,14 @@ const Dashboard = ({ heading }) => {
         <Typography className="dashboard-heading">
           Welcome to ProfitPro!
         </Typography>
+
         {/* <Box className="dashboard-status">
-          <AddNewDealerships />
+          <DashboardSatusIndicator
+            className="status-content"
+            Title="No Record Founded"
+          />
         </Box> */}
-        <Box className="dashboard-status">
-          <DashboardSatusIndicator />
-        </Box>
-        {/* <Box className="dashboard-searchbar">
+        <Box className="dashboard-searchbar">
           <Box
             sx={{
               display: "flex",
@@ -39,10 +44,14 @@ const Dashboard = ({ heading }) => {
               variant="contained"
               styleClass="primary-btn"
               endIcon={<AddIcon />}
+              handleClick={handleOpen}
               sx={{
                 width: "256px",
               }}
             />
+            <Modal open={openModel} onClose={handleClose}>
+              <AddNewDealerships close={handleClose} />
+            </Modal>
             <SearchBar />
           </Box>
           <Box sx={{ display: "flex", gap: "1rem", alignItems: "center" }}>
@@ -62,13 +71,13 @@ const Dashboard = ({ heading }) => {
           </Box>
         </Box>
         {/*  current dealerships */}
-        {/* <Box className="current-dealership">
+        <Box className="current-dealership">
           <DashboardGrid />
-        </Box>  */}
+        </Box>
       </Box>
-      {/* <Box className={open ? "dash-container-open" : "dash-container-default"}>
+      <Box className={open ? "dash-container-open" : "dash-container-default"}>
         <Pagination />
-      </Box> */}
+      </Box>
     </>
   );
 };

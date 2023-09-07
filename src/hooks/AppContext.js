@@ -1,8 +1,18 @@
 import React, { createContext, useState, useEffect } from "react";
+// import { cardData } from "../constants/data";
 
 const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
+  // const [card, setCardData] = useState([]);
+
+  // useEffect(() => {
+  //   setCardData(cardData);
+  // }, []);
+
+  // const handleAddCardData =() =>{
+  //   setCardData(previous)
+  // }
   const [expandValue, setExpandValue] = useState();
   const [openDropDown, setOpen] = useState(() => {
     // Load state from local storage, or use a default value
@@ -61,6 +71,7 @@ const AppContextProvider = ({ children }) => {
         setToken,
         token,
         updateToken,
+        // card,
       }}
     >
       {children}

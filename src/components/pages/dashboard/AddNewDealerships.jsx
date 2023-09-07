@@ -1,28 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography, InputLabel } from "@mui/material";
 import InputField from "../../generic-components/input-field";
 import MenuItem from "@mui/material/MenuItem";
+import LoadingButton from "../../generic-components/button";
+import formatDate from "../../../helpers/date";
+const style = {
+  position: "absolute",
+  top: "52%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "80%",
+  border: "none",
+  borderRadius: "15px",
+  backgroundColor: "#FFF",
+  padding: "2rem",
+};
 
-const AddNewDealerships = () => {
+const AddNewDealerships = ({ close }) => {
+  const date = new Date();
+  const fromattedDate = formatDate(date);
+  //   const [valuedate, setValueDate] = useState();
+  console.log("present time", fromattedDate);
   return (
-    <Box
-      className="add-dealersips"
-      sx={{
-        backgroundColor: "#FFF",
-        width: "80%",
-        height: "55vh",
-        borderRadius: "15px",
-        padding: "2rem",
-      }}
-    >
-      <Typography
-        sx={{
-          fontSize: "1.2rem",
-          fontWeight: 500,
-          color: "#000000",
-          marginBottom: "1.2rem",
-        }}
-      >
+    <Box className="add-dealersips" sx={style}>
+      <Typography className="adding-form-heading">
         Add new Dealership
       </Typography>
       <Box
@@ -46,7 +47,7 @@ const AddNewDealerships = () => {
           />
           <InputLabel className="dealerships-inputLabel">Address</InputLabel>
           <InputField
-            className="dealerships-field .h1"
+            className="dealerships-field "
             variant="outlined"
             fullWidth
             type="text"
@@ -88,7 +89,8 @@ const AddNewDealerships = () => {
             type="date"
             id="JoiningDate"
             name="JoiningDate"
-            placeholder="Enter dealership name"
+            // value={fromattedDate}
+            // placeholder={fromattedDate}
           />
           <InputLabel className="dealerships-inputLabel">
             Short description
@@ -120,6 +122,22 @@ const AddNewDealerships = () => {
         <MenuItem value="salesperson1">Salesperson 1</MenuItem>
         <MenuItem value="salesperson2">Salesperson 2</MenuItem>
     */}
+      <Box>
+        <LoadingButton
+          buttonTitle={"Add"}
+          variant="outlined"
+          size="large"
+          styleClass="adding-btn "
+          handleClick={close}
+        />
+        <LoadingButton
+          buttonTitle={"Cancel"}
+          variant="outlined"
+          size="large"
+          styleClass="cancel-btn "
+          handleClick={close}
+        />
+      </Box>
     </Box>
   );
 };

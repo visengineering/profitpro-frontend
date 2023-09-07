@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import DashboardCard from "../card/DashboardCard";
 import { Box } from "@mui/material";
+// import { AppContext } from "../../../hooks/AppContext";
 
 const cardData = [
   {
@@ -44,6 +45,7 @@ const cardData = [
 ];
 
 const DashboardGrid = () => {
+  // const { card } = useContext(AppContext);
   return (
     <Box sx={{ width: "70%", margin: "auto" }}>
       <Typography
@@ -63,7 +65,7 @@ const DashboardGrid = () => {
         alignItems="center"
         spacing={1}
       >
-        {cardData.map((card, index) => (
+        {cardData?.map((card, index) => (
           <Grid item xs={4} md={4} key={index}>
             <DashboardCard cardDataList={card} />
           </Grid>
