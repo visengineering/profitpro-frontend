@@ -112,10 +112,10 @@ const DashboardCard = ({ cardDataList }) => {
               fontWeight: 500,
             }}
           >
-            {cardDataList.cardTitle}
+            {cardDataList.dealershipsName}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {cardDataList.cardParagraph}
+            {cardDataList.description}
           </Typography>
         </CardContent>
       </Card>
