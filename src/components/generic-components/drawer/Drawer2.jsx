@@ -247,7 +247,8 @@ export default function Drawer2() {
                   <ExpandMoreIcon
                     sx={{ display: `${!open ? "none" : "block"}` }}
                   />
-                ) : ( */}
+                ) 
+                : ( */}
                 <ExpandLessIcon
                   sx={{ display: `${!open ? "none" : "block"}` }}
                 />

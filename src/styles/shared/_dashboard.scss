@@ -1,0 +1,140 @@
+.box-container-default {
+  padding: 0 2rem;
+  width: 100%;
+  margin-left: 3.2rem;
+  margin-top: 4rem;
+  height: 84vh;
+  padding-top: 1rem;
+  max-width: calc(100% - 52px);
+  background-color: #f4f5f8;
+  transition: all 0.195s ease-in-out !important;
+}
+.box-container-open {
+  padding: 0 2rem;
+  width: 85%;
+  margin-left: 17.9rem;
+  margin-top: 4rem;
+  height: 84vh;
+  padding-top: 1rem;
+  max-width: calc(100% - 286px);
+  background-color: #f4f5f8;
+  transition: all 0.225s ease-in-out !important;
+}
+.dashboard-heading {
+  color: #343a40;
+  font-size: 42px !important;
+  font-weight: 700 !important;
+}
+
+.dash-container-default {
+  width: 100%;
+  margin-left: 4rem;
+  height: 2vh;
+  max-width: calc(100% - 64px);
+  transition: all 0.195s ease-in-out !important;
+}
+.dash-container-open {
+  width: 85%;
+  margin-left: 18.7rem;
+  max-width: calc(100% - 300px);
+  transition: all 0.225s ease-in-out !important;
+}
+.dashboard-searchbar {
+  background-color: #ffffff;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1.5rem;
+  padding-right: 1rem;
+  border-radius: 5px;
+}
+.current-dealership {
+  margin-top: 0.5rem;
+  height: 18vh;
+  background-color: #45536c;
+}
+
+.dashboard-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+.status-content {
+  width: 45%;
+  height: 55vh;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.record-heading {
+  font-size: 1.2rem !important;
+  font-weight: 500 !important;
+  color: #000000 !important;
+}
+.record-text {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  color: rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+// .add-dealersips {
+//   background-color: #fff;
+//   width: 80%;
+//   height: 55vh;
+//   border-radius: 15px;
+//   padding: 2rem;
+// }
+.dealerships-inputLabel {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  color: #000000 !important;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.dealerships-field {
+  width: 100%;
+  //   border: 1px solid #5c73db !important;
+  //   border-radius: 8px;
+}
+.newUser-inputLabel {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  color: #000000 !important;
+  margin-top: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+.newUser-field {
+  width: 100%;
+}
+.adding-form-heading {
+  font-size: 1.2rem !important;
+  font-weight: 500 !important;
+  color: #000000 !important;
+  margin-bottom: 1.2rem !important;
+}
+.add-newUser {
+  background-color: #fff;
+  width: 60%;
+  height: 62vh;
+  border-radius: 15px;
+  padding: 2rem;
+}
+.upload-user-photo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 40%;
+  max-width: 100%;
+  border: 1px dashed #4c535f;
+  height: 48%;
+  border-radius: 10px;
+  margin-top: 3rem;
+  background-color: #fafbfc;
+  margin-right: 1rem;
+}

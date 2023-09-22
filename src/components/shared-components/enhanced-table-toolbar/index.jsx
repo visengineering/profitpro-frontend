@@ -1,11 +1,13 @@
 import { Box, IconButton, Toolbar, Tooltip, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { alpha } from "@mui/material/styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import LoadingButton from "../../generic-components/button";
 import AddIcon from "@mui/icons-material/Add";
 import SearchBar from "../uncontrolled-search-bar";
+import AddNewUser from "../../pages/activeUser/AddNewUser";
+import Modal from "../../generic-components/model";
 
 function EnhancedTableToolbar({
   numSelected,
@@ -14,6 +16,9 @@ function EnhancedTableToolbar({
   setSearchTerm,
   searchTerm,
 }) {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <Toolbar
       sx={{
@@ -56,7 +61,12 @@ function EnhancedTableToolbar({
             variant="contained"
             styleClass="primary-btn"
             endIcon={<AddIcon />}
+            handleClick={handleOpen}
           />
+          <Modal open={open} onClose={handleClose}>
+            <AddNewUser close={handleClose} />
+          </Modal>
+
           <SearchBar searchTerm={searchTerm} onChange={setSearchTerm} />
         </Box>
       )}

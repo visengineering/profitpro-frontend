@@ -7,13 +7,14 @@ import {
   InputAdornment,
   IconButton,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import LoadingButton from "../../generic-components/button";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AuthService from "../../../services/plugins/auth";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../../hooks/AppContext";
 
 const validationSchema = yup.object({
   email: yup
@@ -27,6 +28,7 @@ const validationSchema = yup.object({
 });
 
 function LoginPage() {
+  const { updateToken, setIsAuthenticated } = useContext(AppContext);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -35,14 +37,15 @@ function LoginPage() {
       rememberMe: false,
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, event) => {
       const data = {
         username: "atuny0",
         password: values.password,
       };
       try {
         const response = await AuthService.login(data);
-        localStorage.setItem("token", JSON.stringify(response.data.token));
+        updateToken(response.data.token);
+        setIsAuthenticated(true);
         navigate("/");
       } catch (error) {
         console.log(error);
