@@ -5,7 +5,7 @@ export const BASE_AUTH_API_URL = process.env.REACT_APP_BACKEND_AUTH_API_URL;
 
 export const authInterceptor = [
   (config) => {
-    config.headers['ngrok-skip-browser-warning'] = true
+    config.headers["ngrok-skip-browser-warning"] = true;
 
     return config;
   },

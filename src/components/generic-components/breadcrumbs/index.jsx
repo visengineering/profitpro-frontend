@@ -4,7 +4,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const Breadcrumbs = ({ crumbs }) => {
   return (
-    <Box role="presentation" sx={{ padding: "1rem" }}>
+    <Box role="presentation" sx={{ padding: "1rem", paddingBottom: "1.5rem" }}>
       <MUIBreadcrumbs
         separator={<NavigateNextIcon fontSize="small" />}
         aria-label="breadcrumb"

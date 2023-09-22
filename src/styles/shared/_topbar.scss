@@ -1,6 +1,12 @@
-.top-bar-container {
-  display: flex;
+.top-bar-container-close {
   width: 85%;
-  flex-direction: row;
-  max-width: calc(100% - 300px);
+  max-width: calc(100% - 64px);
+  transition: all 0.195s ease-in-out !important;
+  // margin-top: 1rem;
+}
+
+.top-bar-container-open {
+  width: 85%;
+  max-width: calc(100% - 299px);
+  transition: all 0.225s ease-in-out !important;
 }

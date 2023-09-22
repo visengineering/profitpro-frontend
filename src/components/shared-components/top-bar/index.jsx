@@ -1,15 +1,11 @@
-import {
-  Box,
-  IconButton,
-  Toolbar,
-  Typography,
-  Button,
-  LinearProgress,
-} from "@mui/material";
-import React, { useMemo, useState } from "react";
+import { Box, IconButton, Toolbar, Typography, Button } from "@mui/material";
+import React, { useMemo, useContext } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useMatch } from "react-router-dom";
+import { routes } from "../../../constants";
+import { AppContext } from "../../../hooks/AppContext";
+import { useHeading } from "../../../hooks/useHeading";
 
 const drawerWidth = "15%";
 
@@ -30,11 +26,20 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 function TopBar() {
+  const { open } = useContext(AppContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const { heading } = useHeading();
 
   const isActiveUserPath = useMemo(() => {
     return location.pathname.includes("/active-user");
+  }, [location]);
+
+  const pageTitle = useMemo(() => {
+    const route = routes.find((route) =>
+      location.pathname.includes(route.path)
+    );
+    return route?.pageTitle || "Test";
   }, [location]);
 
   const handleButtonClick = () => {
@@ -43,7 +48,11 @@ function TopBar() {
   };
 
   return (
-    <AppBar position="fixed" color="inherit" className="top-bar-container">
+    <AppBar
+      position="fixed"
+      color="inherit"
+      className={open ? "top-bar-container-open" : "top-bar-container-close"}
+    >
       <Toolbar
         sx={{
           width: "100%",
@@ -51,13 +60,17 @@ function TopBar() {
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="h6" noWrap component="div">
-          Active Users List
+        <Typography
+          variant="h6"
+          noWrap
+          component="div"
+          sx={{ color: "#343A40" }}
+        >
+          {heading}
         </Typography>
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
           }}
         >
           <Button
@@ -65,9 +78,11 @@ function TopBar() {
               backgroundColor: !isActiveUserPath ? "#00BE4C" : "#233EAE",
               color: "#FFFFFF",
               paddingX: "1.4rem",
+              marginX: "2.5rem",
               "&:hover": {
                 backgroundColor: !isActiveUserPath ? "#00BE4C" : "#233EAE",
               },
+              boxShadow: "none",
             }}
             variant="contained"
             onClick={handleButtonClick}
@@ -79,7 +94,7 @@ function TopBar() {
           </IconButton>
         </Box>
       </Toolbar>
-      <LinearProgress
+      {/* <LinearProgress
         variant="determinate"
         value={35}
         sx={{
@@ -88,7 +103,7 @@ function TopBar() {
             backgroundColor: "#4F46E5", // Custom progress color
           },
         }}
-      />
+      /> */}
     </AppBar>
   );
 }

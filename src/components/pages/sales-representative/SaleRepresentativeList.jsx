@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import SalesRepresentativeDataTable from "./SalesRepresentativeDataTable";
 import { Box } from "@mui/material";
 import UserService from "../../../services/plugins/user";
 import { toast } from "react-toastify";
 import Breadcrumbs from "../../generic-components/breadcrumbs";
+import { AppContext } from "../../../hooks/AppContext";
+import SaveHeading from "../../shared-components/SaveHeading";
 
-const SaleRepresentativeList = () => {
+const SaleRepresentativeList = ({ heading }) => {
+  const { open } = useContext(AppContext);
+
   const [users, setUsers] = useState([]);
   const [totalCount, setCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,26 +62,21 @@ const SaleRepresentativeList = () => {
   ];
 
   return (
-    <Box className="table-container">
-      <Box role="presentation">
-        <Breadcrumbs crumbs={crumbs} />
+    <>
+      <SaveHeading heading={heading} />
+      <Box className={open ? "table-container-open " : "table-container "}>
+        <Box role="presentation">
+          <Breadcrumbs crumbs={crumbs} />
+        </Box>
+        <SalesRepresentativeDataTable
+          rows={users}
+          isLoading={isLoading}
+          totalCount={totalCount}
+          currentPage={currentPage}
+          filterData={fetchSalesDetails}
+        />
       </Box>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      ></Box>
-      <SalesRepresentativeDataTable
-        rows={users}
-        isLoading={isLoading}
-        totalCount={totalCount}
-        currentPage={currentPage}
-        filterData={fetchSalesDetails}
-      />
-    </Box>
+    </>
   );
 };
 

@@ -1,17 +1,25 @@
 import { Box, CardContent, Typography } from "@mui/material";
 import Card from "../../generic-components/card";
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import TranscriptService from "../../../services/plugins/transcipt";
 import { toast } from "react-toastify";
 import DetailLoader from "./DetailLoader";
 import Breadcrumbs from "../../generic-components/breadcrumbs";
+import Conversation from "../activeUser/Conversation";
+import Suggestion from "../activeUser/Suggestion";
+import { AppContext } from "../../../hooks/AppContext";
+import SaveHeading from "../../shared-components/SaveHeading";
 
-function Transcript() {
+function Transcript({ heading }) {
+  const { open } = useContext(AppContext);
   const { transcriptId, salesRepresentativeId } = useParams();
   const [transcript, setTranscript] = useState({});
   const [isLoading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const userName = location?.state?.userName;
 
   useEffect(() => {
     fetchTranscriptDetailsById(transcriptId);
@@ -24,8 +32,7 @@ function Transcript() {
       const response = await TranscriptService.getTranscriptByUser(
         transcriptId
       );
-
-      setTranscript(response.data);
+      setTranscript(response.data.results);
     } catch (error) {
       setLoading(false);
       if (error.response?.status === 400) {
@@ -75,14 +82,46 @@ function Transcript() {
   ];
 
   return (
-    <Box className="table-container">
-      <Box>
-        <Breadcrumbs crumbs={crumbs} />
-      </Box>
+    <>
+      <SaveHeading heading={heading} />
+      <Box className={open ? "table-container-open " : "table-container "}>
+        <Box>
+          <Breadcrumbs crumbs={crumbs} />
+        </Box>
 
+        <Box
+          sx={{
+            display: "flex",
+            backgroundColor: "#F4F5F8",
+            paddingTop: "1rem",
+            gap: 2,
+          }}
+        >
+          <Conversation
+            conversationList={transcript}
+            isLoading={isLoading}
+            className="transcriptConversationBox"
+          />
+          <Suggestion className="transcriptSuggestionBox" />
+        </Box>
+
+        {/* 
       {isLoading ? (
         <DetailLoader />
       ) : (
+        <Box
+          sx={
+            {
+              // display: "flex",
+              // justifyContent: "space-evenly",
+              // backgroundColor: "#F4F5F8",
+              // paddingTop: "1rem",
+            }
+          }
+        >
+          <Conversation />
+          <Suggestion />
+        </Box>
         <Card
           sx={{
             boxShadow: "rgba(0, 0, 0, 0.15) 5.4px 5.4px 6.2px",
@@ -118,8 +157,9 @@ function Transcript() {
             </Typography>
           </CardContent>
         </Card>
-      )}
-    </Box>
+      )} */}
+      </Box>
+    </>
   );
 }
 

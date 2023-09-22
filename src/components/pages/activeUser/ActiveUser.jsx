@@ -1,43 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Typography, Box } from "@mui/material";
-import SearchBar from "../../generic-components/SearchList";
-import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import Conversation from "./Conversation";
 import Suggestion from "./Suggestion";
 import UserService from "../../../services/plugins/user";
+import { toast } from "react-toastify";
+import { AppContext } from "../../../hooks/AppContext";
+import SaveHeading from "../../shared-components/SaveHeading";
+import { useSocket } from "../../../hooks/useSocket";
 
-const UserList = styled("div")(({ theme }) => ({
-  padding: "0 2rem",
-  width: "85%",
-  marginLeft: "18.7rem",
-  marginTop: "4rem",
-  height: "91vh",
-  paddingTop: "1rem",
-  maxWidth: "calc(100% - 300px)",
-  backgroundColor: "#F4F5F8",
-  marginBottom: "1rem",
-}));
+const ActiveUser = ({ heading }) => {
+  const { open } = useContext(AppContext);
 
-const ActiveUser = () => {
   const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [isLoading, setLoading] = useState(true);
+  const [selectedUser, setSelectedUser] = useState();
+  const [isLoading, setLoading] = useState(false);
   const [conversations, setConversations] = useState([]);
+
+  const { newActiveUser, newActiveConversation, webSocket } = useSocket();
 
   async function getAllActiveUsers() {
     try {
       const response = await UserService.getAllActiveUser();
       const { results } = response.data;
+      const result = results.sort((a, b) => b.user_id - a.user_id);
 
       if (Array.isArray(results) && results.length) {
         getConversationByUser(results[0]);
       }
 
-      setUsers(results || []);
+      setUsers(result || []);
     } catch (error) {
+      setLoading(false);
       console.log(error);
+      toast.error("Something went wrong while fetching details", {
+        position: "top-right",
+        autoClose: 2000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        theme: "colored",
+      });
     }
   }
 
@@ -45,162 +48,214 @@ const ActiveUser = () => {
     setLoading(true);
     try {
       setSelectedUser(user);
+
       const response = await UserService.getActiveConversation(user.user_id);
       const { results } = response.data;
+      if (Array.isArray(results) && results.length) {
+        setConversations(results);
+      }
 
-      setConversations(results);
-      console.log(results);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
+      toast.error("Something went wrong while fetching details", {
+        position: "top-right",
+        autoClose: 2000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        theme: "colored",
+      });
     }
     setLoading(false);
   }
+
+  webSocket.onmessage = (event) => {
+    if (!event.data) return;
+
+    const notification = JSON.parse(event.data);
+
+    if (notification.event_type === "new_active_user") {
+      addNewActiveUser(notification?.user || {});
+    } else if (notification.event_type === "new_conversation_chunk") {
+      addTranscriptToConversation(notification);
+    } else if (notification.event_type === "test") {
+      removeUserFromList(notification.user);
+    }
+  };
+
+  const removeUserFromList = (user) => {
+    console.log(user);
+  };
+
+  const addNewActiveUser = (newActiveUser) => {
+    const isUserExist = users.find(
+      (user) => user?.user_id === newActiveUser.user_id
+    );
+
+    if (isUserExist) return;
+
+    const userList = [...users];
+    userList.push(newActiveUser);
+
+    if (!users.length) {
+      getConversationByUser(newActiveUser);
+    }
+
+    setUsers(userList);
+  };
+
+  const addTranscriptToConversation = (newActiveConversation) => {
+    console.log("running function", newActiveConversation);
+    if (newActiveConversation.is_last === "True") {
+      const updatedUsers = users?.filter(
+        (user) => user.user_id !== newActiveConversation.user_id
+      );
+
+      setUsers([...updatedUsers]);
+      setConversations([]);
+      setSelectedUser(null);
+
+      updatedUsers.length && getConversationByUser(updatedUsers[0]);
+
+      return;
+    }
+
+    if (selectedUser.user_id !== newActiveConversation.user_id) return;
+    console.log("beforeConversation", conversations);
+    const newConversation = newActiveConversation.data;
+    const updatedConversations = [...conversations, ...newConversation];
+    setConversations(updatedConversations);
+    console.log("updateConversation", conversations);
+  };
 
   useEffect(() => {
     getAllActiveUsers();
   }, []);
 
   return (
-    <UserList>
-      <Stack direction="row" spacing={2}>
-        <Box
-          className="active_user_div"
-          sx={{
-            width: "25%",
-            backgroundColor: "#FFFFFF",
-            height: "88vh",
-            padding: "0.3rem 0.1rem",
-            borderRadius: "3px",
-            overflowY: "auto",
-          }}
-        >
+    <>
+      <SaveHeading heading={heading} />
+      <Box className={open ? "userlist-open" : "userlist-default"}>
+        <Stack direction="row" spacing={2}>
           <Box
-            className="active_user_portion"
+            className="active_user_div"
             sx={{
-              paddingLeft: "0.9rem",
-              paddingTop: "0.3rem",
-              paddingBottom: "0.8rem",
-              borderBottom: "1px solid #D9D9D9",
+              width: "22%",
+              backgroundColor: "#FFFFFF",
+              height: "88vh",
+              padding: "0.3rem 0.1rem",
+              borderRadius: "4px",
+              overflowY: "auto",
             }}
           >
-            <Typography
-              // variant="h6"
-              className="User"
-              sx={{
-                fontSize: "min(10vh,30px)",
-                fontWeight: "700",
-                lineHeight: "1",
-              }}
-            >
-              Active Users
-            </Typography>
-            <Typography
-              className="Conversation"
-              sx={{
-                fontSize: "16px",
-                fontWeight: "400",
-              }}
-            >
-              Conversation
-            </Typography>
-          </Box>
-          {/* <Box
-            sx={{
-              padding: "0.5rem 1rem",
-            }}
-          >
-            <SearchBar />
-          </Box> */}
-
-          {users.map((user) => (
             <Box
+              className="active_user_portion"
               sx={{
-                display: "flex",
-                flexDirection: "row",
-                // justifyContent: "space-between",
-                gap: 5,
-                overflowY: "hidden",
-                alignItems: " center",
-                width: "90%",
-                borderRadius: "5px",
-                padding: "0.5rem 0rem",
-
-                marginLeft: "0.9rem",
-                marginTop: "0.5rem",
-                cursor: "pointer",
-                ":hover": {
-                  backgroundColor: user.state,
-                  borderRadius: "5px",
-                },
-                // backgroundColor: user.state,
-              }}
-              className="active-user"
-              onClick={() => {
-                getConversationByUser(user);
+                paddingLeft: "0.9rem",
+                paddingY: "1.2rem",
+                paddingBottom: "0.8rem",
+                borderBottom: "1px solid #D9D9D9",
               }}
             >
+              <Typography className="username">Active users</Typography>
+              <Typography className="userconversation">Conversation</Typography>
+            </Box>
+            {!(Array.isArray(users) && users.length) ? (
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "row",
-                  gap: 1,
+                  justifyContent: "center",
+                  paddingTop: "0.3rem",
                 }}
-                className="activer-user__box"
               >
-                <Box
-                  sx={{
-                    width: "4px",
-                    height: "inherit",
-                    backgroundColor: `${user.state}`,
-                    borderRadius: "3px",
-                    cursor: "pointer",
-                    "&:hover": {
-                      backgroundColor: "transparent",
-                      borderRadius: "0px !important",
-                    },
-                  }}
-                  className="suggestion_box"
-                />
-                <Avatar alt="Remy Sharp" src={user.image} />
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontSize: "min(10vh,18px)",
-                    lineHeight: "2.5rem",
-                    // paddingLeft: "1rem",
-                  }}
-                >
-                  {user.user_display_name}
-                </Typography>
+                <Typography> No Active users found</Typography>
               </Box>
-              {/* <Typography
-                variant="body1"
-                sx={{
-                  fontSize: "12px",
-                  lineHeight: "2.5rem",
+            ) : (
+              <Box>
+                {users.map((user) => (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: 5,
+                      overflowY: "hidden",
+                      alignItems: " center",
+                      width: "90%",
+                      borderRadius: "5px",
+                      padding: "0.5rem 0rem",
 
-                  // paddingLeft: "2rem",
-                }}
-              >
-                {pro.date}
-              </Typography> */}
-            </Box>
-          ))}
-        </Box>
+                      marginLeft: "0.9rem",
+                      marginTop: "0.5rem",
+                      cursor: "pointer",
 
-        {/* second div */}
+                      ":hover": {
+                        backgroundColor:
+                          selectedUser?.user_id === user?.user_id
+                            ? user.state
+                            : "#F1F7FF",
+                        borderRadius: "5px",
+                      },
+                      backgroundColor:
+                        selectedUser?.user_id === user?.user_id
+                          ? user?.state
+                          : "",
+                      color:
+                        selectedUser?.user_id === user?.user_id ? "#FFF" : "",
+                    }}
+                    className="active-user"
+                    onClick={() => {
+                      getConversationByUser(user);
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: 1,
+                      }}
+                      className="activer-user__box"
+                    >
+                      <Box
+                        sx={{
+                          width: "4px",
+                          height: "inherit",
+                          backgroundColor: `${user.state}`,
+                          borderRadius: "3px",
+                          cursor: "pointer",
+                          "&:hover": {
+                            backgroundColor: "transparent",
+                            borderRadius: "0px !important",
+                          },
+                        }}
+                        className="suggestion_box"
+                      />
+                      <Avatar alt="Remy Sharp" src={user.user_avatar} />
+                      <Typography variant="h6" className="displayname">
+                        {user.user_display_name}
+                      </Typography>
+                    </Box>
+                  </Box>
+                ))}
+              </Box>
+            )}
+          </Box>
 
-        <Conversation
-          conversationList={conversations}
-          selectedUser={selectedUser}
-          isLoading={isLoading}
-        />
+          {/* second div */}
 
-        {/* AI SUGGESTION */}
+          <Conversation
+            conversationList={conversations}
+            selectedUser={selectedUser}
+            isLoading={isLoading}
+            className="conversationBox"
+          />
 
-        <Suggestion />
-      </Stack>
-    </UserList>
+          {/* AI SUGGESTION */}
+
+          <Suggestion className="suggestionBox" />
+        </Stack>
+      </Box>
+    </>
   );
 };
 

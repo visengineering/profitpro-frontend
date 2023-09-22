@@ -79,10 +79,22 @@ function Row(props) {
   const navigate = useNavigate();
 
   const navigateToTranscripts = (user_id) => {
-    navigate(`/salesRepresentative/${user_id}/transcripts`);
+    navigate(`/salesRepresentative/${user_id}/transcripts`, {
+      state: {
+        userName: row.user_display_name,
+        userAvatar: row.user_avatar,
+      },
+    });
   };
+
   const handleShowDetails = (userId, transcriptId) => {
-    navigate(`/salesRepresentative/${userId}/transcripts/${transcriptId}`);
+    console.log("row", row);
+    navigate(`/salesRepresentative/${userId}/transcripts/${transcriptId}`, {
+      state: {
+        userName: row.user_display_name,
+        userAvatar: row.user_avatar,
+      },
+    });
   };
 
   const handleShowUser = (e) => {
@@ -140,22 +152,22 @@ function Row(props) {
         <TableCell align="left">{row.user_email}</TableCell>
         <TableCell align="left">
           <Box sx={{ display: "flex", justifyContent: "left", gap: "20px" }}>
-         <IconButton size="small"   sx={{ paddingLeft:"0px" }}>
-                            <Box
-                              component="img"
-                              src="/edit.svg"
-                              sx={{ height: "20px", width: "20px" }}
-                              handleClick={(e) => e.stopPropagation()}
-                            />
-                          </IconButton>
-        <IconButton size="small">
-                            <Box
-                              component="img"
-                              src="/delete.svg"
-                              sx={{ height: "20px", width: "20px" }}
-                              handleClick={(e) => e.stopPropagation()}
-                            />
-       </IconButton>
+            <IconButton size="small" sx={{ paddingLeft: "0px" }}>
+              <Box
+                component="img"
+                src="/edit.svg"
+                sx={{ height: "20px", width: "20px" }}
+                handleClick={(e) => e.stopPropagation()}
+              />
+            </IconButton>
+            <IconButton size="small">
+              <Box
+                component="img"
+                src="/delete.svg"
+                sx={{ height: "20px", width: "20px" }}
+                handleClick={(e) => e.stopPropagation()}
+              />
+            </IconButton>
           </Box>
         </TableCell>
       </TableRow>
@@ -165,7 +177,7 @@ function Row(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Sale Representative Transcripts
+                Sale Representative Details
               </Typography>
               <Table aria-label="purchases">
                 <TableHead>
@@ -173,7 +185,7 @@ function Row(props) {
                     <TableCell align="center">Transcript ID</TableCell>
                     <TableCell align="center">Created At</TableCell>
                     <TableCell align="center">Updated At</TableCell>
-                    <TableCell align="center">Audio Link</TableCell>
+                    <TableCell align="center">Download Audio File</TableCell>
                     <TableCell align="center">
                       Time Duration (seconds)
                     </TableCell>
@@ -182,15 +194,15 @@ function Row(props) {
                 </TableHead>
                 <TableBody>
                   {row.transcripts.map((transcriptRow) => (
-                    <TableRow key={transcriptRow.created_date}>
+                    <TableRow key={transcriptRow.created_at}>
                       <TableCell align="center">
-                        {transcriptRow.conversation_id}
+                        {transcriptRow.dialog_id}
                       </TableCell>
                       <TableCell align="center">
-                        {formatDate(transcriptRow.created_date)}
+                        {formatDate(transcriptRow.created_at)}
                       </TableCell>
                       <TableCell align="center">
-                        {formatDate(transcriptRow.modified_date)}
+                        {formatDate(transcriptRow.updated_at)}
                       </TableCell>
                       <TableCell
                         align="center"
@@ -200,7 +212,7 @@ function Row(props) {
                         }}
                       >
                         <Link
-                          href={transcriptRow.conversation_link}
+                          href={transcriptRow.conversation_url}
                           target="_blank"
                         >
                           <IconButton size="small">
@@ -222,7 +234,7 @@ function Row(props) {
                           onClick={() =>
                             handleShowDetails(
                               row.user_id,
-                              transcriptRow.conversation_id
+                              transcriptRow.dialog_id
                             )
                           }
                         >
@@ -274,7 +286,7 @@ function SalesRepresentativeDataTable({
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
+  const navigate = useNavigate();
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -359,7 +371,7 @@ function SalesRepresentativeDataTable({
                         {" "}
                         <TableCell colSpan={12} align="center">
                           <Typography>
-                            no sales representatives found
+                            no sales representatives founds
                           </Typography>
                         </TableCell>{" "}
                       </TableRow>
